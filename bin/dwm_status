@@ -1,0 +1,60 @@
+#!/bin/bash
+
+print_wifiqual() {
+  wifiessid="$(/sbin/iwconfig 2>/dev/null | grep ESSID | cut -d: -f2)"
+  wifiawk="$(echo $wifiessid | awk -F',' '{gsub(/"/, "", $1); print $1}')"
+  wificut="$(echo $wifiawk | cut -d' ' -f1)"
+  echo -ne "\uf1eb ${wificut} \ue621"
+}
+
+print_mem(){
+	memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}') / 1024))
+	echo -e "$memfree \ue621"
+}
+
+print_temp(){
+	test -f /sys/class/thermal/thermal_zone0/temp || return 0
+	echo -e "$(head -c 2 /sys/class/thermal/thermal_zone0/temp)\ue339 \ue621"
+}
+
+print_volume(){
+    mix=`amixer get Master | tail -1`
+    vol="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
+    if [[ $mix == *\[off\]* ]]; then
+      echo -e "\ufa80 ${vol} \ue621"
+    elif [[ $mix == *\[on\]* ]]; then
+      echo -e "\ufa7d ${vol} \ue621"
+    fi
+}
+
+print_bat(){
+	hash acpi || return 0
+	onl="$(grep "on-line" <(acpi -V))"
+	charge="$(awk '{ sum += $1 } END { print sum }' /sys/class/power_supply/BAT*/capacity)"
+	if test -z "$onl"
+	then
+		# suspend when we close the lid
+		#systemctl --user stop inhibit-lid-sleep-on-battery.service
+		echo -e "\uf241 ${charge} \ue621"
+	else
+		# On mains! no need to suspend
+		#systemctl --user start inhibit-lid-sleep-on-battery.service
+		echo -e "\uf240 ${charge} \ue621"
+	fi
+}
+
+print_date(){
+	date "+%a %m-%d %T"
+}
+
+
+
+
+
+
+while true
+do
+	xsetroot -name " $(print_wifiqual) $(print_mem) $(print_temp) $(print_volume) $(print_bat) $(print_date)"
+
+	sleep 1
+done

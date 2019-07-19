@@ -1,7 +1,7 @@
 #!/bin/bash
 
 print_wifiqual() {
-  wifiessid="$(/sbin/iwconfig 2>/dev/null | grep ESSID | cut -d: -f2)"
+  wifiessid="$(iw dev wlp2s0 link | grep SSID | cut -d: -f2)"
   wifiawk="$(echo $wifiessid | awk -F',' '{gsub(/"/, "", $1); print $1}')"
   wificut="$(echo $wifiawk | cut -d' ' -f1)"
   echo -ne "\uf1eb ${wificut} \ue621"
@@ -9,21 +9,21 @@ print_wifiqual() {
 
 print_mem(){
 	memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}') / 1024))
-	echo -e "$memfree \ue621"
+	echo -e "\uf85a $memfree \ue621"
 }
 
 print_temp(){
 	test -f /sys/class/thermal/thermal_zone0/temp || return 0
-	echo -e "$(head -c 2 /sys/class/thermal/thermal_zone0/temp)\ue339 \ue621"
+	echo -e "\ue20b $(head -c 2 /sys/class/thermal/thermal_zone0/temp) \ue621"
 }
 
 print_volume(){
     mix=`amixer get Master | tail -1`
     vol="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
     if [[ $mix == *\[off\]* ]]; then
-      echo -e "\ufa80 ${vol} \ue621"
+      echo -e "\ufc5d ${vol} \ue621"
     elif [[ $mix == *\[on\]* ]]; then
-      echo -e "\ufa7d ${vol} \ue621"
+      echo -e "\uf028 ${vol} \ue621"
     fi
 }
 
@@ -35,26 +35,26 @@ print_bat(){
 	then
 		# suspend when we close the lid
 		#systemctl --user stop inhibit-lid-sleep-on-battery.service
-		echo -e "\uf241 ${charge} \ue621"
+		echo -e "\uf578 ${charge} \ue621"
 	else
 		# On mains! no need to suspend
 		#systemctl --user start inhibit-lid-sleep-on-battery.service
-		echo -e "\uf240 ${charge} \ue621"
+		echo -e "\uf583 ${charge} \ue621"
 	fi
 }
 
 print_date(){
-	date "+%a %m-%d %T"
+	date "+%A %d/%m %T"
+	
 }
 
-
-
-
-
+show_arch_logo(){
+	echo -e "\uf303"
+}
 
 while true
 do
-	xsetroot -name " $(print_wifiqual) $(print_mem) $(print_temp) $(print_volume) $(print_bat) $(print_date)"
+	xsetroot -name " $(print_wifiqual) $(print_mem) $(print_temp) $(print_volume) $(print_bat) $(print_date) $(show_arch_logo)"
 
 	sleep 1
 done

@@ -5,7 +5,10 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Source Code Pro:pixelsize=20:antialias=true:autohint=true";
+//static char *font = "Source Code Pro:pixelsize=24:antialias=true:autohint=true";
+static char *font = "Source Code Pro for Powerline:pixelsize=24:antialias=true:autohint=true";
+
+//static char *font = "xos4 Terminus:pixelsize=32:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -82,6 +85,7 @@ char *termname = "st-256color";
  */
 unsigned int tabspaces = 8;
 
+/*---------------------MOLOKAI------------------------*/
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
@@ -93,7 +97,7 @@ static const char *colorname[] = {
 	"#9e6ffe",
 	"#5e7175",
 	"#ccccc6",
-	
+
 	/* 8 bright colors */
 	"#4d4d4d",
 	"#ff669d",
@@ -104,8 +108,36 @@ static const char *colorname[] = {
 	"#a3babf",
 	"#f8f8f2",
 };
-
-
+/*---------------------DEFAULT------------------------*/
+/* Terminal colors (16 first used in escape sequence) */
+//static const char *colorname[] = {
+//	/* 8 normal colors */
+//	"black",
+//	"red3",
+//	"green3",
+//	"yellow3",
+//	"blue2",
+//	"magenta3",
+//	"cyan3",
+//	"gray90",
+//
+//	/* 8 bright colors */
+//	"gray50",
+//	"red",
+//	"green",
+//	"yellow",
+//	"#5c5cff",
+//	"magenta",
+//	"cyan",
+//	"white",
+//
+//	[255] = 0,
+//
+//	/* more colors can be added after 255 to use with DefaultXX */
+//	"#cccccc",
+//	"#555555",
+//};
+/*-----------------------------------------------------*/
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor

@@ -10,7 +10,9 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "SauceCodePro Nerd Font:pixelsize=18" };
+//static const char *fonts[]          = { "xos4 Terminess Powerline:pixelsize=28" };
 static const char dmenufont[]       = "Source Code Pro:pixelsize=18";
+//static const char dmenufont[]       = "xos4 Terminess Powerline:pixelsize=28";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -19,7 +21,7 @@ static const char col_cyan[]        = "#005577";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan },
 };
 
 /* tagging */
@@ -52,6 +54,7 @@ static const Layout layouts[] = {
 #define XF86AudioMute		0x1008ff12
 #define XF86AudioLowerVolume	0x1008ff11
 #define XF86AudioRaiseVolume	0x1008ff13
+#define XF86AudioMicMute	0x1008FFB2
 #define XF86Display		0x1008FF59
 #define XF86WLAN		0x1008FF95
 #define MODKEY Mod4Mask
@@ -70,11 +73,12 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *pavuctrlcmd[] = { "pavucontrol", NULL };
 static const char *slockcmd[] = { "slock", NULL };
-static const char *cmdbrightnessup[] = {"xbacklight", "-inc", "10", NULL };	
-static const char *cmdbrightnessdown[] = { "xbacklight", "-dec", "10", NULL }; 
-static const char *cmdsoundup[] = { "amixer", "-q", "sset", "Master", "5%+", NULL }; 
-static const char *cmdsounddown[] = { "amixer", "-q", "sset", "Master", "5%-", NULL }; 
+static const char *cmdbrightnessup[] = {"xbacklight", "-inc", "5", NULL };
+static const char *cmdbrightnessdown[] = { "xbacklight", "-dec", "5", NULL };
+static const char *cmdsoundup[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
+static const char *cmdsounddown[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
 static const char *cmdsoundtoggle[] = { "amixer", "-q", "sset", "Master", "toggle", NULL };
+static const char *cmdmicmute[] = { "pactl", "set-source-mute", "@DEFAULT_SOURCE@", "toggle", NULL };
 static const char *clipcmd[] = { "clipmenu", "-i", "-fn", dmenufont, NULL };
 static const char *display[] = { "arandr", NULL };
 static const char *wlan[] = { "networkmanager_dmenu", NULL };
@@ -89,12 +93,14 @@ static Key keys[] = {
 	{ 0,				XF86AudioMute,		spawn,	   	{.v = cmdsoundtoggle}},
 	{ 0,				XF86AudioRaiseVolume,	spawn,	   	{.v = cmdsoundup}},
 	{ 0,				XF86AudioLowerVolume,	spawn,	   	{.v = cmdsounddown}},
+	{ 0,				XF86AudioMicMute,	spawn,	   	{.v = cmdmicmute}},
 	{ 0,				XF86Display,		spawn,	   	{.v = display}},
-	{ MODKEY,				XK_n,			spawn,	   	{.v = wlan}},
-	{ MODKEY,			XK_a,	   		spawn,	   	{.v = pavuctrlcmd}}, 
+	{ MODKEY,			XK_n,			spawn,	   	{.v = wlan}},
+	{ MODKEY,			XK_a,	   		spawn,	   	{.v = pavuctrlcmd}},
 	{ MODKEY,			XK_F12,	   		spawn, 	   	{.v = slockcmd}},
 	{ MODKEY,			XK_Insert, 		spawn,	   	{.v = clipcmd}},
 	{ 0,				XK_Print, 		spawn,	   	SHCMD("maim -s ~/Pictures/$(date +%s).png")},
+	{ MODKEY,			XK_Home,		spawn,		SHCMD("st -title ranger")},
 	{ MODKEY,                       XK_b,      		togglebar,      {0} },
 	{ MODKEY,                       XK_j,      		focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      		focusstack,     {.i = -1 } },

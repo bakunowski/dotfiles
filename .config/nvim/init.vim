@@ -11,20 +11,34 @@ set noswapfile
 set clipboard=unnamed
 set encoding=utf-8
 
+set tabstop=8
+set shiftwidth=4
+set shiftround
+set autoindent
+
+let maplocalleader=" "
+
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'lervag/vimtex'
 Plug 'jceb/vim-orgmode'
-Plug 'lucasprag/simpleblack'
 Plug 'itchyny/calendar.vim'
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
 Plug 'thaerkh/vim-indentguides'
-Plug 'jaredgorski/spacecamp'
-Plug 'vim-syntastic/syntastic'
 Plug 'sheerun/vim-polyglot'
+Plug 'vim-syntastic/syntastic'
+Plug 'ctrlpvim/ctrlp.vim'
+
+"themes
+Plug 'jaredgorski/spacecamp'
 Plug 'tomasr/molokai'
-Plug 'ervandew/supertab'
+Plug 'lucasprag/simpleblack'
+
+"can use ctr-n and ctr-p instead!
+"Plug 'ervandew/supertab'
 
 call plug#end()
 
@@ -53,6 +67,8 @@ let g:calendar_event_start_time_minwidth = 0
 
 " airline
 let g:airline_theme = 'powerlineish'
+let g:airline_powerline_fonts = 1
+
 
 " indent
 let g:indentguides_spacechar = '|'

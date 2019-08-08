@@ -54,7 +54,7 @@ show_arch_logo(){
 
 while true
 do
-	xsetroot -name " $(print_wifiqual) $(print_mem) $(print_temp) $(print_volume) $(print_bat) $(print_date) $(show_arch_logo)"
+	xsetroot -name " $(print_wifiqual) $(print_mem) $(print_temp) $(print_volume) $(print_bat) $(print_date)"
 
 	sleep 1
 done

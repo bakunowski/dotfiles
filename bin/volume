@@ -1,0 +1,21 @@
+#!/bin/bash
+#changeVolume
+
+#Arbitrary but unique message id
+msgId="991049"
+
+amixer -q sset Master "$@" > /dev/null
+mix=`amixer get Master | tail -1`
+
+volume="$(amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1)"
+mute="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
+bar=$(seq -s "─" $(($volume / 5)) | sed 's/[0-9]//g')
+
+if [[ $mix == *\[off\]* ]]; then
+    #volnoti-show -m
+    dunstify -a "changeVolume" -u low -i audio-volume-off -r "$msgId" "Mute"
+else
+    #volnoti-show ${volume}
+    #dunstify -a "changeVolume" -u low -i audio-volume-high -r "$msgId" "$bar"
+    dunstify -a "changeVolume" -u low -i audio-volume-high -r "$msgId" "${volume}%"
+fi

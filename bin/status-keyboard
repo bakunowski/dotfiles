@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# copied from: https://github.com/altercation/dotfiles-tilingwm/blob/master/bin/wm/status-keyboard
+stdlayout=us  # standard layout takes "default" color
+stdname=en-us # arbitrary, descriptive only
+
+green=#ffa500
+
+layout="$(xkb-switch)"
+
+case $layout in
+    ${stdlayout}) color=$green; icon=" "; name="us" ;; # f11c fa-keyboard-o
+    gb) color=$green; icon=" "; name="gb" ;; # f11c fa-keyboard-o
+    pl) color=$green; icon=" "; name="pl" ;; # f11c fa-keyboard-o
+esac
+
+echo " <fc=$color><fn=1>$icon</fn> ${name}</fc>"

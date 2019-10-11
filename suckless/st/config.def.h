@@ -5,16 +5,19 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Source Code Pro:pixelsize=20:antialias=true:autohint=true";
-//static char *font = "Source Code Pro for Powerline:pixelsize=24:antialias=true:autohint=true";
-//static char *font = "xos4 Terminus:pixelsize=32:antialias=true:autohint=true";
+<<<<<<< ours
+static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+static int borderpx = 2;
+=======
+char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
 
 /* disable bold, italic and roman fonts globally */
-int disablebold = 1;
+int disablebold = 0;
 int disableitalic = 0;
 int disableroman = 0;
 
-static int borderpx = 2;
+int borderpx = 2;
+>>>>>>> theirs
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -90,115 +93,44 @@ char *termname = "st-256color";
  */
 unsigned int tabspaces = 8;
 
-/*-----------------TomorrowNightDark-------------------*/
-/* Terminal colors (16 first used in escape sequence) */
-//static const char *colorname[] = {
-//        /* 8 normal colors */
-//        "#1d1f21", /* black   */
-//        "#cc6666", /* red     */
-//        "#b5bd68", /* green   */
-//        "#f0c674", /* yellow  */
-//        "#81a2be", /* blue    */
-//        "#b294bb", /* magenta */
-//        "#8abeb7", /* cyan    */
-//        "#c5c8c6", /* white   */
-//
-//        /* 8 bright colors */
-//        "#969896", /* black   */
-//        "#cc6666", /* red     */
-//        "#b5bd68", /* green   */
-//        "#f0c674", /* yellow  */
-//        "#81a2be", /* blue    */
-//        "#b294bb", /* magenta */
-//        "#8abeb7", /* cyan    */
-//        "#ffffff", /* white   */
-//};
-
-/*---------------------Chalk---------------------------*/
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-        /* 8 normal colors */
-        "#151515", /* black   */
-        "#fb9fb1", /* red     */
-        "#acc267", /* green   */
-        "#ddb26f", /* yellow  */
-        "#6fc2ef", /* blue    */
-        "#e1a3ee", /* magenta */
-        "#12cfc0", /* cyan    */
-        "#d0d0d0", /* white   */
+	/* 8 normal colors */
+	"black",
+	"red3",
+	"green3",
+	"yellow3",
+	"blue2",
+	"magenta3",
+	"cyan3",
+	"gray90",
 
-        /* 8 bright colors */
-        "#505050", /* black   */
-        "#fb9fb1", /* red     */
-        "#acc267", /* green   */
-        "#ddb26f", /* yellow  */
-        "#6fc2ef", /* blue    */
-        "#e1a3ee", /* magenta */
-        "#12cfc0", /* cyan    */
-        "#f5f5f5", /* white   */
+	/* 8 bright colors */
+	"gray50",
+	"red",
+	"green",
+	"yellow",
+	"#5c5cff",
+	"magenta",
+	"cyan",
+	"white",
+
+	[255] = 0,
+
+	/* more colors can be added after 255 to use with DefaultXX */
+	"#cccccc",
+	"#555555",
 };
-/*---------------------MOLOKAI------------------------*/
-/* Terminal colors (16 first used in escape sequence) */
-//static const char *colorname[] = {
-//	/* 8 normal colors */
-//	"#1B1D1E",
-//	"#f92672",
-//	"#beed5f",
-//	"#fd971f",
-//	"#66d9ef",
-//	"#9e6ffe",
-//	"#5e7175",
-//	"#ccccc6",
-//
-//	/* 8 bright colors */
-//	"#4d4d4d",
-//	"#ff669d",
-//	"#a6e22e",
-//	"#e6db74",
-//	"#66d9ef",
-//	"#936ffe",
-//	"#a3babf",
-//	"#f8f8f2",
-//};
 
-/*---------------------DEFAULT------------------------*/
-/* Terminal colors (16 first used in escape sequence) */
-//static const char *colorname[] = {
-//	/* 8 normal colors */
-//	"black",
-//	"red3",
-//	"green3",
-//	"yellow3",
-//	"blue2",
-//	"magenta3",
-//	"cyan3",
-//	"gray90",
-//
-//	/* 8 bright colors */
-//	"gray50",
-//	"red",
-//	"green",
-//	"yellow",
-//	"#5c5cff",
-//	"magenta",
-//	"cyan",
-//	"white",
-//
-//	[255] = 0,
-//
-//	/* more colors can be added after 255 to use with DefaultXX */
-//	"#cccccc",
-//	"#555555",
-//};
-/*-----------------------------------------------------*/
+
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
 unsigned int defaultfg = 7;
 unsigned int defaultbg = 0;
-static unsigned int defaultcs = 7;
-static unsigned int defaultrcs = 15;
+static unsigned int defaultcs = 256;
+static unsigned int defaultrcs = 257;
 
 /*
  * Default shape of cursor

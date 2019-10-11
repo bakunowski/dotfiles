@@ -9,10 +9,10 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "SauceCodePro Nerd Font:pixelsize=18" };
-//static const char *fonts[]          = { "xos4 Terminess Powerline:pixelsize=28" };
-static const char dmenufont[]       = "Source Code Pro:pixelsize=18";
-//static const char dmenufont[]       = "xos4 Terminess Powerline:pixelsize=28";
+static const char *fonts[]          = { "RobotoMono Nerd Font:pixelsize=18" };
+//static const char *fonts[]          = { "xos4 Terminess Powerline:pixelsize=32" };
+static const char dmenufont[]       = "RobotoMono Nerd Font:pixelsize=18";
+//static const char dmenufont[]       = "xos4 Terminess Powerline:pixelsize=32";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -73,11 +73,11 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *pavuctrlcmd[] = { "pavucontrol", NULL };
 static const char *slockcmd[] = { "slock", NULL };
-static const char *cmdbrightnessup[] = {"xbacklight", "-inc", "5", NULL };
-static const char *cmdbrightnessdown[] = { "xbacklight", "-dec", "5", NULL };
-static const char *cmdsoundup[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
-static const char *cmdsounddown[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
-static const char *cmdsoundtoggle[] = { "amixer", "-q", "sset", "Master", "toggle", NULL };
+static const char *cmdbrightnessup[] = {"brightnessctl", "s", "10%+", NULL };
+static const char *cmdbrightnessdown[] = { "brightnessctl", "s", "10%-", NULL };
+static const char *cmdsoundup[] = { "volume", "5%+", NULL };
+static const char *cmdsounddown[] = { "volume", "5%-", NULL };
+static const char *cmdsoundtoggle[] = { "volume", "toggle", NULL };
 static const char *cmdmicmute[] = { "pactl", "set-source-mute", "@DEFAULT_SOURCE@", "toggle", NULL };
 static const char *clipcmd[] = { "clipmenu", "-i", "-fn", dmenufont, NULL };
 static const char *display[] = { "arandr", NULL };

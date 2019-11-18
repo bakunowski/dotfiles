@@ -5,12 +5,13 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Source Code Pro:pixelsize=20:antialias=true:autohint=true";
+//static char *font = "Source Code Pro:pixelsize=20:antialias=true:autohint=true";
+static char *font = "SauceCodePro Nerd Font:pixelsize=20:antialias=true:autohint=true";
 //static char *font = "Source Code Pro for Powerline:pixelsize=24:antialias=true:autohint=true";
 //static char *font = "xos4 Terminus:pixelsize=32:antialias=true:autohint=true";
 
 /* disable bold, italic and roman fonts globally */
-int disablebold = 1;
+int disablebold = 0;
 int disableitalic = 0;
 int disableroman = 0;
 

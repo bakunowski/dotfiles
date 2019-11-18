@@ -1,7 +1,8 @@
 /* See LICENSE file for copyright and license details. */
+#include "push.c"
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -10,18 +11,18 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "RobotoMono Nerd Font:pixelsize=18" };
-//static const char *fonts[]          = { "xos4 Terminess Powerline:pixelsize=32" };
 static const char dmenufont[]       = "RobotoMono Nerd Font:pixelsize=18";
-//static const char dmenufont[]       = "xos4 Terminess Powerline:pixelsize=32";
-static const char col_gray1[]       = "#222222";
+static const char col_gray1[]       = "#151515";
 static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
+static const char col_gray3[]       = "#808080";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]        = "#778899";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan },
+	[SchemeNorm]  = { col_gray3, col_gray1, col_gray2 },
+	[SchemeSel]   = { col_gray4, col_cyan,  col_cyan },
+	//[SchemeTitle] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeTitle] = { col_gray4, col_cyan,  col_cyan }
 };
 
 /* tagging */
@@ -73,8 +74,9 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *pavuctrlcmd[] = { "pavucontrol", NULL };
 static const char *slockcmd[] = { "slock", NULL };
-static const char *cmdbrightnessup[] = {"brightnessctl", "s", "10%+", NULL };
-static const char *cmdbrightnessdown[] = { "brightnessctl", "s", "10%-", NULL };
+static const char *cmdbrightnessup[] = {"light", "-A", "5", NULL };
+static const char *cmdbrightnessdown[] = { "light", "-U", "5", NULL };
+static const char *cmdbrightnessdown2[] = { "light_xob.sh", NULL };
 static const char *cmdsoundup[] = { "volume", "5%+", NULL };
 static const char *cmdsounddown[] = { "volume", "5%-", NULL };
 static const char *cmdsoundtoggle[] = { "volume", "toggle", NULL };
@@ -87,9 +89,13 @@ static const char *wlan[] = { "networkmanager_dmenu", NULL };
 static Key keys[] = {
 	/* modifier                     key        		function        argument */
 	{ MODKEY,                       XK_p,      		spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_j,      		pushdown,       {0} },
+	{ MODKEY|ShiftMask,             XK_k,      		pushup,         {0} },
 	{ MODKEY|ShiftMask,             XK_Return, 		spawn,          {.v = termcmd } },
 	{ 0,				XF86MonBrightnessDown,	spawn,	   	{.v = cmdbrightnessdown }},
+	{ 0,				XF86MonBrightnessDown,	spawn,	   	{.v = cmdbrightnessdown2 }},
 	{ 0,				XF86MonBrightnessUp,	spawn,	   	{.v = cmdbrightnessup }},
+	{ 0,				XF86MonBrightnessUp,	spawn,	   	{.v = cmdbrightnessdown2 }},
 	{ 0,				XF86AudioMute,		spawn,	   	{.v = cmdsoundtoggle}},
 	{ 0,				XF86AudioRaiseVolume,	spawn,	   	{.v = cmdsoundup}},
 	{ 0,				XF86AudioLowerVolume,	spawn,	   	{.v = cmdsounddown}},

@@ -1,4 +1,4 @@
-set title
+﻿set title
 
 set showmatch
 set ignorecase
@@ -30,9 +30,17 @@ Plug 'jceb/vim-orgmode'
 Plug 'itchyny/calendar.vim'
 Plug 'daeyun/vim-matlab'
 Plug 'sophacles/vim-processing'
+Plug 'davidhalter/jedi-vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'vim-syntastic/syntastic'
+Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-commentary'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " syntax
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+"Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'Guzzii/python-syntax'
 
 " airline
@@ -48,12 +56,14 @@ Plug 'tpope/vim-fugitive'
 
 " visual
 Plug 'thaerkh/vim-indentguides'
-Plug 'tomasr/molokai'
 Plug 'owickstrom/vim-colors-paramount'
 Plug 'chriskempson/base16-vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'lucasprag/simpleblack'
 
 call plug#end()
+
+filetype plugin indent on
 
 " visual settings
 syntax on
@@ -66,6 +76,7 @@ set ruler
 set termguicolors
 
 colorscheme base16-chalk
+hi Normal guibg=NONE
 
 let g:rehash256 = 1
 set t_Co=256
@@ -76,6 +87,7 @@ let g:netrw_liststyle=3
 
 " better syntax for python
 let python_highlight_all = 1
+let g:polyglot_disabled = ['python']
 
 " vimtex + custom syntax changes to folds and .tex files
 let g:vimtex_view_method = 'zathura'
@@ -105,21 +117,27 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 "let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
+let g:airline#extensions#syntastic#enabled = 1
 
 " indent
 let g:indentguides_spacechar = '|'
 let g:indentguides_tabchar = '┆'
 
-" syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
+"" jedi-vim
+let g:jedi#popup_on_dot = 0
+autocmd FileType python setlocal completeopt-=preview
 
+" syntastic
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_style_warning_symbol = '⚠'
+let g:syntastic_auto_loc_list=1
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_python_checkers=['python', 'flake8']
+
+let g:deoplete#enable_at_startup = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""

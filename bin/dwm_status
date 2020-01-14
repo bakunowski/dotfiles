@@ -1,20 +1,29 @@
 #!/bin/bash
 
-print_wifiqual() {
-  wifiessid="$(iw dev wlp2s0 link | grep SSID | cut -d: -f2)"
-  wifiawk="$(echo $wifiessid | awk -F',' '{gsub(/"/, "", $1); print $1}')"
-  wificut="$(echo $wifiawk | cut -d' ' -f1)"
-  echo -ne "\uf1eb ${wificut} \ue621"
+print_wifiqual()
+{
+    wifiessid="$(iw dev wlp2s0 link | grep SSID | cut -d: -f2)"
+    wifiawk="$(echo $wifiessid | awk -F',' '{gsub(/"/, "", $1); print $1}')"
+    wificut="$(echo $wifiawk | cut -d' ' -f1)"
+    echo -ne "\uf1eb ${wificut}"
 }
 
-print_mem(){
-	memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}') / 1024))
-	echo -e "\uf85a $memfree \ue621"
+print_mem()
+{
+    memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}')/ 1000000))
+    # memfree=$(free -m | awk 'NR==2{printf "Memory Usage: %s/%sMB (%.2f%%)\n", $3,$2,$3*100/$2 }')
+    echo -e "\uf85a $memfree GB"
+}
+
+print_cpu()
+{
+    CPU=$(cut /proc/loadavg -c1-4)
+    echo -e "\uf0ae $CPU"
 }
 
 print_temp(){
-	test -f /sys/class/thermal/thermal_zone0/temp || return 0
-	echo -e "\ue20b $(head -c 2 /sys/class/thermal/thermal_zone0/temp) \ue621"
+    test -f /sys/class/thermal/thermal_zone0/temp || return 0
+    echo -e "\uf2db $(head -c 2 /sys/class/thermal/thermal_zone0/temp)°C"
 }
 
 print_volume(){
@@ -23,38 +32,86 @@ print_volume(){
     if [[ $mix == *\[off\]* ]]; then
       echo -e "\ufc5d ${vol} \ue621"
     elif [[ $mix == *\[on\]* ]]; then
-      echo -e "\uf028 ${vol} \ue621"
+      echo -e "\ufa7d ${vol} \ue621"
     fi
 }
 
 print_bat(){
-	hash acpi || return 0
-	onl="$(grep "on-line" <(acpi -V))"
-	charge="$(awk '{ sum += $1 } END { print sum }' /sys/class/power_supply/BAT*/capacity)"
-	if test -z "$onl"
-	then
-		# suspend when we close the lid
-		#systemctl --user stop inhibit-lid-sleep-on-battery.service
-		echo -e "\uf578 ${charge} \ue621"
-	else
-		# On mains! no need to suspend
-		#systemctl --user start inhibit-lid-sleep-on-battery.service
-		echo -e "\uf583 ${charge} \ue621"
-	fi
+    hash acpi || return 0
+    onl="$(grep "on-line" <(acpi -V))"
+    charge="$(awk '{ sum += $1 } END { print sum }' /sys/class/power_supply/BAT*/capacity)"
+    if test -z "$onl"
+    then
+        #not connected
+        if [ "$charge" -gt 50 ]
+        then
+            echo -e "${charge} % \uf240"
+        elif [ "$charge" -gt 20 ]
+        then
+            echo -e "${charge} % \uf243"
+        elif [ "$charge" -lt 20 ]
+        then
+            echo -e "${charge} % \uf244"
+        fi
+    else
+        # connected
+        echo -e "${charge} % "
+    fi
 }
 
 print_date(){
-	date "+%A %d/%m %T"
-	
+    printf "\uf133 %s" "$(date "+%a %d %b %Y  %T")"
 }
 
-show_arch_logo(){
-	echo -e "\uf303"
+print_vpn(){
+    # VPN=$(ifconfig tun0)
+    # if [[ "$VPN" != "" ]]; then
+    #     echo -e "VPN:   "
+    # fi
+connection=$(pgrep -a openvpn$ | head -n 1 | awk '{print $NF }' | cut -d '.' -f 1)
+
+if [ -n "$connection" ]; then
+    echo -e "VPN:   "
+else
+    echo ""
+fi
+}
+
+print_keyboard(){
+    status=$(status_keyboardDWM)
+    echo -e "$status"
+}
+
+print_weather() {
+    LOCATION=city
+        printf "\uf0c2 %s" "$(curl -s wttr.in/$LOCATION?format="%C+%t")  "
+
+}
+
+# stolen from polybar-scripts
+print_updates() {
+    if ! updates_arch=$(checkupdates 2> /dev/null | wc -l ); then
+        updates_arch=0
+    fi
+
+    if ! updates_aur=$(yay -Qum 2> /dev/null | wc -l); then
+        updates_aur=0
+    fi
+
+    updates=$(("$updates_arch" + "$updates_aur"))
+
+    if [ "$updates" -gt 0 ]; then
+        echo " $updates  "
+    else
+        echo ""
+    fi
 }
 
 while true
 do
-	xsetroot -name " $(print_wifiqual) $(print_mem) $(print_temp) $(print_volume) $(print_bat) $(print_date)"
-
-	sleep 1
+    (( 10#$(date +%s) % 5 )) || delayed5=$(print_vpn)
+    (( 10#$(date +%s) % 60 )) || delayed60=$(print_weather)
+    (( 10#$(date +%s) % 3600 )) || delayed60=$(print_updates)
+    xsetroot -name "$delayed5$delayed60$(print_temp)  $(print_mem)  $(print_wifiqual)  $(print_keyboard)  $(print_bat)  $(print_date) "
+    sleep 1
 done

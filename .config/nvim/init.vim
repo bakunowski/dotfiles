@@ -61,6 +61,9 @@ Plug 'chriskempson/base16-vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'lucasprag/simpleblack'
 
+"sudo
+Plug 'lambdalisue/suda.vim'
+
 call plug#end()
 
 filetype plugin indent on
@@ -75,8 +78,9 @@ set ruler
 
 set termguicolors
 
-colorscheme base16-chalk
+colorscheme base16-tomorrow-night
 hi Normal guibg=NONE
+highlight Comment cterm=italic gui=italic
 
 let g:rehash256 = 1
 set t_Co=256
@@ -171,3 +175,5 @@ noremap <C-c> <C-w>c
 nnoremap <silent> <esc> :noh<cr><esc>
 " leader R to replace word under *
 nnoremap <Leader>r :%s///g<Left><Left>
+
+let g:suda_smart_edit = 1

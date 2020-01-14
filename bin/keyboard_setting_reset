@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#keyboard tweaks
+
+setxkbmap -option ctrl:nocaps
+xcape -e 'Control_L=Escape'
+
+setxkbmap -layout "us,pl,gb" -option grp:shifts_toggle
+xset r rate 300 50
+
+#xmodmap current.config
+
+notify-send -t 5000 "Keyboard settings applied"

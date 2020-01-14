@@ -14,4 +14,4 @@ case $layout in
     pl) color=$green; icon=" "; name="pl" ;; # f11c fa-keyboard-o
 esac
 
-echo " <fc=$color><fn=1>$icon</fn> ${name}</fc>"
+echo "$icon${name}"

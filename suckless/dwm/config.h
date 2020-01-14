@@ -2,27 +2,41 @@
 #include "push.c"
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int snap      = 12;       /* snap pixel */
+static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 20;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
+static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "RobotoMono Nerd Font:pixelsize=18" };
-static const char dmenufont[]       = "RobotoMono Nerd Font:pixelsize=18";
+static const char *fonts[]          = { "SF Mono:size=8", "RobotoMono Nerd Font:size=8" };
+static const char dmenufont[]       = "RobotoMono Nerd Font:size=10";
 static const char col_gray1[]       = "#151515";
 static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#808080";
+static const char col_gray3[]       = "#f5f5f5";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#778899";
+static const char col_cyan[]        = "#b294bb";
+static const char col_mage[]        = "#4c4c4c";
+static const unsigned int baralpha = 0xd0;
+static const unsigned int borderalpha = OPAQUE;
+
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm]  = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]   = { col_gray4, col_cyan,  col_cyan },
-	//[SchemeTitle] = { col_gray3, col_gray1,  col_gray2 },
-	[SchemeTitle] = { col_gray4, col_cyan,  col_cyan }
+	[SchemeSel]   = { col_gray3, col_mage,  col_cyan },
+	[SchemeTitle] = { col_gray3, col_gray1,  col_mage }
+};
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, baralpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeTitle]  = { OPAQUE, baralpha, borderalpha },
 };
 
 /* tagging */
@@ -35,6 +49,8 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	{ "Pavucontrol", "pavucontrol", "Volume Control", 0, 1,          -1 },
+	{ "matplotlib", "matplotlib", "Figure 1", 0, 1,          -1 },
 };
 
 /* layout(s) */
@@ -70,16 +86,16 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+/* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL }; */
+static const char *dmenucmd[] = {"rofi", "-show", "drun", NULL};
 static const char *termcmd[]  = { "st", NULL };
 static const char *pavuctrlcmd[] = { "pavucontrol", NULL };
 static const char *slockcmd[] = { "slock", NULL };
-static const char *cmdbrightnessup[] = {"light", "-A", "5", NULL };
-static const char *cmdbrightnessdown[] = { "light", "-U", "5", NULL };
-static const char *cmdbrightnessdown2[] = { "light_xob.sh", NULL };
-static const char *cmdsoundup[] = { "volume", "5%+", NULL };
-static const char *cmdsounddown[] = { "volume", "5%-", NULL };
-static const char *cmdsoundtoggle[] = { "volume", "toggle", NULL };
+static const char *cmdbrightnessup[] = {"brightnessControl.sh", "up", NULL };
+static const char *cmdbrightnessdown[] = { "brightnessControl.sh", "down", NULL };
+static const char *cmdsoundup[] = { "volume", "up", NULL };
+static const char *cmdsounddown[] = { "volume", "down", NULL };
+static const char *cmdsoundtoggle[] = { "volume", "mute", NULL };
 static const char *cmdmicmute[] = { "pactl", "set-source-mute", "@DEFAULT_SOURCE@", "toggle", NULL };
 static const char *clipcmd[] = { "clipmenu", "-i", "-fn", dmenufont, NULL };
 static const char *display[] = { "arandr", NULL };
@@ -93,9 +109,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_k,      		pushup,         {0} },
 	{ MODKEY|ShiftMask,             XK_Return, 		spawn,          {.v = termcmd } },
 	{ 0,				XF86MonBrightnessDown,	spawn,	   	{.v = cmdbrightnessdown }},
-	{ 0,				XF86MonBrightnessDown,	spawn,	   	{.v = cmdbrightnessdown2 }},
 	{ 0,				XF86MonBrightnessUp,	spawn,	   	{.v = cmdbrightnessup }},
-	{ 0,				XF86MonBrightnessUp,	spawn,	   	{.v = cmdbrightnessdown2 }},
 	{ 0,				XF86AudioMute,		spawn,	   	{.v = cmdsoundtoggle}},
 	{ 0,				XF86AudioRaiseVolume,	spawn,	   	{.v = cmdsoundup}},
 	{ 0,				XF86AudioLowerVolume,	spawn,	   	{.v = cmdsounddown}},
@@ -114,6 +128,22 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      		incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      		setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      		setmfact,       {.f = +0.05} },
+	{ MODKEY|Mod1Mask,              XK_h,      incrgaps,       {.i = +1 } },
+	{ MODKEY|Mod1Mask,              XK_l,      incrgaps,       {.i = -1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_h,      incrogaps,      {.i = +1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_l,      incrogaps,      {.i = -1 } },
+	{ MODKEY|Mod1Mask|ControlMask,  XK_h,      incrigaps,      {.i = +1 } },
+	{ MODKEY|Mod1Mask|ControlMask,  XK_l,      incrigaps,      {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
+	{ MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } },
+	{ MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_y,      incrohgaps,     {.i = +1 } },
+	{ MODKEY|Mod1Mask,              XK_o,      incrohgaps,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
 	{ MODKEY,                       XK_Return, 		zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    		view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      		killclient,     {0} },
@@ -146,7 +176,6 @@ static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },

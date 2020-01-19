@@ -60,6 +60,8 @@ Plug 'owickstrom/vim-colors-paramount'
 Plug 'chriskempson/base16-vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'lucasprag/simpleblack'
+Plug 'atweiden/vim-colors-miro8'
+Plug 'joshdick/onedark.vim'
 
 "sudo
 Plug 'lambdalisue/suda.vim'
@@ -77,17 +79,12 @@ set colorcolumn=80
 set ruler
 
 set termguicolors
-
-colorscheme base16-tomorrow-night
+colorscheme onedark
 hi Normal guibg=NONE
 highlight Comment cterm=italic gui=italic
 
 let g:rehash256 = 1
 set t_Co=256
-
-" netrw config
-let g:netrw_banner=0
-let g:netrw_liststyle=3
 
 " better syntax for python
 let python_highlight_all = 1
@@ -98,12 +95,12 @@ let g:vimtex_view_method = 'zathura'
 set foldmethod=expr
 set foldexpr=vimtex#fold#level(v:lnum)
 set foldtext=vimtex#fold#text()
-hi Folded guibg=#151515
-hi texSection guifg=#e1a3ee
-hi texZoneListings guifg=#6fc2ef
-hi texBeginEndName guifg=#6fc2ef
-hi texSectionZone guifg=#6fc2ef
-hi texSubSectionZone guifg=#acc267
+" hi Folded guibg=#151515
+" hi texSection guifg=#e1a3ee
+" hi texZoneListings guifg=#6fc2ef
+" hi texBeginEndName guifg=#6fc2ef
+" hi texSectionZone guifg=#6fc2ef
+" hi texSubSectionZone guifg=#acc267
 autocmd FileType tex setlocal spell spelllang=en_gb
 
 " calendar
@@ -142,6 +139,7 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_python_checkers=['python', 'flake8']
 
 let g:deoplete#enable_at_startup = 1
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""

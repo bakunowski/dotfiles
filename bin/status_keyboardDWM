@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # copied from: https://github.com/altercation/dotfiles-tilingwm/blob/master/bin/wm/status-keyboard
 stdlayout=us  # standard layout takes "default" color

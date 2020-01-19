@@ -12,6 +12,7 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 #PS1="\[\033[00;32m\]\u\[\033[00;35m\] @ \W \[\033[01;34m\]$\[\033[00m\] "
 PS1="\[\033[00;32m\]\[\033[00;35m\] \W \[\033[01;34m\]$\[\033[00m\] "
 
+
 export PATH=$PATH:~/bin
 export PATH=$PATH:~/processing-3.5.3
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
@@ -31,5 +32,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
-export MOZ_ENABLE_WAYLAND=1

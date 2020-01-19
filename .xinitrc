@@ -1,5 +1,4 @@
-!/bin/sh -x
-
+export PATH=~/bin:$PATH
 #export QT_SCREEN_SCALE_FACTOR=0.5
 #export QT_AUTO_SCREEN_SCALE_FACTOR=1.5
 #export QT_SCALE_FACTOR=1.5
@@ -40,7 +39,6 @@ exec unclutter &
 #exec xmodmap current.config &
 
 #dwm + status
-~/bin/dwm_status &
-exec dwm
-# exec ~/bin/startdwm
-# exec startplasma-x11
+exec ~/bin/dwm_status &
+exec ~/bin/startdwm
+# exec xmonad

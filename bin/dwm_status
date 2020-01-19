@@ -1,29 +1,29 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 print_wifiqual()
 {
     wifiessid="$(iw dev wlp2s0 link | grep SSID | cut -d: -f2)"
     wifiawk="$(echo $wifiessid | awk -F',' '{gsub(/"/, "", $1); print $1}')"
     wificut="$(echo $wifiawk | cut -d' ' -f1)"
-    echo -ne "\uf1eb ${wificut}"
+    echo -ne "\uf1eb ${wificut} "
 }
 
 print_mem()
 {
-    memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}')/ 1000000))
+    memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}')/ 1024))
     # memfree=$(free -m | awk 'NR==2{printf "Memory Usage: %s/%sMB (%.2f%%)\n", $3,$2,$3*100/$2 }')
-    echo -e "\uf85a $memfree GB"
+    echo -e "\uf85a $memfree "
 }
 
 print_cpu()
 {
     CPU=$(cut /proc/loadavg -c1-4)
-    echo -e "\uf0ae $CPU"
+    echo -e "\uf0ae $CPU "
 }
 
 print_temp(){
     test -f /sys/class/thermal/thermal_zone0/temp || return 0
-    echo -e "\uf2db $(head -c 2 /sys/class/thermal/thermal_zone0/temp)°C"
+    echo -e "\uf2db $(head -c 2 /sys/class/thermal/thermal_zone0/temp)°C "
 }
 
 print_volume(){
@@ -45,22 +45,22 @@ print_bat(){
         #not connected
         if [ "$charge" -gt 50 ]
         then
-            echo -e "${charge} % \uf240"
+            echo -e " \uf240 ${charge} % "
         elif [ "$charge" -gt 20 ]
         then
-            echo -e "${charge} % \uf243"
+            echo -e "\uf243 ${charge} % "
         elif [ "$charge" -lt 20 ]
         then
-            echo -e "${charge} % \uf244"
+            echo -e "\uf244 ${charge} % "
         fi
     else
         # connected
-        echo -e "${charge} % "
+        echo -e " ${charge} % "
     fi
 }
 
 print_date(){
-    printf "\uf133 %s" "$(date "+%a %d %b %Y  %T")"
+    printf "\uf073 %s" "$(date "+%a %d %b %Y  %T")"
 }
 
 print_vpn(){
@@ -79,7 +79,7 @@ fi
 
 print_keyboard(){
     status=$(status_keyboardDWM)
-    echo -e "$status"
+    echo -e "$status "
 }
 
 print_weather() {
@@ -112,6 +112,6 @@ do
     (( 10#$(date +%s) % 5 )) || delayed5=$(print_vpn)
     (( 10#$(date +%s) % 60 )) || delayed60=$(print_weather)
     (( 10#$(date +%s) % 3600 )) || delayed60=$(print_updates)
-    xsetroot -name "$delayed5$delayed60$(print_temp)  $(print_mem)  $(print_wifiqual)  $(print_keyboard)  $(print_bat)  $(print_date) "
+    xsetroot -name "$delayed5$delayed60$(print_temp) $(print_mem) $(print_wifiqual) $(print_keyboard) $(print_bat) $(print_date) "
     sleep 1
 done

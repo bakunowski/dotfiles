@@ -5,7 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "SauceCodePro Nerd Font:size=10:antialias=true:autohint=true";
+/* static char *font = "SauceCodePro Nerd Font:size=9:antialias=true:autohint=true"; */
+static char *font = "SF Mono Powerline:size=10:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -57,6 +58,17 @@ static unsigned int blinktimeout = 800;
 static unsigned int cursorthickness = 2;
 
 /*
+ * 1: render most of the lines/blocks characters without using the font for
+ *    perfect alignment between cells (U2500 - U259F except dashes/diagonals).
+ *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
+ * 0: disable (render all U25XX glyphs normally from the font).
+ */
+const int boxdraw = 1;
+const int boxdraw_bold = 1;
+
+/* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
+const int boxdraw_braille = 1;
+/*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
  * it
  */
@@ -107,12 +119,31 @@ static const char *colorname[] = {
   "#b294bb", /* magenta */
   "#8abeb7", /* cyan    */
   "#ffffff", /* white   */
-
-  /* special colors */
-  [256] = "#1d1f21", /* background */
-  [257] = "#c5c8c6", /* foreground */
 };
 
+/* /1* onedark  *1/ */
+/* static const char *colorname[] = { */
+
+/*   /1* 8 normal colors *1/ */
+/*   "#282c34", /1* black   *1/ */
+/*   "#be5046", /1* red     *1/ */
+/*   "#98c379", /1* green   *1/ */
+/*   "#d19a66", /1* yellow  *1/ */
+/*   "#61afef", /1* blue    *1/ */
+/*   "#c678dd", /1* magenta *1/ */
+/*   "#56b6c2", /1* cyan    *1/ */
+/*   "#abb2bf", /1* white   *1/ */
+
+/*   /1* 8 bright colors *1/ */
+/*   "#4b5263", /1* black   *1/ */
+/*   "#e06c75", /1* red     *1/ */
+/*   "#98c379", /1* green   *1/ */
+/*   "#e5c07b", /1* yellow  *1/ */
+/*   "#61afef", /1* blue    *1/ */
+/*   "#c678dd", /1* magenta *1/ */
+/*   "#56b6c2", /1* cyan    *1/ */
+/*   "#5c6370", /1* white   *1/ */
+/* }; */
 /*---------------------Chalk---------------------------*/
 /* Terminal colors (16 first used in escape sequence) */
 /* static const char *colorname[] = { */
@@ -136,6 +167,7 @@ static const char *colorname[] = {
 /*         "#12cfc0", /1* cyan    *1/ */
 /*         "#f5f5f5", /1* white   *1/ */
 /* }; */
+
 /* /1* Terminal colors (16 first used in escape sequence) *1/ */
 /* static const char *colorname[] = { */
 /* 	/1* 8 normal colors *1/ */

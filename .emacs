@@ -95,14 +95,20 @@ There are two things you can do about this warning:
  '(custom-safe-themes
    (quote
     ("e1498b2416922aa561076edc5c9b0ad7b34d8ff849f335c13364c8f4276904f0" "b3bcf1b12ef2a7606c7697d71b934ca0bdd495d52f901e73ce008c4c9825a3aa" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299" default)))
+ '(display-line-numbers (quote relative))
  '(fci-rule-color "#373b41")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(frame-background-mode (quote dark))
+ '(global-display-line-numbers-mode t)
+ '(org-format-latex-options
+   (quote
+    (:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+		 ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-emphasis-markers t)
  '(org-hide-leading-stars t)
  '(package-selected-packages
    (quote
-    (molokai-theme base16-theme evil-collection highlight-parentheses ivy telephone-line color-theme-sanityinc-tomorrow)))
+    (which-key molokai-theme base16-theme evil-collection highlight-parentheses ivy telephone-line color-theme-sanityinc-tomorrow)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -132,6 +138,8 @@ There are two things you can do about this warning:
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(line-number ((t (:background "#151515" :foreground "#505050"))))
+ '(line-number-current-line ((t (:background "olive" :foreground "#151515" :inverse-video t))))
  '(org-checkbox-statistics-todo ((t (:background "#151515"))))
  '(org-done ((t (:background "#151515" :foreground "#acc267"))))
  '(org-level-2 ((t (:inherit outline-8))))
@@ -150,3 +158,7 @@ There are two things you can do about this warning:
 ;; change standard evil keybindings
 (define-key evil-normal-state-map (kbd "L") 'org-shiftright)
 (define-key evil-normal-state-map (kbd "H") 'org-shiftleft)
+(setq org-latex-create-formula-image-program 'dvipng)
+
+;; open todo list on start up
+(setq initial-buffer-choice "~/Documents/org/todo.org")

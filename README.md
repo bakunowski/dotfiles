@@ -1,3 +1,4 @@
+[screen](screenshot_dwm.png?raw=true)
 # Software:
 - terminal emulator: st
 - font: SFMono

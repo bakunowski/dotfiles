@@ -41,4 +41,5 @@ exec unclutter &
 #dwm + status
 exec ~/bin/dwm_status &
 exec ~/bin/startdwm
+# exec evilwm
 # exec xmonad

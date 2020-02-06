@@ -45,22 +45,23 @@ print_bat(){
         #not connected
         if [ "$charge" -gt 50 ]
         then
-            echo -e " \uf240 ${charge} % "
+            echo -e "${charge} % \uf240 "
         elif [ "$charge" -gt 20 ]
         then
-            echo -e "\uf243 ${charge} % "
+            echo -e "${charge} % \uf243  "
         elif [ "$charge" -lt 20 ]
         then
-            echo -e "\uf244 ${charge} % "
+            echo -e "${charge} % \uf244 "
         fi
     else
         # connected
-        echo -e " ${charge} % "
+        echo -e "${charge}% "
     fi
 }
 
 print_date(){
-    printf "\uf073 %s" "$(date "+%a %d %b %Y  %T")"
+    # printf "\uf073 %s" "$(date "+%a %d %b %T")"
+    printf "$(date "+%a %d %b %T")"
 }
 
 print_vpn(){

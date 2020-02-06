@@ -82,14 +82,12 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
-/* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 /* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL }; */
 static const char *dmenucmd[] = {"rofi", "-show", "drun", NULL};
 static const char *termcmd[]  = { "st", NULL };
+/* static const char *termcmd[]  = { "alacritty", NULL }; */
 static const char *pavuctrlcmd[] = { "pavucontrol", NULL };
 static const char *slockcmd[] = { "slock", NULL };
 static const char *cmdbrightnessup[] = {"brightnessControl", "up", NULL };
@@ -101,7 +99,8 @@ static const char *cmdmicmute[] = { "pactl", "set-source-mute", "@DEFAULT_SOURCE
 static const char *clipcmd[] = { "clipmenu", "-i", "-fn", dmenufont, NULL };
 static const char *display[] = { "arandr", NULL };
 static const char *wlan[] = { "networkmanager_dmenu", NULL };
-
+static const char *ranger[] = { "st", "ranger", NULL };
+static const char *maim[] = { "maim", "-s", "~/Pictures/$(date +%s).png", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        		function        argument */
@@ -120,8 +119,8 @@ static Key keys[] = {
 	{ MODKEY,			XK_a,	   		spawn,	   	{.v = pavuctrlcmd}},
 	{ MODKEY,			XK_F12,	   		spawn, 	   	{.v = slockcmd}},
 	{ MODKEY,			XK_Insert, 		spawn,	   	{.v = clipcmd}},
-	{ 0,				XK_Print, 		spawn,	   	SHCMD("maim -s ~/Pictures/$(date +%s).png")},
-	{ MODKEY,			XK_Home,		spawn,		SHCMD("st -title ranger")},
+	{ 0,				XK_Print, 		spawn,	   	{.v = maim}},
+	{ MODKEY,			XK_Home,		spawn,		{.v = ranger}},
 	{ MODKEY,                       XK_b,      		togglebar,      {0} },
 	{ MODKEY,                       XK_j,      		focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      		focusstack,     {.i = -1 } },
@@ -169,8 +168,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      		7)
 	TAGKEYS(                        XK_9,                      		8)
 	{ MODKEY|ShiftMask,             XK_q,      		quit,           {0} },
-	{ MODKEY|ShiftMask,             XK_l,      		shiftview,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_h,      		shiftview,      {.i = -1 } },
+	{ MODKEY|ControlMask,             XK_l,      		shiftview,      {.i = +1 } },
+	{ MODKEY|ControlMask,             XK_h,      		shiftview,      {.i = -1 } },
 };
 
 /* button definitions */

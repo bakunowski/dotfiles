@@ -140,13 +140,6 @@ let g:syntastic_python_checkers=['python', 'flake8']
 
 let g:deoplete#enable_at_startup = 1
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <C-n> :NERDTreeToggle<CR>
-let NERDTreeMapOpenSplit='s'
-let NERDTreeMapOpenVSplit='v'
-
 " orgmode
 nmap <S-l> <Plug>OrgTodoForward
 nmap <S-h> <Plug>OrgTodoBackward
@@ -154,6 +147,15 @@ nmap <S-k> <Plug>OrgMoveSubtreeUpward
 nmap <S-j> <Plug>OrgMoveSubtreeDownward
 let g:org_aggressive_conceal = 1
 let g:org_indent = 1
+let g:org_heading_shade_leading_stars = 0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeMapOpenSplit='s'
+let NERDTreeMapOpenVSplit='v'
+
 
 " Tabs
 nnoremap <silent> <C-t> :tabnew<CR>

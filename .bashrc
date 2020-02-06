@@ -13,6 +13,7 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 PS1="\[\033[00;32m\]\[\033[00;35m\] \W \[\033[01;34m\]$\[\033[00m\] "
 
 
+export EDITOR='nvim'
 export PATH=$PATH:~/bin
 export PATH=$PATH:~/processing-3.5.3
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'

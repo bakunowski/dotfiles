@@ -33,7 +33,7 @@ exec clipmenud &
 exec dunst &
 exec udiskie --tray --no-notify &
 exec mons -a & disown
-exec picom -CGb &
+# exec picom -CGb &
 exec redshift &
 exec unclutter &
 #exec xmodmap current.config &
@@ -43,3 +43,4 @@ exec ~/bin/dwm_status &
 exec ~/bin/startdwm
 # exec evilwm
 # exec xmonad
+# exec i3

@@ -15,7 +15,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "SF Mono:size=10", "RobotoMono Nerd Font:size=10" };
+static const char *fonts[]          = { "SF Mono:size=9", "RobotoMono Nerd Font:size=8" };
 static const char dmenufont[]       = "RobotoMono Nerd Font:size=10";
 static const char col_gray1[]       = "#1d1f21";
 static const char col_gray2[]       = "#444444";
@@ -76,6 +76,7 @@ static const Layout layouts[] = {
 #define XF86Display		0x1008FF59
 #define XF86WLAN		0x1008FF95
 #define MODKEY Mod4Mask
+#define MODKEY2 Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -102,8 +103,53 @@ static const char *wlan[] = { "networkmanager_dmenu", NULL };
 static const char *ranger[] = { "st", "ranger", NULL };
 static const char *maim[] = { "maim", "-s", "~/Pictures/$(date +%s).png", NULL };
 
+/* this implements <alt-Tab> for dwm, put it in config.h  */
+
+static int alt_tab_count = 0;
+
+/* focus and restack a client */
+static void focus_restack(Client *c)
+   { if (c) { focus(c); restack(selmon); } }
+
+static void start_alt_tab(const Arg *arg)
+   { alt_tab_count = 0; }
+
+static Client *next_visible(Client *c)
+{
+   for(/* DO_NOTHING */; c && !ISVISIBLE(c); c=c->snext);
+   return c;
+}
+
+static int count_visible(void)
+{
+   int count = 0;
+   for (Client *c=next_visible(selmon->stack); c; c = next_visible(c->snext))
+      count += 1;
+   return count;
+}
+
+static Client *get_nth_client(int n)
+{
+   Client *c;
+   for (c=next_visible(selmon->stack); c && n--; c = next_visible(c->snext));
+   return c;
+}
+
+static void alt_tab(const Arg *arg)
+{
+   // put all of the windows back in their original focus/stack position */
+   for (int i=0; i<alt_tab_count; i+=1)
+      focus_restack(get_nth_client(alt_tab_count));
+
+   // focus and restack the nth window */
+   alt_tab_count = (alt_tab_count + 1) % count_visible();
+   focus_restack(get_nth_client(alt_tab_count));
+}
+
 static Key keys[] = {
 	/* modifier                     key        		function        argument */
+        { 0,       XK_Alt_L,   start_alt_tab,  {0} },
+        { MODKEY2,  XK_Tab,     alt_tab,        {0} },
 	{ MODKEY,                       XK_p,      		spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_j,      		pushdown,       {0} },
 	{ MODKEY|ShiftMask,             XK_k,      		pushup,         {0} },
@@ -126,8 +172,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      		focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      		incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      		incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      		setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      		setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,                       XK_h,      		setmfact,       {.f = -0.05} },
+	{ MODKEY|ShiftMask,                       XK_l,      		setmfact,       {.f = +0.05} },
 	{ MODKEY|Mod1Mask,              XK_h,      incrgaps,       {.i = +1 } },
 	{ MODKEY|Mod1Mask,              XK_l,      incrgaps,       {.i = -1 } },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_h,      incrogaps,      {.i = +1 } },
@@ -145,7 +191,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
 	{ MODKEY,                       XK_Return, 		zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    		view,           {0} },
+	/* { MODKEY,                       XK_Tab,    		view,           {0} }, */
 	{ MODKEY|ShiftMask,             XK_c,      		killclient,     {0} },
 	{ MODKEY,                       XK_t,      		setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      		setlayout,      {.v = &layouts[1]} },
@@ -168,8 +214,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      		7)
 	TAGKEYS(                        XK_9,                      		8)
 	{ MODKEY|ShiftMask,             XK_q,      		quit,           {0} },
-	{ MODKEY|ControlMask,             XK_l,      		shiftview,      {.i = +1 } },
-	{ MODKEY|ControlMask,             XK_h,      		shiftview,      {.i = -1 } },
+	{ MODKEY,                       XK_Tab,      		shiftview,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_Tab,      		shiftview,      {.i = -1 } },
 };
 
 /* button definitions */

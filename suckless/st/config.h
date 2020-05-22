@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-/* static char *font = "SauceCodePro Nerd Font:size=9:antialias=true:autohint=true"; */
-static char *font = "SF Mono Powerline:size=10:antialias=true:autohint=true";
+
+static char *font = "Terminus (TTF):pixelsize=32:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -58,17 +58,6 @@ static unsigned int blinktimeout = 800;
 static unsigned int cursorthickness = 2;
 
 /*
- * 1: render most of the lines/blocks characters without using the font for
- *    perfect alignment between cells (U2500 - U259F except dashes/diagonals).
- *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
- * 0: disable (render all U25XX glyphs normally from the font).
- */
-const int boxdraw = 1;
-const int boxdraw_bold = 1;
-
-/* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
-const int boxdraw_braille = 1;
-/*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
  * it
  */
@@ -94,108 +83,61 @@ char *termname = "st-256color";
  */
 unsigned int tabspaces = 8;
 
-/* bg opacity */
-float alpha = 0.95;
-
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
+	/* 8 normal colors */
+	"black",
+	"red3",
+	"green3",
+	"yellow3",
+	"blue2",
+	"magenta3",
+	"cyan3",
+	"gray90",
 
-  /* 8 normal colors */
-  "#1d1f21", /* black   */
-  "#cc6666", /* red     */
-  "#b5bd68", /* green   */
-  "#f0c674", /* yellow  */
-  "#81a2be", /* blue    */
-  "#b294bb", /* magenta */
-  "#8abeb7", /* cyan    */
-  "#c5c8c6", /* white   */
+	/* 8 bright colors */
+	"gray50",
+	"red",
+	"green",
+	"yellow",
+	"#5c5cff",
+	"magenta",
+	"cyan",
+	"white",
 
-  /* 8 bright colors */
-  "#969896", /* black   */
-  "#cc6666", /* red     */
-  "#b5bd68", /* green   */
-  "#f0c674", /* yellow  */
-  "#81a2be", /* blue    */
-  "#b294bb", /* magenta */
-  "#8abeb7", /* cyan    */
-  "#ffffff", /* white   */
+	[255] = 0,
+
+	/* more colors can be added after 255 to use with DefaultXX */
+	"#cccccc",
+	"#555555",
 };
-
-/* /1* onedark  *1/ */
-/* static const char *colorname[] = { */
-
-/*   /1* 8 normal colors *1/ */
-/*   "#282c34", /1* black   *1/ */
-/*   "#be5046", /1* red     *1/ */
-/*   "#98c379", /1* green   *1/ */
-/*   "#d19a66", /1* yellow  *1/ */
-/*   "#61afef", /1* blue    *1/ */
-/*   "#c678dd", /1* magenta *1/ */
-/*   "#56b6c2", /1* cyan    *1/ */
-/*   "#abb2bf", /1* white   *1/ */
-
-/*   /1* 8 bright colors *1/ */
-/*   "#4b5263", /1* black   *1/ */
-/*   "#e06c75", /1* red     *1/ */
-/*   "#98c379", /1* green   *1/ */
-/*   "#e5c07b", /1* yellow  *1/ */
-/*   "#61afef", /1* blue    *1/ */
-/*   "#c678dd", /1* magenta *1/ */
-/*   "#56b6c2", /1* cyan    *1/ */
-/*   "#5c6370", /1* white   *1/ */
-/* }; */
-/*---------------------Chalk---------------------------*/
-/* Terminal colors (16 first used in escape sequence) */
-/* static const char *colorname[] = { */
-/*         /1* 8 normal colors *1/ */
-/*         "#151515", /1* black   *1/ */
-/*         "#fb9fb1", /1* red     *1/ */
-/*         "#acc267", /1* green   *1/ */
-/*         "#ddb26f", /1* yellow  *1/ */
-/*         "#6fc2ef", /1* blue    *1/ */
-/*         "#e1a3ee", /1* magenta *1/ */
-/*         "#12cfc0", /1* cyan    *1/ */
-/*         "#d0d0d0", /1* white   *1/ */
-
-/*         /1* 8 bright colors *1/ */
-/*         "#505050", /1* black   *1/ */
-/*         "#fb9fb1", /1* red     *1/ */
-/*         "#acc267", /1* green   *1/ */
-/*         "#ddb26f", /1* yellow  *1/ */
-/*         "#6fc2ef", /1* blue    *1/ */
-/*         "#e1a3ee", /1* magenta *1/ */
-/*         "#12cfc0", /1* cyan    *1/ */
-/*         "#f5f5f5", /1* white   *1/ */
-/* }; */
-
 /* /1* Terminal colors (16 first used in escape sequence) *1/ */
 /* static const char *colorname[] = { */
 /* 	/1* 8 normal colors *1/ */
-/* 	"black", */
-/* 	"red3", */
-/* 	"green3", */
-/* 	"yellow3", */
-/* 	"blue2", */
-/* 	"magenta3", */
-/* 	"cyan3", */
-/* 	"gray90", */
+/* 	"#121317", */
+/* 	"#E06c75", */
+/* 	"#98c379", */
+/* 	"#E5C07B", */
+/* 	"#61AFEF", */
+/* 	"#C678DD", */
+/* 	"#56B6C2", */
+/* 	"#ABB2BF", */
 
 /* 	/1* 8 bright colors *1/ */
-/* 	"gray50", */
-/* 	"red", */
-/* 	"green", */
-/* 	"yellow", */
-/* 	"#5c5cff", */
-/* 	"magenta", */
-/* 	"cyan", */
-/* 	"white", */
+/* 	"#454c59", */
+/* 	"#FF7A85", */
+/* 	"#B5E890", */
+/* 	"#FFD86A", */
+/* 	"#69BBFF", */
+/* 	"#E48AFF", */
+/* 	"#66D9E8", */
+/* 	"#CFD7E6", */
 
 /* 	[255] = 0, */
 
 /* 	/1* more colors can be added after 255 to use with DefaultXX *1/ */
 /* 	"#cccccc", */
 /* 	"#555555", */
-/* 	"black", */
 /* }; */
 
 
@@ -205,8 +147,8 @@ static const char *colorname[] = {
  */
 unsigned int defaultfg = 7;
 unsigned int defaultbg = 0;
-static unsigned int defaultcs = 7;
-static unsigned int defaultrcs = 15;
+static unsigned int defaultcs = 256;
+static unsigned int defaultrcs = 257;
 
 /*
  * Default shape of cursor

@@ -4,7 +4,7 @@
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
-if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-		exec startx
-#		exec sway -d 2> ~/sway.log
+# If running from tty1 start sway
+if [ "$(tty)" = "/dev/tty1" ]; then
+    exec sway
 fi

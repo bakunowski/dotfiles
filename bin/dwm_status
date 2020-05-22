@@ -5,14 +5,14 @@ print_wifiqual()
     wifiessid="$(iw dev wlp2s0 link | grep SSID | cut -d: -f2)"
     wifiawk="$(echo $wifiessid | awk -F',' '{gsub(/"/, "", $1); print $1}')"
     wificut="$(echo $wifiawk | cut -d' ' -f1)"
-    echo -ne "\uf1eb ${wificut} "
+    echo -ne "[WIFI: ${wificut}]"
 }
 
 print_mem()
 {
     memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}')/ 1024))
     # memfree=$(free -m | awk 'NR==2{printf "Memory Usage: %s/%sMB (%.2f%%)\n", $3,$2,$3*100/$2 }')
-    echo -e "\uf85a $memfree "
+    echo -e "MEM: $memfree "
 }
 
 print_cpu()
@@ -21,9 +21,15 @@ print_cpu()
     echo -e "\uf0ae $CPU "
 }
 
+print_fan()
+{
+    fanRPM=$(sensors | grep fan | cut -d: -f2 | tr -s ' ')
+    echo -e "[FAN:${fanRPM}]"
+}
+
 print_temp(){
     test -f /sys/class/thermal/thermal_zone0/temp || return 0
-    echo -e "\uf2db $(head -c 2 /sys/class/thermal/thermal_zone0/temp)°C "
+    echo -e "[TEMP: $(head -c 2 /sys/class/thermal/thermal_zone0/temp)°C]"
 }
 
 print_volume(){
@@ -45,23 +51,23 @@ print_bat(){
         #not connected
         if [ "$charge" -gt 50 ]
         then
-            echo -e "${charge} % \uf240 "
+            echo -e "[BAT: ${charge} %]"
         elif [ "$charge" -gt 20 ]
         then
-            echo -e "${charge} % \uf243  "
+            echo -e "[BAT: ${charge} %]"
         elif [ "$charge" -lt 20 ]
         then
-            echo -e "${charge} % \uf244 "
+            echo -e "[BAT: ${charge} %]"
         fi
     else
         # connected
-        echo -e "${charge}% "
+        echo -e "[BAT: ${charge}%]"
     fi
 }
 
 print_date(){
     # printf "\uf073 %s" "$(date "+%a %d %b %T")"
-    printf "$(date "+%a %d %b %T")"
+    printf "[$(date "+%a %d %b %T")]"
 }
 
 print_vpn(){
@@ -110,9 +116,9 @@ print_updates() {
 
 while true
 do
-    (( 10#$(date +%s) % 5 )) || delayed5=$(print_vpn)
-    (( 10#$(date +%s) % 60 )) || delayed60=$(print_weather)
-    (( 10#$(date +%s) % 3600 )) || delayed60=$(print_updates)
-    xsetroot -name "$delayed5$delayed60$(print_temp) $(print_mem) $(print_wifiqual) $(print_keyboard) $(print_bat) $(print_date) "
+    # (( 10#$(date +%s) % 5 )) || delayed5=$(print_vpn)
+    # (( 10#$(date +%s) % 60 )) || delayed60=$(print_weather)
+    # (( 10#$(date +%s) % 3600 )) || delayed60=$(print_updates)
+    xsetroot -name "$delayed5$delayed60 $(print_fan) $(print_temp) $(print_wifiqual) $(print_bat) $(print_date) "
     sleep 1
 done

@@ -1,4 +1,4 @@
-<div align="center"><img src="https://raw.githubusercontent.com/bakunowski/dotfiles/master/screenshot_dwm.png" width="768"/></div>
+> <div align="center"><img src="https://raw.githubusercontent.com/bakunowski/dotfiles/master/screenshot_dwm.png" width="768"/></div>
 
 # Software:
 - terminal emulator: st

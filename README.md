@@ -1,13 +1,7 @@
-> <div align="center"><img src="https://raw.githubusercontent.com/bakunowski/dotfiles/master/screenshot_dwm.png" width="768"/></div>
+> <div align="center"><img src="https://raw.githubusercontent.com/bakunowski/dotfiles/master/1590164191_grim.png" width="768"/></div>
 
 # Software:
-- terminal emulator: st
-- font: SFMono
+- terminal emulator: alacritty
+- font: SF Mono Powerline
 - editor: nvim
-- window manager: dwm
-
-## Suckless patches:
-- dwm patches: alpha, activetagindicatorbar, noborder, notitle, pertag, push, vanitygaps
-- st patches: alpha, bold is not bright, boxdraw, scrollback
-
-heavily inspired by @smly
+- window manager: sway

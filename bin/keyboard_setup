@@ -1,0 +1,9 @@
+#!/bin/bash
+
+setxkbmap -option ctrl:nocaps
+xcape -e 'Control_L=Escape'
+
+setxkbmap -layout "us,pl,gb" -option grp:shifts_toggle
+xset r rate 300 50
+
+xinput set-prop 'Primax Kensington Eagle Trackball' 'libinput Natural Scrolling Enabled' 1

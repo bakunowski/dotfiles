@@ -1,4 +1,0 @@
-#! /bin/bash
-
-exec xrandr --output eDP-1 --mode 2560x1440 --scale 1.5x1.5 \
-            --output DP-1 --mode 3840x2160 --scale 1.5x1.5 &

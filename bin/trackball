@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-exec xinput -set-prop 'Primax Kensington Eagle Trackball' 'libinput Natural Scrolling Enabled' 1

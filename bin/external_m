@@ -1,6 +1,0 @@
-#! /bin/bash
-
-sed -i 's/144/192/' ~/.Xresources
-exec xrdb -merge ~/.Xresources &
-exec mons -s
-

@@ -3,6 +3,34 @@
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
 # Read `man 5 sway` for a complete reference.
+include colorscheme
+
+
+# font SF Mono Powerline 10
+font Source Code Pro 12
+# font Terminus (TTF) 16
+
+# 5f676a
+### Colors
+set $cl_high #943114
+set $cl_indi #d9d8d8
+set $cl_fore #d9d8d8
+set $cl_urge #ee2e24
+set $cl_wind #943114
+set $cl_back #000000
+
+# set $cl_high #b16286    # border color
+# set $cl_indi #d9d8d8
+# set $cl_fore #d9d8d8
+# set $cl_urge #ee2e24
+# set $cl_wind #b16286
+# set $cl_back #000000
+
+# #                       border   bg       text     indi     childborder
+client.focused          $cl_wind $cl_wind $cl_fore $cl_indi
+client.focused_inactive $cl_back $cl_back $cl_fore $cl_back $cl_back
+client.unfocused        $cl_back $cl_back $cl_fore $cl_back $cl_back
+client.urgent           $cl_urge $cl_urge $cl_fore $cl_urge $cl_urge
 
 ### Variables
 #
@@ -15,24 +43,27 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term alacritty
+# set $term st
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu -i -b -fn 'SF Mono Powerline-19' | xargs swaymsg exec --
+set $menu dmenu_path | dmenu -fn 'Source Code Pro-13' -nb "#000000" -sb "#943114" | xargs swaymsg exec --
+# set $menu dmenu_path | dmenu -fn 'Terminus (TTF)-24' | xargs swaymsg exec --
 
 # Xwayland blur fix
-xwayland force scale 2
-exec xsettingsd
+# xwayland force scale 2
+# exec xsettingsd
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * bg ~/Pictures/Sherwin2.png center #000000
-#
+output * bg ~/Pictures/Wallpapers/Dim-Gray-Solid-Color-Background-Wallpaper-5120x2880.png fit
+# 
 # Example configuration:
 #
-    output eDP-1 scale 1.7777777777777777
+# output eDP-1 scale 1.3333333333333333
+    output eDP-1 scale 2
     output DP-1 scale 2
 #
 #
@@ -143,25 +174,25 @@ output * bg ~/Pictures/Sherwin2.png center #000000
 # Workspaces:
 #
     # Switch to workspace
-    bindsym $mod+1 workspace 1 "1 "
-    bindsym $mod+2 workspace 2 "2 "
-    bindsym $mod+3 workspace 3 "3 "
-    bindsym $mod+4 workspace 4 "4 "
-    bindsym $mod+5 workspace 5 "5 "
-    bindsym $mod+6 workspace 6 "6 "
-    bindsym $mod+7 workspace 7 "7 "
-    bindsym $mod+8 workspace 8 "8 "
-    bindsym $mod+9 workspace 9 "9 "
+    bindsym $mod+1 workspace 1
+    bindsym $mod+2 workspace 2
+    bindsym $mod+3 workspace 3
+    bindsym $mod+4 workspace 4
+    bindsym $mod+5 workspace 5
+    bindsym $mod+6 workspace 6
+    bindsym $mod+7 workspace 7
+    bindsym $mod+8 workspace 8
+    bindsym $mod+9 workspace 9
     # Move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace 1 "1 "
-    bindsym $mod+Shift+2 move container to workspace 2 "2 "
-    bindsym $mod+Shift+3 move container to workspace 3 "3 "
-    bindsym $mod+Shift+4 move container to workspace 4 "4 "
-    bindsym $mod+Shift+5 move container to workspace 5 "5 "
-    bindsym $mod+Shift+6 move container to workspace 6 "6 "
-    bindsym $mod+Shift+7 move container to workspace 7 "7 "
-    bindsym $mod+Shift+8 move container to workspace 8 "8 "
-    bindsym $mod+Shift+9 move container to workspace 9 "9 "
+    bindsym $mod+Shift+1 move container to workspace 1
+    bindsym $mod+Shift+2 move container to workspace 2
+    bindsym $mod+Shift+3 move container to workspace 3
+    bindsym $mod+Shift+4 move container to workspace 4
+    bindsym $mod+Shift+5 move container to workspace 5
+    bindsym $mod+Shift+6 move container to workspace 6
+    bindsym $mod+Shift+7 move container to workspace 7
+    bindsym $mod+Shift+8 move container to workspace 8
+    bindsym $mod+Shift+9 move container to workspace 9
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 #
@@ -231,29 +262,37 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    position bottom
-    status_padding 4
-    strip_workspace_numbers yes
-    # separator_symbol K
-    font SF Mono Powerline 10
+    position top
+    # status_padding 4
+    # strip_workspace_numbers yes
 
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    # status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
     status_command while ~/bin/swaybar.sh; do sleep 1; done
 
-    colors {
-        statusline #eeeeee
-        background #000000
-        inactive_workspace #222222 #000000 #5c5c5c
-        focused_workspace #e1140a #e1140a #eeeeee
-    }
+     colors {
+         # statusline #ebdbb2
+         # inactive_workspace #1d2021 #1d2021 #5c5c5c
+         # focused_workspace #d65d0e #d65d0e #ebdbb2
+
+         statusline $cl_fore
+         background $cl_back
+         inactive_workspace $cl_back $cl_back $cl_fore
+         focused_workspace $cl_high $cl_high $cl_fore
+     }
+
+    # colors {
+    #     statusline #ffffff
+    #     background #323232
+    #     inactive_workspace #32323200 #32323200 #5c5c5c
+    # }
+
 }
 
 #-------------------Additional options------------------------------
 #
 default_border pixel 1
 hide_edge_borders smart
+gaps inner 10
+smart_gaps on
 
 # Special keys
 bindsym XF86MonBrightnessDown   exec sudo ~/bin/brightness down
@@ -273,7 +312,24 @@ exec mako
 # gestures
 exec libinput-gestures-setup start
 
+exec autotiling
+
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+exec /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
+
 # alttab
 bindsym $mod+tab workspace back_and_forth
+bindsym Mod1+tab workspace next_on_output
+bindsym Mod1+Shift+tab workspace prev_on_output
+bindsym Mod1+grave workspace prev_on_output
+
+# screenshot
+bindsym Print exec grim -g "$(slurp)"
+
+for_window [class="Matplotlib"] floating enable
+
+bindsym $mod+Insert exec pavucontrol
+for_window [app_id="pavucontrol"] floating enable
 
 include /etc/sway/config.d/*

@@ -5,7 +5,7 @@ print_wifiqual()
     wifiessid="$(iw dev wlp2s0 link | grep SSID | cut -d: -f2)"
     wifiawk="$(echo $wifiessid | awk -F',' '{gsub(/"/, "", $1); print $1}')"
     wificut="$(echo $wifiawk | cut -d' ' -f1)"
-    echo -ne "[WIFI: ${wificut}]"
+    echo -ne "WIFI: ${wificut}"
 }
 
 print_mem()
@@ -24,12 +24,12 @@ print_cpu()
 print_fan()
 {
     fanRPM=$(sensors | grep fan | cut -d: -f2 | tr -s ' ')
-    echo -e "[FAN:${fanRPM}]"
+    echo -e "FAN:${fanRPM}"
 }
 
 print_temp(){
     test -f /sys/class/thermal/thermal_zone0/temp || return 0
-    echo -e "[TEMP: $(head -c 2 /sys/class/thermal/thermal_zone0/temp)°C]"
+    echo -e "TEMP: $(head -c 2 /sys/class/thermal/thermal_zone0/temp)°C"
 }
 
 print_volume(){
@@ -51,23 +51,23 @@ print_bat(){
         #not connected
         if [ "$charge" -gt 50 ]
         then
-            echo -e "[BAT: ${charge} %]"
+            echo -e "BAT: ${charge} %"
         elif [ "$charge" -gt 20 ]
         then
-            echo -e "[BAT: ${charge} %]"
+            echo -e "BAT: ${charge} %"
         elif [ "$charge" -lt 20 ]
         then
-            echo -e "[BAT: ${charge} %]"
+            echo -e "BAT: ${charge} %"
         fi
     else
         # connected
-        echo -e "[BAT: ${charge}%]"
+        echo -e "BAT: ${charge}%"
     fi
 }
 
 print_date(){
     # printf "\uf073 %s" "$(date "+%a %d %b %T")"
-    printf "[$(date "+%a %d %b %T")]"
+    printf "$(date "+%a %d %b %T")"
 }
 
 print_vpn(){

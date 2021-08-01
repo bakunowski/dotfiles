@@ -6,7 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 
-static char *font = "Terminus (TTF):pixelsize=32:antialias=true:autohint=true";
+static char *font = "xos4 Terminus:size=16:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -111,35 +111,6 @@ static const char *colorname[] = {
 	"#cccccc",
 	"#555555",
 };
-/* /1* Terminal colors (16 first used in escape sequence) *1/ */
-/* static const char *colorname[] = { */
-/* 	/1* 8 normal colors *1/ */
-/* 	"#121317", */
-/* 	"#E06c75", */
-/* 	"#98c379", */
-/* 	"#E5C07B", */
-/* 	"#61AFEF", */
-/* 	"#C678DD", */
-/* 	"#56B6C2", */
-/* 	"#ABB2BF", */
-
-/* 	/1* 8 bright colors *1/ */
-/* 	"#454c59", */
-/* 	"#FF7A85", */
-/* 	"#B5E890", */
-/* 	"#FFD86A", */
-/* 	"#69BBFF", */
-/* 	"#E48AFF", */
-/* 	"#66D9E8", */
-/* 	"#CFD7E6", */
-
-/* 	[255] = 0, */
-
-/* 	/1* more colors can be added after 255 to use with DefaultXX *1/ */
-/* 	"#cccccc", */
-/* 	"#555555", */
-/* }; */
-
 
 /*
  * Default colors (colorname index)
@@ -150,13 +121,6 @@ unsigned int defaultbg = 0;
 static unsigned int defaultcs = 256;
 static unsigned int defaultrcs = 257;
 
-/*
- * Default shape of cursor
- * 2: Block ("█")
- * 4: Underline ("_")
- * 6: Bar ("|")
- * 7: Snowman ("☃")
- */
 static unsigned int cursorshape = 2;
 
 /*

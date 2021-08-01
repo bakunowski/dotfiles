@@ -5,10 +5,14 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export MOZ_ENABLE_WAYLAND=1
+# export PS1="[\[\e[32;40m\]\u\[\e[m\]@\h \W] "
+
+# export MOZ_ENABLE_WAYLAND=1
+# export XDG_CURRENT_DESKTOP=sway
+# export XDG_SESSION_TYPE=wayland
+export MOZ_X11_EGL=1
 export LIBVA_DRIVER_NAME=i965
 export _JAVA_AWT_WM_NONREPARENTING=1
-export GDK_SCALE=2
 
 alias ls='ls --color=auto'
 alias vim=nvim

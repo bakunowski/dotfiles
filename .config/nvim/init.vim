@@ -60,7 +60,8 @@ set number
 " set background=dark
 " set t_Co=256
 
-" set termguicolors
+set termguicolors
+colorscheme acme
 " colorscheme github
 " colorscheme base16-tomorrow-night
 " colorscheme gruvbox

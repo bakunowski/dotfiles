@@ -1,43 +1,14 @@
-set ignorecase
-
-set nobackup
-set nowritebackup
-set noswapfile
-
-set nofixendofline
-
-set hidden
-
-set splitbelow
-set splitright
-
-set clipboard=unnamedplus
-
-" make tab work as 4 spaces in a file
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-
-set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
-
-set signcolumn=auto
-set updatetime=300
-
-set noshowmode
-
-set mouse=a
-
-set nofoldenable
-
-let mapleader=" "
-let maplocalleader=","
-
 call plug#begin('~/.local/share/nvim/plugged')
 
 " LSP support
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
-Plug 'ray-x/lsp_signature.nvim'
+
+" Completion
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'saadparwaiz1/cmp_luasnip'
 
 " Snippets
 Plug 'L3MON4D3/LuaSnip'
@@ -60,67 +31,86 @@ Plug 'tpope/vim-commentary'
 
 " Parantheses
 Plug 'windwp/nvim-autopairs'
-Plug 'blackCauldron7/surround.nvim'
+Plug 'tpope/vim-surround'
 
 " Better syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
-" Eyecandy
-Plug 'hoob3rt/lualine.nvim'
-Plug 'lukas-reineke/indent-blankline.nvim'
-
-Plug 'ap/vim-css-color'
-
+" Tree view
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 
-" Themes
-Plug 'rktjmp/lush.nvim'
-" Plug 'sjl/badwolf'
-" Plug 'bakunowski/nvim-colours-github'
-" Plug 'projekt0n/github-nvim-theme'
-" Plug 'shaunsingh/nord.nvim'
-Plug 'arcticicestudio/nord-vim'
-Plug 'tomasr/molokai'
-Plug 'nanotech/jellybeans.vim'
-Plug 'briones-gabriel/darcula-solid.nvim'
+" Eyecandy
+Plug 'hoob3rt/lualine.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'wfxr/minimap.vim'
+
+Plug 'sainnhe/sonokai'
+Plug 'shaunsingh/nord.nvim'
 Plug 'eddyekofo94/gruvbox-flat.nvim'
-Plug 'lighthaus-theme/vim-lighthaus'
-Plug 'fnune/base16-vim'
-Plug 'EdenEast/nightfox.nvim'
+Plug 'briones-gabriel/darcula-solid.nvim'
+Plug 'rktjmp/lush.nvim'
+Plug 'mcchrish/zenbones.nvim'
+
 
 call plug#end()
 
-" visual settings
-set termguicolors
-let g:gruvbox_flat_style = "hard"
-colorscheme gruvbox-flat
-" colorscheme acme
+let mapleader=" "
+let maplocalleader=";"
+
+" Basic settings
+set nofixendofline              " If there isn't an empty line at EOF don't insert it
+set hidden                      " Allow buffers to be backgrounded without being saved
+set splitbelow                  " Splits show up below by default
+set splitright                  " Splits go to the right by default
+set clipboard=unnamedplus       " Yank to system cliboard
+set mouse=a                     " Enable mouse support
+
+" Search settings
+set ignorecase
+set smartcase
+
+" Tab settings
+set expandtab                   " Expand tabs to the proper type and size
+set tabstop=4                   " Tabs width in spaces
+set softtabstop=4               " Soft tab width in spaces
+set shiftwidth=4                " Amount of spaces when shifting
+
+" GUI settings
 set relativenumber
 set number
-set colorcolumn=80
+set colorcolumn=80              " Highlight 80 character limit
+set signcolumn=auto             " How to display gitgutter signs next to numbers column
+set noshowmode                  " Don't show current mode in status line
+set scrolloff=10
+set list                        " Always show invisible characters
+set listchars=tab:\|\ ,trail:⋅  " Set the characters for the invisibles
+set termguicolors               " Use 24-bit RGB color in terminal
+set pumheight=10
 
-" Change indent character for indent-blankline plugin
-" let g:indent_blankline_char="│"
+colorscheme darcula-solid
+highlight Normal guibg=#1e1e1e
+hi! link NormalNC Normal
+highlight VertSplit guifg=#262627
+hi link LspSignatureActiveParameter Search
+hi! link NvimTreeNormal Normal
+hi! link NvimTreeFolderName Question
+hi! link NvimTreeOpenedFolderName Question
+hi! link NvimTreeEmptyFolderName Question
 
-" hi link LspSignatureActiveParameter Search
-" highlight TSVariable guifg=#c5c8c6
-" highlight TSProperty guifg=#de935f
+" Treat Jenkinsfile as a java file type for treesitter
+augroup filetypedetect
+    autocmd BufRead,BufNewFile *Jenkins* set filetype=groovy
+augroup END
 
-" Jellybeans custom
-" highlight VertSplit guifg=#151515 guibg=#151515
-" highlight ColorColumn guibg=#1f1f1f
-" highlight SignColumn guibg=#151515
-
-" hi link TSComment Comment
-" highlight TSComment gui=italic
-" hi link TSField Directory
+" let g:gruvbox_flat_style = "hard"
+" colorscheme gruvbox-flat
 
 " -------------------------------------
 "  Mappings
-"  ------------------------------------
+" ------------------------------------
 
 " Switching windows
 noremap <C-j> <C-w>j
@@ -130,6 +120,11 @@ noremap <C-h> <C-w>h
 
 " Close buffer
 noremap <C-c> <C-w>c
+
+" Make j/k visual down and up instead of whole lines. This makes word
+" wrapping a lot more pleasent.
+map j gj
+map k gk
 
 " hit esc to clear search
 nnoremap <silent> <esc> :noh<cr><esc>
@@ -142,18 +137,14 @@ nnoremap <Leader>x *``cgn
 
 map <F8> :setlocal spell! spelllang=en_gb<CR>
 
-" compe
-" inoremap <silent><expr> <C-n> compe#complete()
-
 " Telescope
 nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <C-n> <cmd>Telescope file_browser<cr>
 " TODO: add to lua config
 nnoremap <leader>d <cmd>Telescope lsp_workspace_diagnostics<cr>
 
-" map C-l to skip a char eg )
+" map C-l to skip a char eg. )
 inoremap <C-l> <C-o>a
 
 " luasnip
@@ -165,17 +156,6 @@ imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' 
 smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
 
 nnoremap <C-n> :NvimTreeToggle<CR>
-" -------------------------------------
-"  LSP
-"  ------------------------------------
-
-function Refresh()
-	lua vim.lsp.stop_client(vim.lsp.get_active_clients())
-	sleep 500m
-	edit
-endfunction
-
-command RefreshLSP call Refresh()
 
 lua require('init')
 

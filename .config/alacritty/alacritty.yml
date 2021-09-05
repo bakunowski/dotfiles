@@ -4,28 +4,27 @@ env:
 window:
   padding:
     x: 10
-    y: 5
+    y: 10
   dynamic_padding: true
-  decorations: "none"
+  decorations: "buttonless"
 
 font:
   normal:
-    family: JetBrainsMono Nerd Font Mono
-    # family: MesloLGM Nerd Font Mono
+    family: SFMono Nerd Font
     style: Regular
   italic:
-     family: JetBrainsMono Nerd Font Mono
-     style: Italic
+    family: SFMono Nerd Font
+    style: Light Italic
   bold:
-    family: JetBrainsMono Nerd Font Mono
-    style: Medium
+    family: SFMono Nerd Font
+    style: Bold
 
-  size: 13
+  size: 11.5
 
   use_thin_strokes: true
 
   offset:
-    x: 0
+    x: 1
     y: 3
   glyph_offset:
     x: 0
@@ -110,19 +109,27 @@ schemes:
       magenta: '#b3a0bd'
       cyan:    '#a0bdb3'
       white:   '#e5e5e5'
-
   custom-dark: &custom-dark
     primary:
-      background: '#151515'
-      foreground: '#e8e8d3'
+        background: '#000000'
+        foreground: '#eaeaea'
     normal:
       black:   '#000000'
-      red:     '#e74946'
-      green:   '#8fa867'
-      yellow:  '#ffc66b'
-      blue:    '#5594ec'
-      magenta: '#cd00cd'
-      cyan:    '#299999'
+      red:     '#825b69'
+      green:   '#69825b'
+      yellow:  '#82755b'
+      blue:    '#5b6982'
+      magenta: '#755b82'
+      cyan:    '#5b8275'
+      white:   '#d9d7cc'
+    bright:
+      black:   '#777777'
+      red:     '#bda0aa'
+      green:   '#aabda0'
+      yellow:  '#bdb3a0'
+      blue:    '#a0aabd'
+      magenta: '#b3a0bd'
+      cyan:    '#a0bdb3'
       white:   '#e5e5e5'
 
   ## Terminal.app after contrast manipulation
@@ -172,98 +179,10 @@ schemes:
         cyan:    '#8dfbba'
         white:   '#fefefe'
 
-  jellybeans: &jellybeans
-    primary:
-      background: '#151515'
-      foreground: '#e8e8d3'
-    cursor:
-      text: '#feffff'
-      cursor: '#ffb472'
-    normal:
-      black:   '#151515'
-      red:     '#e74946'
-      green:   '#8fa867'
-      yellow:  '#ffc66b'
-      blue:    '#a6cae2'
-      magenta: '#e7cdfb'
-      cyan:    '#00a69f'
-      white:   '#e4e4e4'
-    bright:
-      black:   '#838383'
-      red:     '#ffb2b0'
-      green:   '#c8e2b9'
-      yellow:  '#ffe1af'
-      blue:    '#bddff7'
-      magenta: '#fce2ff'
-      cyan:    '#0bbdb6'
-      white:   '#feffff'
-  
-    # Selection colors
-    selection:
-      text: '#5963a2'
-      background: '#f6f6f6'
-
-  nostalgia: &nostalgia
-    primary:
-      background: '#d9d5ba'
-      foreground: '#444444'
-    cursor:
-      cursor: '#444444'
-    normal:
-      black:   '#333333'
-      red:     '#825b69'
-      green:   '#69825b'
-      yellow:  '#82755b'
-      blue:    '#5b6982'
-      magenta: '#755b82'
-      cyan:    '#5b8275'
-      white:   '#d9d5ba'
-    bright:
-      black:   '#666666'
-      red:     '#bda0aa'
-      green:   '#aabda0'
-      yellow:  '#bdb3a0'
-      blue:    '#7484a2'
-      magenta: '#b3a0bd'
-      cyan:    '#a0bdb3'
-      white:   '#feffff'
-
-  dark: &dark
-    # Default colors
-    primary:
-      background: '#181818'
-      foreground: '#d8d8d8'
-
-    # Colors the cursor will use if `custom_cursor_colors` is true
-    cursor:
-      text: '#d8d8d8'
-      cursor: '#d8d8d8'
-
-    # Normal colors
-    normal:
-      black:   '#181818'
-      red:     '#ab4642'
-      green:   '#a1b56c'
-      yellow:  '#f7ca88'
-      blue:    '#7cafc2'
-      magenta: '#ba8baf'
-      cyan:    '#86c1b9'
-      white:   '#d8d8d8'
-
-    # Bright colors
-    bright:
-      black:   '#585858'
-      red:     '#ab4642'
-      green:   '#a1b56c'
-      yellow:  '#f7ca88'
-      blue:    '#7cafc2'
-      magenta: '#ba8baf'
-      cyan:    '#86c1b9'
-      white:   '#f8f8f8'
-
   gruvbox-hard: &gruvbox
     primary:
       background: '0x1d2021'
+      # background: '0x282828'
       foreground: '0xd4be98'
     normal:
       black:   '0x1D2021'
@@ -283,12 +202,73 @@ schemes:
       magenta: '0xd3869b'
       aqua:    '0x89b482'
       white:   '0xd4be98'
-  
-    indexed_colors:
-      - { index: 16, color: '0xe78a4e' }
-      - { index: 17, color: '0xc14a4a' }
 
-colors: *gruvbox
+# Revert https://github.com/alacritty/alacritty/commit/9a0eac0a14e631485c9e33e7499d84549ba510fc
+  og: &og
+    primary:
+      background: '#000000'
+      foreground: '#eaeaea'
+      dim_foreground: '#9a9a9a'
+      bright_foreground: '#ffffff'
+    normal:
+      black:   '#000000'
+      red:     '#d54e53'
+      green:   '#b9ca4a'
+      yellow:  '#e6c547'
+      blue:    '#7aa6da'
+      magenta: '#c397d8'
+      cyan:    '#70c0ba'
+      white:   '#eaeaea'
+
+  darcula: &darcula
+    primary:
+      # background: '#262627'
+      background: '#1e1e1e'
+      foreground: '#ced1d4'
+    normal:
+      black:   '#000000'
+      red:     '#E74946'
+      green:   '#8FA867'
+      yellow:  '#FFC66B'
+      blue:    '#5594EC'
+      magenta: '#D194C7'
+      cyan:    '#CD7832'
+      white:   '#ced1d4'
+    # bright:
+    #   black:   '#666666'
+    #   red:     '#F92672'
+    #   green:   '#A6E22E'
+    #   yellow:  '#E2E22E'
+    #   blue:    '#819AFF'
+    #   magenta: '#AE81FF'
+    #   cyan:    '#66D9EF'
+    #   white:   '#F8F8F2'
+
+sonokai: &sonokai
+  primary:
+    background: "0x2c2e34"
+    foreground: "0xe2e2e3"
+
+  normal:
+    black: "0x181819"
+    red: "0xfc5d7c"
+    green: "0x9ed072"
+    yellow: "0xe7c664"
+    blue: "0x76cce0"
+    magenta: "0xb39df3"
+    cyan: "0xf39660"
+    white: "0xe2e2e3"
+
+  bright:
+    black: "0x181819"
+    red: "0xfc5d7c"
+    green: "0x9ed072"
+    yellow: "0xe7c664"
+    blue: "0x76cce0"
+    magenta: "0xb39df3"
+    cyan: "0xf39660"
+    white: "0xe2e2e3"
+colors: *darcula
 
 ## https://github.com/alacritty/alacritty/issues/1073
 #key_bindings:

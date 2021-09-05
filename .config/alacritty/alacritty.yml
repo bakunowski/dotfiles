@@ -30,63 +30,10 @@ font:
     x: 0
     y: 2
 
-# selection:
-#   save_to_clipboard: true
-
 mouse:
   hide_when_typing: true
 
-
 schemes:
-  nord: &nord
-    primary:
-      background: '#2e3440'
-      foreground: '#d8dee9'
-      dim_foreground: '#a5abb6'
-    cursor:
-      text: '#2e3440'
-      cursor: '#d8dee9'
-    vi_mode_cursor:
-      text: '#2e3440'
-      cursor: '#d8dee9'
-    selection:
-      text: CellForeground
-      background: '#4c566a'
-    search:
-      matches:
-        foreground: CellBackground
-        background: '#88c0d0'
-      bar:
-        background: '#434c5e'
-        foreground: '#d8dee9'
-    normal:
-      black: '#3b4252'
-      red: '#bf616a'
-      green: '#a3be8c'
-      yellow: '#ebcb8b'
-      blue: '#81a1c1'
-      magenta: '#b48ead'
-      cyan: '#88c0d0'
-      white: '#e5e9f0'
-    bright:
-      black: '#4c566a'
-      red: '#bf616a'
-      green: '#a3be8c'
-      yellow: '#ebcb8b'
-      blue: '#81a1c1'
-      magenta: '#b48ead'
-      cyan: '#8fbcbb'
-      white: '#eceff4'
-    dim:
-      black: '#373e4d'
-      red: '#94545d'
-      green: '#809575'
-      yellow: '#b29e75'
-      blue: '#68809a'
-      magenta: '#8c738c'
-      cyan: '#6d96a5'
-      white: '#aeb3bb'
-
   custom: &custom
     primary:
         background: '#d9d5ba'
@@ -109,120 +56,9 @@ schemes:
       magenta: '#b3a0bd'
       cyan:    '#a0bdb3'
       white:   '#e5e5e5'
-  custom-dark: &custom-dark
-    primary:
-        background: '#000000'
-        foreground: '#eaeaea'
-    normal:
-      black:   '#000000'
-      red:     '#825b69'
-      green:   '#69825b'
-      yellow:  '#82755b'
-      blue:    '#5b6982'
-      magenta: '#755b82'
-      cyan:    '#5b8275'
-      white:   '#d9d7cc'
-    bright:
-      black:   '#777777'
-      red:     '#bda0aa'
-      green:   '#aabda0'
-      yellow:  '#bdb3a0'
-      blue:    '#a0aabd'
-      magenta: '#b3a0bd'
-      cyan:    '#a0bdb3'
-      white:   '#e5e5e5'
-
-  ## Terminal.app after contrast manipulation
-  terminal: &terminal
-    primary:
-      background: '#1e1e1e' #done
-      foreground: '#ffffff' #done
-    normal:
-      black:   '#000000' #done
-      red:     '#c75339' #199, 82, 57
-      green:   '#4aa22f' #74, 162, 47
-      yellow:  '#9a982f' #154, 152, 47
-      blue:    '#634ced' #99, 76, 237
-      magenta: '#69c1cf' #105, 194, 207
-      cyan:    '#69c1cf'
-      white:   '#bfbfbf'
-    bright:
-      black:   '#666666'
-      red:     '#e50000'
-      green:   '#4aa22f'
-      yellow:  '#efed54' #239, 237, 84
-      blue:    '#d09cf9' #208, 156, 24
-      magenta: '#ec60f8' #236, 96, 248
-      cyan:    '#77f0f2' #119, 240, 242
-      white:   '#e5e5e5'
-
-  badwolf: &badwolf
-      primary:
-          background: '#1c1b1a'
-          foreground: '#ffffff'
-      normal:
-        black:   '#1c1b19'
-        red:     '#ff2b4a'
-        green:   '#aeee31'
-        yellow:  '#fade3d'
-        blue:    '#0e9dfc'
-        magenta: '#a72e9c'
-        cyan:    '#8dfbba'
-        white:   '#f8f6f2'
-      bright:
-        black:   '#000000'
-        red:     '#ff2b4a'
-        green:   '#aeee31'
-        yellow:  '#fade3d'
-        blue:    '#0e9dfc'
-        magenta: '#ff9eb8'
-        cyan:    '#8dfbba'
-        white:   '#fefefe'
-
-  gruvbox-hard: &gruvbox
-    primary:
-      background: '0x1d2021'
-      # background: '0x282828'
-      foreground: '0xd4be98'
-    normal:
-      black:   '0x1D2021'
-      red:     '0xea6962'
-      green:   '0xa9b665'
-      yellow:  '0xd8a657'
-      blue:    '0x7daea3'
-      magenta: '0xd3869b'
-      aqua:    '0x89b482'
-      white:   '0xd4be98'
-    bright:
-      black:   '#7c6f64'
-      red:     '0xea6962'
-      green:   '0xa9b665'
-      yellow:  '0xd8a657'
-      blue:    '0x7daea3'
-      magenta: '0xd3869b'
-      aqua:    '0x89b482'
-      white:   '0xd4be98'
-
-# Revert https://github.com/alacritty/alacritty/commit/9a0eac0a14e631485c9e33e7499d84549ba510fc
-  og: &og
-    primary:
-      background: '#000000'
-      foreground: '#eaeaea'
-      dim_foreground: '#9a9a9a'
-      bright_foreground: '#ffffff'
-    normal:
-      black:   '#000000'
-      red:     '#d54e53'
-      green:   '#b9ca4a'
-      yellow:  '#e6c547'
-      blue:    '#7aa6da'
-      magenta: '#c397d8'
-      cyan:    '#70c0ba'
-      white:   '#eaeaea'
 
   darcula: &darcula
     primary:
-      # background: '#262627'
       background: '#1e1e1e'
       foreground: '#ced1d4'
     normal:
@@ -244,30 +80,6 @@ schemes:
     #   cyan:    '#66D9EF'
     #   white:   '#F8F8F2'
 
-sonokai: &sonokai
-  primary:
-    background: "0x2c2e34"
-    foreground: "0xe2e2e3"
-
-  normal:
-    black: "0x181819"
-    red: "0xfc5d7c"
-    green: "0x9ed072"
-    yellow: "0xe7c664"
-    blue: "0x76cce0"
-    magenta: "0xb39df3"
-    cyan: "0xf39660"
-    white: "0xe2e2e3"
-
-  bright:
-    black: "0x181819"
-    red: "0xfc5d7c"
-    green: "0x9ed072"
-    yellow: "0xe7c664"
-    blue: "0x76cce0"
-    magenta: "0xb39df3"
-    cyan: "0xf39660"
-    white: "0xe2e2e3"
 colors: *darcula
 
 ## https://github.com/alacritty/alacritty/issues/1073

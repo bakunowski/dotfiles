@@ -3,84 +3,35 @@ env:
 
 window:
   padding:
-    x: 10
-    y: 10
+    x: 5
+    y: 5
   dynamic_padding: true
   decorations: "buttonless"
 
 font:
   normal:
-    family: SFMono Nerd Font
+    family: JetBrainsMonoNL Nerd Font
     style: Regular
   italic:
-    family: SFMono Nerd Font
-    style: Light Italic
+    family: JetBrainsMonoNL Nerd Font
+    style: Italic
   bold:
-    family: SFMono Nerd Font
+    family: JetBrainsMonoNL Nerd Font
     style: Bold
 
-  size: 11.5
+  size: 12
 
   use_thin_strokes: true
 
   offset:
-    x: 1
-    y: 3
+    x: 0
+    y: 0
   glyph_offset:
     x: 0
-    y: 2
+    y: 0
 
 mouse:
   hide_when_typing: true
-
-schemes:
-  custom: &custom
-    primary:
-        background: '#d9d5ba'
-        foreground: '#444444'
-    normal:
-      black:   '#444444'
-      red:     '#825b69'
-      green:   '#69825b'
-      yellow:  '#82755b'
-      blue:    '#5b6982'
-      magenta: '#755b82'
-      cyan:    '#5b8275'
-      white:   '#d9d7cc'
-    bright:
-      black:   '#777777'
-      red:     '#bda0aa'
-      green:   '#aabda0'
-      yellow:  '#bdb3a0'
-      blue:    '#a0aabd'
-      magenta: '#b3a0bd'
-      cyan:    '#a0bdb3'
-      white:   '#e5e5e5'
-
-  darcula: &darcula
-    primary:
-      background: '#1e1e1e'
-      foreground: '#ced1d4'
-    normal:
-      black:   '#000000'
-      red:     '#E74946'
-      green:   '#8FA867'
-      yellow:  '#FFC66B'
-      blue:    '#5594EC'
-      magenta: '#D194C7'
-      cyan:    '#CD7832'
-      white:   '#ced1d4'
-    # bright:
-    #   black:   '#666666'
-    #   red:     '#F92672'
-    #   green:   '#A6E22E'
-    #   yellow:  '#E2E22E'
-    #   blue:    '#819AFF'
-    #   magenta: '#AE81FF'
-    #   cyan:    '#66D9EF'
-    #   white:   '#F8F8F2'
-
-colors: *darcula
 
 ## https://github.com/alacritty/alacritty/issues/1073
 #key_bindings:

@@ -31,8 +31,15 @@ local on_attach = function(client, bufnr)
     -- Add a rounded border over hover window
     -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"})
 
-    -- require("lsp_signature").on_attach({bind = true, handler_opts = {border = "rounded"}, hint_enable = false}, bufnr)
-    require("lsp_signature").on_attach({bind = true, hint_enable = false}, bufnr)
+    require("lsp_signature").on_attach({
+        bind = true,
+        handler_opts = {
+            border = "none"
+        },
+        floating_window = true,
+        hint_enable = false,
+        hint_prefix = ""
+        })
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

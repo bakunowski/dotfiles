@@ -2,7 +2,7 @@ local cmp = require('cmp')
 cmp.setup {
     snippet = {
         expand = function(args)
-            require'luasnip'.lsp_expand(args.body)
+            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
         end
     },
     mapping = {
@@ -24,7 +24,7 @@ cmp.setup {
       { name = 'nvim_lsp' },
       { name = 'buffer' },
       { name = 'path' },
-      { name = 'luasnip' },
+      { name = 'vsnip' },
     },
     formatting = {
         format = function(entry, vim_item)
@@ -35,16 +35,11 @@ cmp.setup {
           vim_item.menu = ({
             buffer = "[Buffer]",
             nvim_lsp = "[LSP]",
-            luasnip = "[LuaSnip]",
             nvim_lua = "[Lua]",
             latex_symbols = "[Latex]",
+            vsnip = "[Vsnip]"
           })[entry.source.name]
           return vim_item
         end,
     },
 }
-
-vim.o.completeopt = 'menu,menuone,noinsert'
-
--- Load snippets
--- require("luasnip/loaders/from_vscode").lazy_load()

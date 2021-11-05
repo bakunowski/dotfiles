@@ -20,23 +20,20 @@ vim.o.shiftwidth = 4    -- Amount of spaces when shifting
 vim.o.relativenumber = true
 vim.o.number = true
 vim.o.colorcolumn = '80'    -- Highlight 80 character limit
-vim.o.signcolumn = 'auto'   -- How to display gitgutter signs next to numbers column
+vim.o.signcolumn = 'yes'   -- How to display gitgutter signs next to numbers column
 vim.o.showmode = false      -- Don't show current mode in status line
 -- vim.o.scrolloff = 10
--- vim.o.list = true           -- Always show invisible characters
--- vim.opt.listchars = {trail = '⋅'} -- Set the characters for the invisibles
+vim.o.list = true           -- Always show invisible characters
 vim.o.termguicolors = true  -- Use 24-bit RGB color in terminal
 vim.o.pumheight = 10
 
--- vim.cmd [[set foldmethod=expr]]
--- vim.cmd [[set foldexpr=nvim_treesitter#foldexpr()]]
-
-vim.cmd [[colorscheme base16-tomorrow-night]]
+vim.cmd [[colorscheme nord]]
+-- vim.cmd [[colorscheme base16-tomorrow-night]]
 -- don't want red variables...
-vim.cmd [[hi TSVariable guifg=#c5c8c6]]
-vim.cmd [[hi TSProperty guifg=#cc6666]]
-vim.cmd [[hi IndentBlanklineChar guifg=#373b41]]
-vim.cmd [[hi Vertsplit guifg=#282a2e]]
+-- vim.cmd [[hi TSVariable guifg=#c5c8c6]]
+-- vim.cmd [[hi TSProperty guifg=#cc6666]]
+-- vim.cmd [[hi IndentBlanklineChar guifg=#373b41]]
+-- vim.cmd [[hi Vertsplit guifg=#282a2e]]
 
 vim.cmd[[autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab]]
 vim.cmd[[autocmd FileType helm setlocal ts=2 sts=2 sw=2 expandtab]]
@@ -71,7 +68,8 @@ vim.api.nvim_set_keymap('n', '<Leader>x', [[*``cgn]], {noremap = true})
 -- map C-l to skip a char eg. )
 vim.api.nvim_set_keymap('i', '<c-l>', '<c-o>a', {noremap = true})
 
--- map <F8> :setlocal spell! spelllang=en_gb<CR>
+-- toggle spellcheck
+vim.cmd [[map <leader>sp :setlocal spell! spelllang=en_gb<CR>]]
 
 -------------------
 -- Plugins
@@ -106,3 +104,5 @@ vim.cmd([[
 -- Lsp
 -------------------
 require('lsp')
+
+vim.fn.sign_define('LightBulbSign', { text = "🧚", texthl = "", linehl="", numhl="" })

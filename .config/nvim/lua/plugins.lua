@@ -10,7 +10,7 @@ return require('packer').startup(
         use {
             'kosayoda/nvim-lightbulb',
             config = function()
-                vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb({sign = {enabled=false}, virtual_text = {enabled=true, text=""}})]]
+                vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb({sign = {enabled=true}, virtual_text = {enabled=false, text=""}})]]
             end
         }
 
@@ -18,23 +18,24 @@ return require('packer').startup(
         use {
             'hrsh7th/nvim-cmp',
             requires = {
-                'hrsh7th/cmp-nvim-lsp',
-                { 'L3MON4D3/LuaSnip', after = 'nvim-cmp' },
+                { 'hrsh7th/vim-vsnip', after = 'nvim-cmp' },
+                { 'hrsh7th/cmp-vsnip', after = 'nvim-cmp' },
+                { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
                 { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
                 { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
                 { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
-                { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
                 { 'onsails/lspkind-nvim', after = 'nvim-cmp', },
             },
             config = [[require('config.cmp')]],
             event = 'InsertEnter *'
         }
 
+        -- for go snippets...
+        use 'golang/vscode-go'
+
         -- Show function signature when in brackets
         use {
-            'ray-x/lsp_signature.nvim',
-            opt = true,
-            module = 'lsp_signature'
+            'ray-x/lsp_signature.nvim'
         }
 
         -- Telescope
@@ -61,6 +62,10 @@ return require('packer').startup(
             }
         }
 
+        use {'pwntester/octo.nvim', config=function()
+          require"octo".setup()
+        end}
+
         -- Comments with one keybinding
         use  'tpope/vim-commentary'
 
@@ -70,7 +75,7 @@ return require('packer').startup(
             after = 'nvim-cmp',
             config = [[require('config.autopairs')]],
         }
-        use 'tpope/vim-surround' 
+        use 'tpope/vim-surround'
 
         -- Better syntax highlighting
         use {
@@ -96,13 +101,11 @@ return require('packer').startup(
         -- Eyecandy
         -- use 'shaunsingh/nord.nvim'
         use 'arcticicestudio/nord-vim'
-        use 'navarasu/onedark.nvim'
         use 'Mofiqul/vscode.nvim'
-        use 'RRethy/nvim-base16'
-        use 'sainnhe/everforest'
-        use 'sainnhe/sonokai'
         use 'mcchrish/zenbones.nvim'
-        use 'martinsione/darkplus.nvim'
+        use 'RRethy/nvim-base16'
+        use 'folke/tokyonight.nvim'
+        use 'sainnhe/edge'
 
         use {
             'briones-gabriel/darcula-solid.nvim',

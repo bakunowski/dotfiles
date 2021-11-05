@@ -1,223 +1,131 @@
-#env:
-  #TERM: alacritty
+env:
+  TERM: alacritty
 
 window:
   padding:
     x: 5
     y: 5
+  dynamic_padding: true
+  #decorations: "buttonless"
 
-    dynamic_padding: true
-    decorations: none
-
-# Font configuration
 font:
   normal:
     family: JetBrainsMono Nerd Font
     style: Regular
-  # bold:
-  #   family: BlexMono Nerd Font
-  #   style: Bold
-  # italic:
-  #   family: BlexMono Nerd Font
-  #   style: Italic
+  italic:
+    family: JetBrainsMono Nerd Font
+    style: Italic
+  bold:
+    family: JetBrainsMono Nerd Font
+    style: Bold
 
-  size: 11
+  size: 12 # check 14 on LG 21"
 
-draw_bold_text_with_bright_colors: false
+  use_thin_strokes: true
 
-# Colors
-schemes:
-  karol: &karol
-      primary:
-        background: '#d9d5ba'
-        foreground: '#444444'
-      normal:
-        black:   '#444444'
-        red:     '#825b69'
-        green:   '#69825b'
-        yellow:  '#82755b'
-        blue:    '#5b6982'
-        magenta: '#755b82'
-        cyan:    '#5b8275'
-        white:   '#d9d7cc'
-      bright:
-        black:   '#333333'
-        red:     '#bda0aa'
-        green:   '#aabda0'
-        yellow:  '#bdb3a0'
-        blue:    '#a0aabd'
-        magenta: '#b3a0bd'
-        cyan:    '#a0bdb3'
-        white:   '#e5e5e5'
-#   default: &default
-#       primary:
-#         background: '#000000'
-#         foreground: '#c5c8c6'
-#       normal:
-#         black:   '#000000'
-#         red:     '#d54e53'
-#         green:   '#b9ca4a'
-#         yellow:  '#e6c547'
-#         blue:    '#7aa6da'
-#         magenta: '#c397d8'
-#         cyan:    '#70c0ba'
-#         white:   '#eaeaea'
-#       bright:
-#         black:   '#666666'
-#         red:     '#ff3334'
-#         green:   '#9ec400'
-#         yellow:  '#e7c547'
-#         blue:    '#7aa6da'
-#         magenta: '#b77ee0'
-#         cyan:    '#54ced6'
-#         white:   '#ffffff'
-#   onedark: &onedark
-#       primary:
-#         background: '#282c34'
-#         foreground: '#abb2bf'
-#       normal:
-#         # NOTE: Use '#131613' for the `black` color if you'd like to see
-#         # black text on the background.
-#         black:   '#282c34'
-#         red:     '#e06c75'
-#         green:   '#98c379'
-#         yellow:  '#d19a66'
-#         blue:    '#61afef'
-#         magenta: '#c678dd'
-#         cyan:    '#56b6c2'
-#         white:   '#abb2bf'
-#       bright:
-#         black:   '#5c6370'
-#         red:     '#e06c75'
-#         green:   '#98c379'
-#         yellow:  '#d19a66'
-#         blue:    '#61afef'
-#         magenta: '#c678dd'
-#         cyan:    '#56b6c2'
-#         white:   '#ffffff'
-#   xcode: &xcode
-#       primary:
-#         background: '#1f1f24'
-#         foreground: '#ffffff'
-#       normal:
-#         black:   '#34353b'
-#         red:     '#ff8a7a'
-#         green:   '#83c9bc'
-#         yellow:  '#d9c668'
-#         blue:    '#4ec4e6'
-#         magenta: '#ff85b8'
-#         cyan:    '#cda1ff'
-#         white:   '#ffffff'
-#       bright:
-#         black:   '#838991'
-#         red:     '#ff8a7a'
-#         green:   '#b1faeb'
-#         yellow:  '#ffa14f'
-#         blue:    '#6bdfff'
-#         magenta: '#ff85b8'
-#         cyan:    '#e5cfff'
-#         white:   '#ffffff'
-#   colors: &gruvbox
-#     # Default colors
-#     primary:
-#       # hard contrast: background = '#1d2021'
-#       background: '#282828'
-#       # soft contrast: background = '#32302f'
-#       foreground: '#ebdbb2'
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
 
-#     # Normal colors
-#     normal:
-#       black:   '#282828'
-#       red:     '#cc241d'
-#       green:   '#98971a'
-#       yellow:  '#d79921'
-#       blue:    '#458588'
-#       magenta: '#b16286'
-#       cyan:    '#689d6a'
-#       white:   '#a89984'
+mouse:
+  hide_when_typing: true
 
-#     # Bright colors
-#     bright:
-#       black:   '#928374'
-#       red:     '#fb4934'
-#       green:   '#b8bb26'
-#       yellow:  '#fabd2f'
-#       blue:    '#83a598'
-#       magenta: '#d3869b'
-#       cyan:    '#8ec07c'
-#       white:   '#ebdbb2'
-#       # Base16 Chalk - alacritty color config
-# # Chris Kempson (http://chriskempson.com)
-#     colors: &chalk
-#       # Default colors
-#       primary:
-#         background: '0x151515'
-#         foreground: '0xd0d0d0'
-    
-#       # Colors the cursor will use if `custom_cursor_colors` is true
-#       cursor:
-#         text: '0x151515'
-#         cursor: '0xd0d0d0'
-    
-#       # Normal colors
-#       normal:
-#         black:   '0x151515'
-#         red:     '0xfb9fb1'
-#         green:   '0xacc267'
-#         yellow:  '0xddb26f'
-#         blue:    '0x6fc2ef'
-#         magenta: '0xe1a3ee'
-#         cyan:    '0x12cfc0'
-#         white:   '0xd0d0d0'
-    
-#       # Bright colors
-#       bright:
-#         black:   '0x505050'
-#         red:     '0xeda987'
-#         green:   '0x202020'
-#         yellow:  '0x303030'
-#         blue:    '0xb0b0b0'
-#         magenta: '0xe0e0e0'
-#         cyan:    '0xdeaf8f'
-#         white:   '0xf5f5f5'
-#     colors: &durr
-#       selection:
-#         text: CellForeground
-#         background: "0x444444"
-    
-#       search:
-#         matches:
-#           foreground: "0x181818"
-#           background: "0xac4242"
-#         bar:
-#           foreground: "0xaaaaaa"
-#           background: "0x282828"
-    
-#       primary:
-#         foreground: "0xaaaaaa"
-#         background: "0x181818"
-    
-#       normal:
-#         black:   "0x181818"
-#         red:     "0xac4242"
-#         green:   "0x90a959"
-#         yellow:  "0xf4bf75"
-#         blue:    "0x6a9fb5"
-#         magenta: "0xaa759f"
-#         cyan:    "0x75b5aa"
-#         white:   "0x666666"
-    
-#       bright:
-#         black:   "0x282828"
-#         red:     "0x752a2a"
-#         green:   "0x5d742a"
-#         yellow:  "0x754e2a"
-#         blue:    "0x2a4e74"
-#         magenta: "0x703664"
-#         cyan:    "0x297366"
-#         white:   "0xaaaaaa"
-#     draw_bold_text_with_bright_colors: false
-colors: *karol
+nord: &nord
+  primary:
+    background: '#2e3440'
+    foreground: '#d8dee9'
+    dim_foreground: '#a5abb6'
+  cursor:
+    text: '#2e3440'
+    cursor: '#d8dee9'
+  vi_mode_cursor:
+    text: '#2e3440'
+    cursor: '#d8dee9'
+  selection:
+    text: CellForeground
+    background: '#4c566a'
+  search:
+    matches:
+      foreground: CellBackground
+      background: '#88c0d0'
+    bar:
+      background: '#434c5e'
+      foreground: '#d8dee9'
+  normal:
+    black: '#3b4252'
+    red: '#bf616a'
+    green: '#a3be8c'
+    yellow: '#ebcb8b'
+    blue: '#81a1c1'
+    magenta: '#b48ead'
+    cyan: '#88c0d0'
+    white: '#e5e9f0'
+  bright:
+    black: '#4c566a'
+    red: '#bf616a'
+    green: '#a3be8c'
+    yellow: '#ebcb8b'
+    blue: '#81a1c1'
+    magenta: '#b48ead'
+    cyan: '#8fbcbb'
+    white: '#eceff4'
+  dim:
+    black: '#373e4d'
+    red: '#94545d'
+    green: '#809575'
+    yellow: '#b29e75'
+    blue: '#68809a'
+    magenta: '#8c738c'
+    cyan: '#6d96a5'
+    white: '#aeb3bb'
 
-# Live config reload (changes require restart)
-live_config_reload: true
+c: &c
+  primary:
+    foreground: "0xaaaaaa"
+    background: "0x181818"
+
+  normal:
+    black:   "0x181818"
+    red:     "0xac4242"
+    green:   "0x90a959"
+    yellow:  "0xf4bf75"
+    blue:    "0x6a9fb5"
+    magenta: "0xaa759f"
+    cyan:    "0x75b5aa"
+    white:   "0x666666"
+
+  bright:
+    black:   "0x282828"
+    red:     "0x752a2a"
+    green:   "0x5d742a"
+    yellow:  "0x754e2a"
+    blue:    "0x2a4e74"
+    magenta: "0x703664"
+    cyan:    "0x297366"
+    white:   "0xaaaaaa"
+
+  search:
+    matches:
+      foreground: "0x181818"
+      background: "0xac4242"
+    focused_match:
+      foreground: "0xac4242"
+      background: "0x181818"
+    bar:
+      foreground: "0xaaaaaa"
+      background: "0x282828"
+
+  hints:
+    start:
+      foreground: "0x181818"
+      background: "0xac4242"
+    end:
+      background: "0xac4242"
+      foreground: "0x181818"
+colors: *nord
+## https://github.com/alacritty/alacritty/issues/1073
+#key_bindings:
+#- { key: Key3,     mods: Alt,     chars: "#"                        }

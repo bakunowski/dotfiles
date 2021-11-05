@@ -1,7 +1,4 @@
-> <div align="center"><img src="https://raw.githubusercontent.com/bakunowski/dotfiles/master/1590164191_grim.png" width="768"/></div>
+## Karol's dotfiles
 
-# Software:
-- terminal emulator: alacritty
-- font: SF Mono Powerline
-- editor: nvim
-- window manager: sway
+Default stuff lives on `main`, macos / linux specific lives on `darwin` and `linux`
+branches respectively.

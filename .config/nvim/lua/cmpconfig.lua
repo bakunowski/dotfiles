@@ -1,4 +1,5 @@
 local cmp = require('cmp')
+
 cmp.setup {
     snippet = {
         expand = function(args)
@@ -22,6 +23,7 @@ cmp.setup {
     -- preselect = cmp.PreselectMode.None,
     sources = {
       { name = 'nvim_lsp' },
+      { name = "nvim_lsp_signature_help" },
       { name = 'buffer' },
       { name = 'path' },
       { name = 'vsnip' },

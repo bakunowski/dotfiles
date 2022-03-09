@@ -4,128 +4,95 @@ env:
 window:
   padding:
     x: 5
-    y: 5
-  dynamic_padding: true
-  #decorations: "buttonless"
+    y: 8
+  dynamic_padding: false
+  decorations: buttonless
+  # opacity: 1.0
+
+scrolling:
+  multiplier: 1
 
 font:
   normal:
     family: JetBrainsMono Nerd Font
-    style: Regular
-  italic:
-    family: JetBrainsMono Nerd Font
-    style: Italic
+    style: Medium
   bold:
     family: JetBrainsMono Nerd Font
     style: Bold
+  italic:
+    family: JetBrainsMono Nerd Font
+    style: Italic
 
-  size: 12 # check 14 on LG 21"
-
-  use_thin_strokes: true
+  size: 14.0
 
   offset:
     x: 0
-    y: 0
+    y: 10
+
   glyph_offset:
     x: 0
-    y: 0
+    y: 5
+
+  builtin_box_drawing: true
+
+draw_bold_text_with_bright_colors: false
+
+zenwrittend: &zenwrittend
+  primary:
+    foreground: '#BBBBBB'
+    background: '#191919'
+  cursor:
+    cursor: '#C9C9C9'
+    text: '#191919'
+  normal:
+    black:   '#191919'
+    red:     '#DE6E7C'
+    green:   '#819B69'
+    yellow:  '#B77E64'
+    blue:    '#6099C0'
+    magenta: '#B279A7'
+    cyan:    '#66A5AD'
+    white:   '#BBBBBB'
+  bright:
+    black:   '#3D3839'
+    red:     '#E8838F'
+    green:   '#8BAE68'
+    yellow:  '#D68C67'
+    blue:    '#61ABDA'
+    magenta: '#CF86C1'
+    cyan:    '#65B8C1'
+    white:   '#8E8E8E'
+zenwritten: &zenwritten
+  primary:
+    foreground: '#353535'
+    # background: '#EEEEEE'
+    background: '#FFFFDB'
+  cursor:
+    cursor: '#353535'
+    text: '#EEEEEE'
+  normal:
+    black:   '#EEEEEE'
+    red:     '#A8334C'
+    green:   '#4F6C31'
+    yellow:  '#944927'
+    blue:    '#286486'
+    magenta: '#88507D'
+    cyan:    '#3B8992'
+    white:   '#353535'
+  bright:
+    black:   '#C6C3C3'
+    red:     '#94253E'
+    green:   '#3F5A22'
+    yellow:  '#803D1C'
+    blue:    '#1D5573'
+    magenta: '#7B3B70'
+    cyan:    '#2B747C'
+    white:   '#5C5C5C'
+
+colors: *zenwrittend
 
 mouse:
   hide_when_typing: true
 
-nord: &nord
-  primary:
-    background: '#2e3440'
-    foreground: '#d8dee9'
-    dim_foreground: '#a5abb6'
-  cursor:
-    text: '#2e3440'
-    cursor: '#d8dee9'
-  vi_mode_cursor:
-    text: '#2e3440'
-    cursor: '#d8dee9'
-  selection:
-    text: CellForeground
-    background: '#4c566a'
-  search:
-    matches:
-      foreground: CellBackground
-      background: '#88c0d0'
-    bar:
-      background: '#434c5e'
-      foreground: '#d8dee9'
-  normal:
-    black: '#3b4252'
-    red: '#bf616a'
-    green: '#a3be8c'
-    yellow: '#ebcb8b'
-    blue: '#81a1c1'
-    magenta: '#b48ead'
-    cyan: '#88c0d0'
-    white: '#e5e9f0'
-  bright:
-    black: '#4c566a'
-    red: '#bf616a'
-    green: '#a3be8c'
-    yellow: '#ebcb8b'
-    blue: '#81a1c1'
-    magenta: '#b48ead'
-    cyan: '#8fbcbb'
-    white: '#eceff4'
-  dim:
-    black: '#373e4d'
-    red: '#94545d'
-    green: '#809575'
-    yellow: '#b29e75'
-    blue: '#68809a'
-    magenta: '#8c738c'
-    cyan: '#6d96a5'
-    white: '#aeb3bb'
-
-c: &c
-  primary:
-    foreground: "0xaaaaaa"
-    background: "0x181818"
-
-  normal:
-    black:   "0x181818"
-    red:     "0xac4242"
-    green:   "0x90a959"
-    yellow:  "0xf4bf75"
-    blue:    "0x6a9fb5"
-    magenta: "0xaa759f"
-    cyan:    "0x75b5aa"
-    white:   "0x666666"
-
-  bright:
-    black:   "0x282828"
-    red:     "0x752a2a"
-    green:   "0x5d742a"
-    yellow:  "0x754e2a"
-    blue:    "0x2a4e74"
-    magenta: "0x703664"
-    cyan:    "0x297366"
-    white:   "0xaaaaaa"
-
-  search:
-    matches:
-      foreground: "0x181818"
-      background: "0xac4242"
-    focused_match:
-      foreground: "0xac4242"
-      background: "0x181818"
-    bar:
-      foreground: "0xaaaaaa"
-      background: "0x282828"
-
-  hints:
-    start:
-      foreground: "0x181818"
-      background: "0xac4242"
-    end:
-      background: "0xac4242"
-      foreground: "0x181818"
-colors: *nord
-## https://github.com/alacritty/alacritty/issues/1073
-#key_bindings:
-#- { key: Key3,     mods: Alt,     chars: "#"                        }
+key_bindings:
+  - { key: Key3,     mods: Alt,     chars: "\x23"                        }

@@ -1,7 +1,7 @@
 require'nvim-treesitter.configs'.setup {
 	ensure_installed = {
         "go",
-        "comment",
+        -- "comment",
         "python",
         "hcl",
         "yaml",

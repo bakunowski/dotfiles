@@ -17,8 +17,6 @@ return require('packer').startup(function()
   -- Manage yourself pls :)
   use 'wbthomason/packer.nvim'
 
-  use 'tpope/vim-surround'
-
   -- Completion
   use {
       'hrsh7th/nvim-cmp',
@@ -94,5 +92,14 @@ return require('packer').startup(function()
       requires = "rktjmp/lush.nvim"
   }
 
-  use 'arcticicestudio/nord-vim'
+  use { 'sainnhe/gruvbox-material' }
+  use 'gruvbox-community/gruvbox'
+  use { 'sainnhe/sonokai' }
+  use "rebelot/kanagawa.nvim"
+
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
+
 end)

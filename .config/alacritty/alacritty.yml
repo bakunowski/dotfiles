@@ -23,7 +23,7 @@ font:
     family: JetBrainsMono Nerd Font
     style: Italic
 
-  size: 14.0
+  size: 13.0
 
   offset:
     x: 0
@@ -88,8 +88,52 @@ zenwritten: &zenwritten
     magenta: '#7B3B70'
     cyan:    '#2B747C'
     white:   '#5C5C5C'
-
-colors: *zenwrittend
+gruvbox_material_hard_light: &gruvbox_material_hard_light
+  primary:
+    background: '0xf9f5d7'
+    foreground: '0x654735'
+  normal:
+    black:   '0x251a13'
+    red:     '0xc14a4a'
+    green:   '0x6c782e'
+    yellow:  '0xb47109'
+    blue:    '0x45707a'
+    magenta: '0x945e80'
+    cyan:    '0x4c7a5d'
+    white:   '0xf2e5bc'
+  bright:
+    black:   '0x654735'
+    red:     '0xc14a4a'
+    green:   '0x6c782e'
+    yellow:  '0xb47109'
+    blue:    '0x45707a'
+    magenta: '0x945e80'
+    cyan:    '0x4c7a5d'
+    white:   '0xf2e5bc'
+gruvbox_material_hard_dark: &gruvbox_material_hard_dark
+  primary:
+    background: '0x1d2021'
+    foreground: '0xd4be98'
+  normal:
+    black:   '0x32302f'
+    red:     '0xea6962'
+    green:   '0xa9b665'
+    yellow:  '0xd8a657'
+    blue:    '0x7daea3'
+    magenta: '0xd3869b'
+    cyan:    '0x89b482'
+    white:   '0xd4be98'
+  bright:
+    black:   '0x32302f'
+    red:     '0xea6962'
+    green:   '0xa9b665'
+    yellow:  '0xd8a657'
+    blue:    '0x7daea3'
+    magenta: '0xd3869b'
+    cyan:    '0x89b482'
+    white:   '0xd4be98'
+# colors: *gruvbox_material_hard_dark
+# colors: *zenwrittend
 
 mouse:
   hide_when_typing: true

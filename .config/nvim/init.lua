@@ -68,14 +68,6 @@ require('nvim-autopairs').setup({
 	},
 })
 require('lsp')
-require('lualine').setup{
-    options = {
-    theme = 'auto',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {},
-    always_divide_middle = true,
-  },}
 
 --command to get syntax highlighting in a new buffer
 --so $VIMRUNTIME/syntax/hitest.vim

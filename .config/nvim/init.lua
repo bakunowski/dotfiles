@@ -16,6 +16,7 @@ vim.o.shiftwidth = 4             -- Amount of spaces when shifting
 vim.o.termguicolors = true       -- Use 24-bit RGB color in terminal
 
 vim.o.mouse = 'a'                -- Enable mouse support
+vim.o.laststatus = 3             -- Global status line
 
 -- vim.o.list = true                -- Always show invisible characters
 

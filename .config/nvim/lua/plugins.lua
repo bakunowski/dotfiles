@@ -91,11 +91,8 @@ return require('packer').startup(function()
       "mcchrish/zenbones.nvim",
       requires = "rktjmp/lush.nvim"
   }
-
-  use { 'sainnhe/gruvbox-material' }
-  use 'gruvbox-community/gruvbox'
-  use { 'sainnhe/sonokai' }
-  use "rebelot/kanagawa.nvim"
-
+  use 'sainnhe/gruvbox-material' 
+  use 'rebelot/kanagawa.nvim'
+  use "projekt0n/github-nvim-theme"
 
 end)

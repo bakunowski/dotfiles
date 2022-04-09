@@ -30,3 +30,6 @@ vim.api.nvim_set_keymap('i', '<c-l>', '<c-o>a', {noremap = true})
 
 -- toggle spellcheck
 vim.cmd [[map <leader>sp :setlocal spell! spelllang=en_gb<CR>]]
+
+-- Nvim Tree
+vim.api.nvim_set_keymap('n', '<c-n>', [[:NvimTreeToggle<cr>]], {noremap = true})

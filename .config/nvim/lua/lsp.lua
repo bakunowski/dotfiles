@@ -37,7 +37,7 @@ require'lspconfig'.gopls.setup{
     capabilities = capabilities,
     settings = {
         gopls = {
-            gofumpt = true,
+            gofumpt = false,
             linksInHover = false,
         },
     }

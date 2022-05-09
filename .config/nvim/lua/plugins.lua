@@ -2,7 +2,7 @@
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-	packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+	Packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
 -- Compile whenever changes are made to this file
@@ -13,7 +13,7 @@ vim.cmd([[
 	augroup end
 ]])
 
-return require('packer').startup(function()
+return require('packer').startup(function(use)
 	-- Manage yourself pls :)
 	use 'wbthomason/packer.nvim'
 
@@ -91,7 +91,8 @@ return require('packer').startup(function()
 			requires = {
 				'kyazdani42/nvim-web-devicons', -- optional, for file icon
 			},
-			config = function() require'nvim-tree'.setup {} end
+			config = function() require'nvim-tree'.setup {} end,
+			cmd = 'NvimTreeToggle'
 	}
 
 	-- And now make everything pretty
@@ -102,7 +103,17 @@ return require('packer').startup(function()
 	use 'cormacrelf/dark-notify'
 
 	use {
-	  'nvim-lualine/lualine.nvim',
-	  requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+		'nvim-lualine/lualine.nvim',
+		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 	}
+
+	use 'lukas-reineke/indent-blankline.nvim'
+
+	use {
+		"SmiteshP/nvim-gps",
+		config = function() require('nvim-gps').setup() end,
+	}
+
+	use "b0o/incline.nvim"
+
 end)

@@ -39,6 +39,7 @@ require('config.cmp')
 require('config.telescope')
 require('config.treesitter')
 require('config.lualine')
+require('incline').setup()
 require('nvim-autopairs').setup({
 	fast_wrap = {
 		map = '<C-e>',

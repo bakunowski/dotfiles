@@ -8,7 +8,7 @@ local on_attach = function(client, bufnr)
     vim.lsp.handlers["textDocument/codeAction"] = require("telescope.builtin").lsp_code_actions
 
     -- Mappings.
-    vim.api.nvim_set_keymap('n', '<leader>d', [[<cmd>Telescope lsp_workspace_diagnostics<cr>]], {noremap = true})
+    vim.api.nvim_set_keymap('n', '<leader>d', [[<cmd>Telescope diagnostics<cr>]], {noremap = true})
     vim.api.nvim_set_keymap('n', 'gd', [[<cmd>Telescope lsp_definitions jump_type=never<cr>]], {noremap = true})
 
     local opts = {noremap = true, silent = true}
@@ -25,7 +25,7 @@ local on_attach = function(client, bufnr)
 
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
     buf_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    buf_set_keymap('n', 'ff', '<cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>', opts)
+    buf_set_keymap('n', 'ff', '<cmd>lua vim.lsp.buf.format()<CR>', {async=true})
 
 end
 

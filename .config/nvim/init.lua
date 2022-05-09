@@ -11,19 +11,33 @@ vim.o.shiftwidth = 4							-- Amount of spaces when shifting
 vim.o.termguicolors = true				-- Use 24-bit RGB color in terminal
 vim.o.mouse = 'a'									-- Enable mouse support
 vim.o.laststatus = 3							-- Global status line
--- vim.o.list = true									-- Always show invisible characters
+vim.o.list = true									-- Always show invisible characters
+vim.o.listchars = 'nbsp:¬,tab:  ,trail:·,extends:>' -- Set the characters for the invisibles
+
+vim.o.fixendofline = false      	-- If there isn't an empty line at EOF don't insert it
+vim.o.hidden = true             	-- Allow buffers to be backgrounded without being saved
+vim.o.updatetime = 100          	-- cursor hold trigger after 100ms
+vim.o.colorcolumn = '80'        	-- Highlight 80 character limit
+vim.o.signcolumn = 'auto'       	-- How to display gitgutter signs next to numbers column
+vim.o.showmode = false          	-- Don't show current mode in status line
+vim.o.scroll = 10 								-- Number of lines to scroll with CTRL-U and CTRL-D commands
+vim.o.pumheight = 10							-- 	Maximum number of items to show in the popup menu
+
+vim.cmd [[set fillchars+=diff:/,fold:-]]
+vim.cmd [[set foldlevelstart=99]]
 
 -- Tab is 2 spaces in these files:
 vim.cmd[[autocmd FileType yaml setlocal ts=2 sw=2]]
 vim.cmd[[autocmd FileType helm setlocal ts=2 sw=2]]
 vim.cmd[[autocmd FileType lua setlocal ts=2 sw=2]]
+vim.cmd[[autocmd FileType terraform setlocal ts=2 sw=2]]
 
 -- Lua library
 require('mappings')
 require('plugins')
-require('cmpconfig')
-require('telescopeconfig')
-require('treesitterconfig')
+require('config.cmp')
+require('config.telescope')
+require('config.treesitter')
 require('nvim-autopairs').setup({
 	fast_wrap = {
 		map = '<C-e>',
@@ -62,14 +76,10 @@ require('lualine').setup {
 
 local dn = require('dark_notify')
 dn.run({
-	schemes = {
-		dark = {
-			colorscheme = "zenwritten"
-		},
-			light = {
-				colorscheme = "zenwritten",
-			}
-		},
+    schemes = {
+        dark = 'zenwritten',
+        light = 'zenwritten'
+    }
 })
 dn.update()
 

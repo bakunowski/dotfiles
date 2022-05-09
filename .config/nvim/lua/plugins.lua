@@ -99,6 +99,10 @@ return require('packer').startup(function()
 			"mcchrish/zenbones.nvim",
 			requires = "rktjmp/lush.nvim"
 	}
-	use 'sainnhe/gruvbox-material'
 	use 'cormacrelf/dark-notify'
+
+	use {
+	  'nvim-lualine/lualine.nvim',
+	  requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+	}
 end)

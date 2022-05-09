@@ -1,24 +1,24 @@
 require'nvim-treesitter.configs'.setup {
 	ensure_installed = {
-        "go",
-        "comment",
-        "python",
-        "hcl",
-        "yaml",
-        "bash",
-        "lua",
-        "vim",
-        "json",
-        "java",
-        "dockerfile",
-        "rust"
-    },
+  	"bash",
+  	"comment",
+  	"dockerfile",
+  	"go",
+  	"hcl",
+  	"java",
+  	"json",
+  	"lua",
+  	"python",
+  	"rust",
+  	"vim",
+  	"yaml",
+	},
 	highlight = {
 		enable = true,
 		disable = {"yaml"},
 	},
-    indent = {
-        enable = true,
+  indent = {
+    enable = true,
 		disable = {"yaml"},
-    },
+  },
 }

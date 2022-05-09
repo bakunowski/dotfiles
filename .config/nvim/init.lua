@@ -11,20 +11,7 @@ vim.o.shiftwidth = 4							-- Amount of spaces when shifting
 vim.o.termguicolors = true				-- Use 24-bit RGB color in terminal
 vim.o.mouse = 'a'									-- Enable mouse support
 vim.o.laststatus = 3							-- Global status line
-vim.o.list = true									-- Always show invisible characters
-
-vim.cmd [[ let g:gruvbox_material_background = 'hard' ]]
-local dn = require('dark_notify')
-dn.run({
-	schemes = {
-		dark = {
-			colorscheme = "zenwritten"
-		},
-			light = {
-				colorscheme = "gruvbox-material",
-			}
-		},
-})
+-- vim.o.list = true									-- Always show invisible characters
 
 -- Tab is 2 spaces in these files:
 vim.cmd[[autocmd FileType yaml setlocal ts=2 sw=2]]
@@ -43,6 +30,48 @@ require('nvim-autopairs').setup({
 	},
 })
 require('lsp')
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'zenwritten',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {},
+    always_divide_middle = true,
+    globalstatus = false,
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  extensions = {}
+}
+
+local dn = require('dark_notify')
+dn.run({
+	schemes = {
+		dark = {
+			colorscheme = "zenwritten"
+		},
+			light = {
+				colorscheme = "zenwritten",
+			}
+		},
+})
+dn.update()
 
 --command to get syntax highlighting in a new buffer
 --so $VIMRUNTIME/syntax/hitest.vim

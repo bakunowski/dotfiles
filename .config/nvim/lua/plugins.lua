@@ -23,17 +23,18 @@ return require('packer').startup(function(use)
 			requires = {
 					{ 'hrsh7th/vim-vsnip', after = 'nvim-cmp' },
 					{ 'hrsh7th/cmp-vsnip', after = 'nvim-cmp' },
-					-- { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
+					{ 'hrsh7th/cmp-nvim-lsp' },
 					{ 'hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp' },
 					{ 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
 					{ 'hrsh7th/cmp-path', after = 'nvim-cmp' },
 					{ 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
 					{ 'onsails/lspkind-nvim', after = 'nvim-cmp', },
 			},
-			-- config = [[require('cmpconfig')]],
-			-- event = 'InsertEnter *'
+			config = function()
+				require('config.cmp')
+			end,
+			event = 'InsertEnter *'
 	}
-	use 'hrsh7th/cmp-nvim-lsp'
 
 	-- Complete my brackets!
 	use 'windwp/nvim-autopairs'
@@ -100,7 +101,6 @@ return require('packer').startup(function(use)
 			"mcchrish/zenbones.nvim",
 			requires = "rktjmp/lush.nvim"
 	}
-	use 'cormacrelf/dark-notify'
 
 	use {
 		'nvim-lualine/lualine.nvim',
@@ -114,6 +114,9 @@ return require('packer').startup(function(use)
 		config = function() require('nvim-gps').setup() end,
 	}
 
-	use "b0o/incline.nvim"
+	use {
+    "b0o/incline.nvim",
+		config = function() require('incline').setup() end,
+  }
 
 end)

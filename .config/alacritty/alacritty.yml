@@ -4,7 +4,7 @@ env:
 window:
   padding:
     x: 4
-    y: 4
+    y: 0
   dynamic_padding: false
   decorations: buttonless
 
@@ -12,25 +12,27 @@ scrolling:
   multiplier: 1
 
 font:
+  # Font smoothing is disabled macOS wide using:
+  # defaults -currentHost write -g AppleFontSmoothing -int 0
   normal:
-    family: JetBrainsMono Nerd Font
-    style: Regular
+    family: &ffamily JetBrainsMono Nerd Font
+    style: Medium
   bold:
-    family: JetBrainsMono Nerd Font
-    style: Bold
+    family: *ffamily
+    style: ExtraBold
   italic:
-    family: JetBrainsMono Nerd Font
-    style: Italic
+    family: *ffamily
+    style: Medium Italic
 
-  size: 13.0
+  size: 11.0
 
   offset:
-    x: 0
-    y: 0
+    x: 1
+    y: 10
 
   glyph_offset:
     x: 0
-    y: 0
+    y: 5
 
   builtin_box_drawing: true
 

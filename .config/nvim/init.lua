@@ -25,9 +25,6 @@ vim.o.pumheight = 10							--	Maximum number of items to show in the popup menu
 vim.o.winbar='%=%f%m%='
 vim.o.linebreak = true
 
-vim.cmd [[set fillchars+=diff:/,fold:-]]
-vim.cmd [[set foldlevelstart=99]]
-
 -- Tab is 2 spaces in these files:
 vim.cmd[[autocmd FileType yaml setlocal ts=2 sw=2]]
 vim.cmd[[autocmd FileType helm setlocal ts=2 sw=2]]

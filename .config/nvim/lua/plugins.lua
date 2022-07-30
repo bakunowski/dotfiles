@@ -102,21 +102,6 @@ return require('packer').startup(function(use)
 			requires = "rktjmp/lush.nvim"
 	}
 
-	use {
-		'nvim-lualine/lualine.nvim',
-		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-	}
-
+  use 'stevearc/dressing.nvim'
 	use 'lukas-reineke/indent-blankline.nvim'
-
-	use {
-		"SmiteshP/nvim-gps",
-		config = function() require('nvim-gps').setup() end,
-	}
-
-	use {
-    "b0o/incline.nvim",
-		config = function() require('incline').setup() end,
-  }
-
 end)

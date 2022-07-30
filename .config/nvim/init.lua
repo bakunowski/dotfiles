@@ -22,6 +22,8 @@ vim.o.signcolumn = 'auto'					-- How to display gitgutter signs next to numbers 
 vim.o.showmode = false						-- Don't show current mode in status line
 vim.o.scroll = 10									-- Number of lines to scroll with CTRL-U and CTRL-D commands
 vim.o.pumheight = 10							--	Maximum number of items to show in the popup menu
+vim.o.winbar='%=%f%m%='
+vim.o.linebreak = true
 
 vim.cmd [[set fillchars+=diff:/,fold:-]]
 vim.cmd [[set foldlevelstart=99]]

@@ -33,3 +33,7 @@ vim.cmd [[map <leader>sp :setlocal spell! spelllang=en_gb<CR>]]
 
 -- Nvim Tree
 vim.api.nvim_set_keymap('n', '<c-n>', [[:NvimTreeToggle<cr>]], {noremap = true})
+
+-- Toggle background
+vim.api.nvim_set_keymap('n', '<Leader>bgd', ':set bg=dark<cr><esc>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>bgl', ':set bg=light<cr><esc>', {noremap = true, silent = true})

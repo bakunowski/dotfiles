@@ -22,6 +22,7 @@ vim.o.signcolumn = 'auto'					-- How to display gitgutter signs next to numbers 
 vim.o.showmode = false						-- Don't show current mode in status line
 vim.o.scroll = 10									-- Number of lines to scroll with CTRL-U and CTRL-D commands
 vim.o.pumheight = 10							--	Maximum number of items to show in the popup menu
+vim.o.cmdheight=0                 -- Don't show empty command line if not in use
 vim.o.winbar='%=%f%m%='
 vim.o.linebreak = true
 
@@ -37,9 +38,23 @@ vim.cmd[[ let g:indent_blankline_filetype = ['yaml'] ]]
 -- Lua library
 require('mappings')
 require('plugins')
+require('telescope').setup({
+  defaults = {
+    layout_config = {
+      horizontal = {
+        width = 0.95,
+        height = 0.9,
+        preview_cutoff = 120,
+        prompt_position = "bottom",
+      },
+    },
+    path_display = {
+      truncate = 3
+    },
+  },
+})
 require('config.telescope')
 require('config.treesitter')
-require('config.lualine')
 require('nvim-autopairs').setup({
 	fast_wrap = {
 		map = '<C-e>',

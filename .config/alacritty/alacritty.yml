@@ -38,38 +38,32 @@ font:
 
 draw_bold_text_with_bright_colors: false
 
-zenwritten: &zenwritten
+rasmus: &rasmus
   primary:
-    foreground: '#BBBBBB'
-    background: '#191919'
-  cursor:
-    cursor: '#C9C9C9'
-    text: '#191919'
+    background: '#1a1a19'
+    foreground: '#d1d1d1'
   normal:
-    black:   '#191919'
-    red:     '#DE6E7C'
-    green:   '#819B69'
-    yellow:  '#B77E64'
-    blue:    '#6099C0'
-    magenta: '#B279A7'
-    cyan:    '#66A5AD'
-    white:   '#BBBBBB'
+    black:   '#333332'
+    red:     '#ff968c'
+    green:   '#61957f'
+    yellow:  '#ffc591'
+    blue:    '#8db4d4'
+    magenta: '#de9bc8'
+    cyan:    '#7bb099'
+    white:   '#d1d1d1'
   bright:
-    black:   '#3D3839'
-    red:     '#E8838F'
-    green:   '#8BAE68'
-    yellow:  '#D68C67'
-    blue:    '#61ABDA'
-    magenta: '#CF86C1'
-    cyan:    '#65B8C1'
-    white:   '#8E8E8E'
-zenwrittenl: &zenwrittenl
+    black:   '#4c4c4b'
+    red:     '#ffafa5'
+    green:   '#7aae98'
+    yellow:  '#ffdeaa'
+    blue:    '#a6cded'
+    magenta: '#f7b4e1'
+    cyan:    '#94c9b2'
+    white:   '#eaeaea'
+rasmusl: &rasmusl
   primary:
-    foreground: '#353535'
-    background: '#EEEEEE'
-  cursor:
-    cursor: '#353535'
-    text: '#EEEEEE'
+    foreground: '#222222'
+    background: '#fdfdfc'
   normal:
     black:   '#EEEEEE'
     red:     '#A8334C'
@@ -88,7 +82,30 @@ zenwrittenl: &zenwrittenl
     magenta: '#7B3B70'
     cyan:    '#2B747C'
     white:   '#5C5C5C'
-colors: *zenwritten
+rasmusl2: &rasmusl2
+  primary:
+    foreground: '#444444'
+    background: '#d9d5ba'
+  normal:
+    black:   '#d9d5ba'
+    red:     '#825b69'
+    green:   '#69825b'
+    yellow:  '#82755b'
+    blue:    '#5b6982'
+    magenta: '#755b82'
+    cyan:    '#5b8275'
+    white:   '#494949'
+  bright:
+    black:   '#333333'
+    red:     '#bda0aa'
+    green:   '#aabda0'
+    yellow:  '#bdb3a0'
+    blue:    '#7484a2'
+    magenta: '#b3a0bd'
+    cyan:    '#a0bdb3'
+    white:   '#494847'
+
+colors: *rasmusl2
 
 mouse:
   hide_when_typing: true

@@ -12,28 +12,28 @@ vim.api.nvim_set_keymap('n', '<c-l>', '<c-w>l', {})
 vim.api.nvim_set_keymap('n', '<c-c>', '<c-w>c', {})
 
 -- Make j/k visual down and up instead of whole lines. This makes word
--- wrapping a lot more pleasent.
+-- wrapping a lot more pleasant.
 vim.api.nvim_set_keymap('n', 'j', 'gj', {})
 vim.api.nvim_set_keymap('n', 'k', 'gk', {})
 
 -- Hit esc to clear search
-vim.api.nvim_set_keymap('n', '<esc>', ':noh<cr><esc>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<esc>', ':noh<cr><esc>', { noremap = true, silent = true })
 
 -- Leader R to replace word under *
-vim.api.nvim_set_keymap('n', '<Leader>r', [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>r', [[:%s/\<<C-r><C-w>\>//g<Left><Left>]], { noremap = true })
 
 -- aka multiple cursors
-vim.api.nvim_set_keymap('n', '<Leader>x', [[*``cgn]], {noremap = true})
+vim.api.nvim_set_keymap('n', '<Leader>x', [[*``cgn]], { noremap = true })
 
 -- map C-l to skip a char eg. )
-vim.api.nvim_set_keymap('i', '<c-l>', '<c-o>a', {noremap = true})
+vim.api.nvim_set_keymap('i', '<c-l>', '<c-o>a', { noremap = true })
 
 -- toggle spellcheck
 vim.cmd [[map <leader>sp :setlocal spell! spelllang=en_gb<CR>]]
 
 -- Nvim Tree
-vim.api.nvim_set_keymap('n', '<c-n>', [[:NvimTreeToggle<cr>]], {noremap = true})
+vim.api.nvim_set_keymap('n', '<c-n>', [[:NvimTreeToggle<cr>]], { noremap = true })
 
 -- Toggle background
-vim.api.nvim_set_keymap('n', '<Leader>bgd', ':set bg=dark<cr><esc>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>bgl', ':set bg=light<cr><esc>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>bgd', ':set bg=dark<cr><esc>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>bgl', ':set bg=light<cr><esc>', { noremap = true, silent = true })

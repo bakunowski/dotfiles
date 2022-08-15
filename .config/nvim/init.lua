@@ -62,6 +62,16 @@ require('nvim-autopairs').setup({
 })
 require('lsp')
 
+require('lint').linters_by_ft = {
+  go = { 'golangcilint', }
+}
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    require("lint").try_lint()
+  end,
+})
+
 -- vim.cmd [[ set bg=light ]]
 vim.cmd [[ colorscheme rasmus ]]
 

@@ -72,6 +72,9 @@ return require('packer').startup(function(use)
   -- Go tests
   use { 'buoto/gotests-vim', ft = 'go' }
 
+  -- Linting
+  use 'mfussenegger/nvim-lint'
+
   use 'towolf/vim-helm'
 
   -- Git

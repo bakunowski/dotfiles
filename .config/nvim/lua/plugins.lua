@@ -89,7 +89,9 @@ return require('packer').startup(function(use)
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
     },
-    config = function() require 'nvim-tree'.setup {} end,
+    config = function()
+      require('config.nvim-tree')
+    end,
     cmd = 'NvimTreeToggle'
   }
 

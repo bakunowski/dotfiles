@@ -1,47 +1,107 @@
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<space>D', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...)
-        vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
+  -- Override handlers
+  local telescope_builtin = require 'telescope.builtin'
 
-    -- Use telescope for references and code actions
-    vim.lsp.handlers["textDocument/references"] = require("telescope.builtin").lsp_references
-    vim.lsp.handlers["textDocument/codeAction"] = require("telescope.builtin").lsp_code_actions
+  vim.lsp.handlers["textDocument/references"]     = telescope_builtin.lsp_references
+  vim.lsp.handlers["textDocument/implementation"] = function()
+    return telescope_builtin.lsp_implementations({
+      jump_type = "never",
+      show_line = false,
+    })
+  end
+  vim.lsp.handlers["textDocument/definition"]     = function()
+    return telescope_builtin.lsp_definitions({
+      jump_type = "never",
+      show_line = false,
+    })
+  end
+  -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  --   vim.lsp.handlers.hover, {
+  --     border = "solid"
+  --   }
+  -- )
 
-    -- Mappings.
-    vim.api.nvim_set_keymap('n', '<leader>d', [[<cmd>Telescope diagnostics<cr>]], {noremap = true})
-    vim.api.nvim_set_keymap('n', 'gd', [[<cmd>Telescope lsp_definitions jump_type=never<cr>]], {noremap = true})
-
-    local opts = {noremap = true, silent = true}
-    buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<space>D', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-
-    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-    buf_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    buf_set_keymap('n', 'ff', '<cmd>lua vim.lsp.buf.format()<CR>', {async=true})
-
+  -- Mappings.
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
 end
 
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- Setup lspconfig.
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-require'lspconfig'.gopls.setup{
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        gopls = {
-            gofumpt = false,
-            linksInHover = false,
-        },
-    }
+require 'lspconfig'.gopls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    gopls = {
+      gofumpt = false,
+      linksInHover = false,
+    },
+  }
+}
+
+require 'lspconfig'.rust_analyzer.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require 'lspconfig'.html.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require 'lspconfig'.cssls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require 'lspconfig'.sumneko_lua.setup {
+  settings = {
+    Lua = {
+      format = {
+        enable = true,
+        defaultConfig = {
+          indent_style = "tabs",
+          indent_size = "2",
+        }
+      },
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+
+    },
+  },
 }
 
 -- Format these files on save
-vim.cmd('autocmd BufWritePre *.go,*.tf,*.py,*.yaml,*.yml,*.lua lua vim.lsp.buf.formatting_sync(nil, 1000)')
+-- vim.cmd('autocmd BufWritePre *.go,*.tf,*.py,*.yaml,*.yml,*.lua lua vim.lsp.buf.format({async = true})')
+vim.cmd [[autocmd BufWritePre *.go,*.tf,*.lua,*.rs lua vim.lsp.buf.format( { async = false })]]

@@ -79,15 +79,8 @@ return require('packer').startup(function(use)
 
   -- Git
   use {
-    {
-      'tpope/vim-fugitive',
-      cmd = { 'G', 'Gstatus', 'Gblame', 'Gpush', 'Gpull', 'Gdiff' },
-    },
-    {
-      'lewis6991/gitsigns.nvim',
-      requires = { 'nvim-lua/plenary.nvim' },
-      config = function() require('gitsigns').setup() end,
-    }
+    'tpope/vim-fugitive',
+    cmd = { 'G', 'Gstatus', 'Gblame', 'Gpush', 'Gpull', 'Gdiff' },
   }
 
   -- File tree view

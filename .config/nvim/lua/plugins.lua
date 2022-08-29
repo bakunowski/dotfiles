@@ -37,12 +37,20 @@ return require('packer').startup(function(use)
     event = 'InsertEnter *'
   }
 
-  -- Complete my brackets!
-  use 'windwp/nvim-autopairs'
-
+  -- Brackets
+  use {
+    'windwp/nvim-autopairs',
+    config = function()
+      require('nvim-autopairs').setup({
+        fast_wrap = {
+          map = '<C-e>',
+        },
+      })
+    end
+  }
   use 'tpope/vim-surround'
 
-  -- Comments with a keybinding
+  -- Comments
   use {
     'numToStr/Comment.nvim',
     config = function()
@@ -53,7 +61,27 @@ return require('packer').startup(function(use)
   -- Classic TJ
   use {
     'nvim-telescope/telescope.nvim',
-    requires = { { 'nvim-lua/plenary.nvim' } }
+    requires = {
+      { 'nvim-lua/plenary.nvim' },
+    },
+    config = function()
+      require('config.telescope')
+      --   require('telescope').setup({
+      --     defaults = {
+      --       layout_config = {
+      --         horizontal = {
+      --           width = 0.95,
+      --           height = 0.9,
+      --           preview_cutoff = 120,
+      --           prompt_position = "bottom",
+      --         },
+      --       },
+      --       path_display = {
+      --         truncate = 3
+      --       },
+      --     },
+      --   })
+    end
   }
 
   -- Easy native LSP setup
@@ -67,13 +95,30 @@ return require('packer').startup(function(use)
       cmd = 'TSHighlightCapturesUnderCursor'
     },
     run = ':TSUpdate',
+    config = function()
+      require('config.treesitter')
+    end
   }
 
   -- Go tests
-  use { 'buoto/gotests-vim', ft = 'go' }
+  -- use { 'buoto/gotests-vim', ft = 'go' }
 
   -- Linting
-  use 'mfussenegger/nvim-lint'
+  use {
+    'mfussenegger/nvim-lint',
+    config = function()
+      require('lint').linters_by_ft = {
+        go = { 'golangcilint', },
+        -- yaml = { 'yamllint', }
+      }
+
+      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+        callback = function()
+          require("lint").try_lint()
+        end,
+      })
+    end
+  }
 
   use 'towolf/vim-helm'
 
@@ -87,17 +132,18 @@ return require('packer').startup(function(use)
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icon
+      'kyazdani42/nvim-web-devicons',
     },
     config = function()
-      require('config.nvim-tree')
+      require 'nvim-tree'.setup {}
     end,
     cmd = 'NvimTreeToggle'
   }
 
-  -- And now make everything pretty
-  use 'bakunowski/rasmus'
-
-  use 'stevearc/dressing.nvim'
-  use 'lukas-reineke/indent-blankline.nvim'
+  -- Pretty
+  use "lukas-reineke/indent-blankline.nvim"
+  use {
+    "mcchrish/zenbones.nvim",
+    requires = "rktjmp/lush.nvim"
+  }
 end)

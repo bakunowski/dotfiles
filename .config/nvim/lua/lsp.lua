@@ -102,6 +102,23 @@ require 'lspconfig'.sumneko_lua.setup {
   },
 }
 
+require('lspconfig').yamlls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    yaml = {
+      trace = {
+        server = "verbose"
+      },
+      schemas = {
+        kubernetes = "/*.yaml"
+      },
+      schemaDownload = { enable = true },
+      validate = true,
+    },
+  }
+}
+
 -- Format these files on save
 -- vim.cmd('autocmd BufWritePre *.go,*.tf,*.py,*.yaml,*.yml,*.lua lua vim.lsp.buf.format({async = true})')
 vim.cmd [[autocmd BufWritePre *.go,*.tf,*.lua,*.rs lua vim.lsp.buf.format( { async = false })]]

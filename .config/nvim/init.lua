@@ -36,7 +36,4 @@ require('mappings')
 require('plugins')
 require('lsp')
 
-vim.g.karol_italic_comments = false
-vim.g.karol_darken_noncurrent_window = true
-vim.g.karol_lighten_noncurrent_window = true
-vim.cmd [[ colorscheme karol ]]
+vim.cmd [[ colorscheme playground ]]

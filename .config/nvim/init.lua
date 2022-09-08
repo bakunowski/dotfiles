@@ -16,13 +16,10 @@ vim.o.listchars = 'nbsp:¬,tab:  ,trail:·,extends:>' -- Set the characters for 
 
 vim.o.fixendofline = false -- If there isn't an empty line at EOF don't insert it
 vim.o.hidden = true -- Allow buffers to be backgrounded without being saved
--- vim.o.updatetime = 100 -- cursor hold trigger after 100ms
 -- vim.o.colorcolumn = '80' -- Highlight 80 character limit
 vim.o.signcolumn = 'auto' -- How to display gitgutter signs next to numbers column
--- vim.o.showmode = false -- Don't show current mode in status line
--- vim.o.pumheight = 10 -- Maximum number of items to show in the popup menu
 vim.o.cmdheight = 0 -- Don't show empty command line if not in use
--- vim.o.winbar = '%=%f%m%='
+vim.o.winbar = '%=%f%m%='
 vim.o.linebreak = true
 
 -- Tab is 2 spaces in these files:
@@ -32,7 +29,7 @@ vim.cmd [[ autocmd FileType lua setlocal ts=2 sw=2 ]]
 vim.cmd [[ autocmd FileType terraform setlocal ts=2 sw=2 ]]
 
 -- Show indent lines only in these files
-vim.cmd [[ let g:indent_blankline_filetype = ['yaml'] ]]
+vim.g.indent_blankline_filetype = { 'yaml' }
 
 -- Lua library
 require('mappings')

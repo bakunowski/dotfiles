@@ -10,7 +10,12 @@ local on_attach = function(client, bufnr)
   -- Override handlers
   local telescope_builtin = require 'telescope.builtin'
 
-  vim.lsp.handlers["textDocument/references"]     = telescope_builtin.lsp_references
+  vim.lsp.handlers["textDocument/references"]     = function()
+    return telescope_builtin.lsp_references({
+      include_declaration = false,
+      show_line = false,
+    })
+  end
   vim.lsp.handlers["textDocument/implementation"] = function()
     return telescope_builtin.lsp_implementations({
       jump_type = "never",
@@ -35,7 +40,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
@@ -120,5 +125,4 @@ require('lspconfig').yamlls.setup {
 }
 
 -- Format these files on save
--- vim.cmd('autocmd BufWritePre *.go,*.tf,*.py,*.yaml,*.yml,*.lua lua vim.lsp.buf.format({async = true})')
 vim.cmd [[autocmd BufWritePre *.go,*.tf,*.lua,*.rs lua vim.lsp.buf.format( { async = false })]]

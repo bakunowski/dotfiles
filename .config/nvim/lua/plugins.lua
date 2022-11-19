@@ -141,7 +141,13 @@ return require('packer').startup(function(use)
   }
 
   -- Pretty
-  use "lukas-reineke/indent-blankline.nvim"
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    config = function()
+      -- Show indent lines only in these files
+      vim.g.indent_blankline_filetype = { 'yaml' }
+    end
+  }
   use {
     "mcchrish/zenbones.nvim",
     requires = "rktjmp/lush.nvim"

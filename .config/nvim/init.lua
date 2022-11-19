@@ -29,9 +29,6 @@ vim.cmd [[ autocmd FileType lua setlocal ts=2 sw=2 ]]
 vim.cmd [[ autocmd FileType terraform setlocal ts=2 sw=2 ]]
 vim.cmd [[ autocmd FileType groovy setlocal ts=2 sw=2 ]]
 
--- Show indent lines only in these files
-vim.g.indent_blankline_filetype = { 'yaml' }
-
 -- Lua library
 require('mappings')
 require('plugins')

@@ -10,17 +10,17 @@ vim.o.tabstop = 4 -- Tab width in spaces
 vim.o.shiftwidth = 4 -- Amount of spaces when shifting
 vim.o.termguicolors = true -- Use 24-bit RGB color in terminal
 vim.o.mouse = 'a' -- Enable mouse support
-vim.o.laststatus = 3 -- Global status line
 vim.o.list = true -- Always show invisible characters
 vim.o.listchars = 'nbsp:¬,tab:  ,trail:·,extends:>' -- Set the characters for the invisibles
-
+vim.o.linebreak = true
 vim.o.fixendofline = false -- If there isn't an empty line at EOF don't insert it
 vim.o.hidden = true -- Allow buffers to be backgrounded without being saved
 -- vim.o.colorcolumn = '80' -- Highlight 80 character limit
-vim.o.signcolumn = 'auto' -- How to display gitgutter signs next to numbers column
-vim.o.cmdheight = 0 -- Don't show empty command line if not in use
-vim.o.winbar = '%=%f%m%='
-vim.o.linebreak = true
+vim.o.signcolumn = 'yes' -- How to display gitgutter signs next to numbers column
+vim.o.scrolloff = 5
+-- vim.o.cmdheight = 0 -- Don't show empty command line if not in use
+-- vim.o.winbar = '%=%f%m%='
+-- vim.o.laststatus = 3 -- Global status line
 
 -- Tab is 2 spaces in these files:
 vim.cmd [[ autocmd FileType yaml setlocal ts=2 sw=2 ]]

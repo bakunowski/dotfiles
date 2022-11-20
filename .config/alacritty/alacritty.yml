@@ -1,3 +1,4 @@
+---
 env:
   TERM: alacritty
 
@@ -24,91 +25,59 @@ font:
     family: *ffamily
     style: Medium Italic
 
-  size: 11.0
+  size: 12.0
 
   offset:
-    x: 1
-    y: 10
+    x: 0
+    y: 4
 
   glyph_offset:
     x: 0
-    y: 5
+    y: 2
 
   builtin_box_drawing: true
 
+colibri: &colibri
+  primary:
+    foreground: '0xebeafa'
+    background: '0x3b224c'
+
+  normal:
+    black:   '0x3b224c'
+    red:     '0xf47868'
+    green:   '0x9ff28f'
+    yellow:  '0xefba5d'
+    blue:    '0xa4a0e8'
+    magenta: '0xdbbfef'
+    cyan:    '0x6acdca'
+    white:   '0xebeafa'
+
+  bright:
+    black:   '0x697c81'
+    red:     '0xff3334'
+    green:   '0x9ec400'
+    yellow:  '0xe7c547'
+    blue:    '0x7aa6da'
+    magenta: '0xb77ee0'
+    cyan:    '0x54ced6'
+    white:   '0xffffff'
+
+  selection:
+    background: '0x2d4f67'
+    foreground: '0xc8c093'
+
+  indexed_colors:
+    - { index: 16, color: '0xffa066' }
+    - { index: 17, color: '0xff5d62' }
+
+colors: *colibri
+
 draw_bold_text_with_bright_colors: false
-
-rasmus: &rasmus
-  primary:
-    background: '#1a1a19'
-    foreground: '#d1d1d1'
-  normal:
-    black:   '#333332'
-    red:     '#ff968c'
-    green:   '#61957f'
-    yellow:  '#ffc591'
-    blue:    '#8db4d4'
-    magenta: '#de9bc8'
-    cyan:    '#7bb099'
-    white:   '#d1d1d1'
-  bright:
-    black:   '#4c4c4b'
-    red:     '#ffafa5'
-    green:   '#7aae98'
-    yellow:  '#ffdeaa'
-    blue:    '#a6cded'
-    magenta: '#f7b4e1'
-    cyan:    '#94c9b2'
-    white:   '#eaeaea'
-rasmusl: &rasmusl
-  primary:
-    foreground: '#222222'
-    background: '#fdfdfc'
-  normal:
-    black:   '#EEEEEE'
-    red:     '#A8334C'
-    green:   '#4F6C31'
-    yellow:  '#944927'
-    blue:    '#286486'
-    magenta: '#88507D'
-    cyan:    '#3B8992'
-    white:   '#353535'
-  bright:
-    black:   '#C6C3C3'
-    red:     '#94253E'
-    green:   '#3F5A22'
-    yellow:  '#803D1C'
-    blue:    '#1D5573'
-    magenta: '#7B3B70'
-    cyan:    '#2B747C'
-    white:   '#5C5C5C'
-rasmusl2: &rasmusl2
-  primary:
-    foreground: '#444444'
-    background: '#d9d5ba'
-  normal:
-    black:   '#d9d5ba'
-    red:     '#825b69'
-    green:   '#69825b'
-    yellow:  '#82755b'
-    blue:    '#5b6982'
-    magenta: '#755b82'
-    cyan:    '#5b8275'
-    white:   '#494949'
-  bright:
-    black:   '#333333'
-    red:     '#bda0aa'
-    green:   '#aabda0'
-    yellow:  '#bdb3a0'
-    blue:    '#7484a2'
-    magenta: '#b3a0bd'
-    cyan:    '#a0bdb3'
-    white:   '#494847'
-
-colors: *rasmusl2
 
 mouse:
   hide_when_typing: true
 
 key_bindings:
   - { key: Key3,     mods: Alt,     chars: "\x23"                        }
+  - { key: B,        mods: Alt,     chars: "\x1bb"                       }
+  - { key: F,        mods: Alt,     chars: "\x1bf"                       }

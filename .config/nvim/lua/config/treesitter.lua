@@ -12,6 +12,8 @@ require 'nvim-treesitter.configs'.setup {
     "rust",
     "vim",
     "yaml",
+    "markdown",
+    "markdown_inline",
   },
   highlight = {
     enable = true,

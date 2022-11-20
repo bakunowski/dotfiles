@@ -12,20 +12,28 @@ local on_attach = function(client, bufnr)
 
   vim.lsp.handlers["textDocument/references"]     = function()
     return telescope_builtin.lsp_references({
+      jump_type = "never",
       include_declaration = false,
       show_line = false,
+      prompt_title = false,
+      results_title = false,
+      preview_title = false,
     })
   end
   vim.lsp.handlers["textDocument/implementation"] = function()
     return telescope_builtin.lsp_implementations({
-      jump_type = "never",
       show_line = false,
+      prompt_title = false,
+      results_title = false,
+      preview_title = false,
     })
   end
   vim.lsp.handlers["textDocument/definition"]     = function()
     return telescope_builtin.lsp_definitions({
-      jump_type = "never",
       show_line = false,
+      prompt_title = false,
+      results_title = false,
+      preview_title = false,
     })
   end
   -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
@@ -44,11 +52,12 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+
 end
 
 -- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 require 'lspconfig'.gopls.setup {
   on_attach = on_attach,
@@ -56,9 +65,14 @@ require 'lspconfig'.gopls.setup {
   settings = {
     gopls = {
       gofumpt = false,
-      linksInHover = false,
+      linksInHover = true,
     },
   }
+}
+
+require 'lspconfig'.terraformls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
 }
 
 require 'lspconfig'.rust_analyzer.setup {
@@ -72,6 +86,11 @@ require 'lspconfig'.html.setup {
 }
 
 require 'lspconfig'.cssls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require 'lspconfig'.bashls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
 }
@@ -107,22 +126,37 @@ require 'lspconfig'.sumneko_lua.setup {
   },
 }
 
-require('lspconfig').yamlls.setup {
+require 'lspconfig'.jsonnet_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
-  settings = {
-    yaml = {
-      trace = {
-        server = "verbose"
-      },
-      schemas = {
-        kubernetes = "/*.yaml"
-      },
-      schemaDownload = { enable = true },
-      validate = true,
-    },
-  }
+}
+
+-- require('lspconfig').yamlls.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   settings = {
+--     yaml = {
+--       trace = {
+--         server = "verbose"
+--       },
+--       schemas = {
+--         kubernetes = "/*.yaml"
+--       },
+--       schemaDownload = { enable = true },
+--       validate = true,
+--     },
+--   }
+-- }
+
+require 'lspconfig'.pyright.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
 }
 
 -- Format these files on save
-vim.cmd [[autocmd BufWritePre *.go,*.tf,*.lua,*.rs lua vim.lsp.buf.format( { async = false })]]
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*.lua", "*.rs", "*.go", "*.tf", "*.tfvars" },
+  callback = function()
+    vim.lsp.buf.format({ async = false })
+  end,
+})

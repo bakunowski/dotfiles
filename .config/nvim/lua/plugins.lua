@@ -66,21 +66,37 @@ return require('packer').startup(function(use)
     },
     config = function()
       require('config.telescope')
-      --   require('telescope').setup({
-      --     defaults = {
-      --       layout_config = {
-      --         horizontal = {
-      --           width = 0.95,
-      --           height = 0.9,
-      --           preview_cutoff = 120,
-      --           prompt_position = "bottom",
-      --         },
-      --       },
-      --       path_display = {
-      --         truncate = 3
-      --       },
-      --     },
-      --   })
+      require('telescope').setup({
+        defaults = {
+          sorting_strategy = "ascending",
+          layout_config = {
+            horizontal = {
+              -- width = 0.95,
+              -- height = 0.9,
+              -- preview_cutoff = 120,
+              prompt_position = "top",
+            },
+          },
+          path_display = {
+            -- tail = true
+            truncate = 8
+          },
+        },
+        pickers = {
+          find_files = {
+            disable_devicons = true,
+            prompt_title = false,
+            results_title = false,
+            preview_title = false,
+          },
+          live_grep = {
+            disable_devicons = true,
+            prompt_title = false,
+            results_title = false,
+            preview_title = false,
+          },
+        }
+      })
     end
   }
 
@@ -127,6 +143,7 @@ return require('packer').startup(function(use)
     'tpope/vim-fugitive',
     cmd = { 'G', 'Gstatus', 'Gblame', 'Gpush', 'Gpull', 'Gdiff' },
   }
+  use 'tpope/vim-rhubarb'
 
   -- File tree view
   use {
@@ -135,12 +152,60 @@ return require('packer').startup(function(use)
       'kyazdani42/nvim-web-devicons',
     },
     config = function()
-      require 'nvim-tree'.setup {}
+      require 'nvim-tree'.setup({
+        view = {
+          adaptive_size = true,
+          signcolumn = "no",
+        },
+        actions = {
+          open_file = {
+            quit_on_open = true,
+          },
+        },
+      })
     end,
     cmd = 'NvimTreeToggle'
   }
 
   -- Pretty
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = function()
+
+      local fugitiveblame = { sections = { lualine_a = { 'mode' } }, filetypes = { 'fugitiveblame' } }
+
+      require('lualine').setup {
+        options = {
+          icons_enabled = false,
+          theme = 'colibri',
+          component_separators = { left = '', right = '' },
+          section_separators = { left = '', right = '' },
+        },
+        sections = {
+          lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 3) end } },
+          -- lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_b = {},
+          lualine_c = { { 'filename', path = 1 } },
+          lualine_x = {},
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' }
+        },
+        inactive_sections = {
+          lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 3) end } },
+          lualine_b = {},
+          lualine_c = { 'filename' },
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {}
+        },
+        tabline = {},
+        winbar = {},
+        inactive_winbar = {},
+        extensions = { 'nvim-tree', 'fugitive', fugitiveblame }
+      }
+    end
+  }
   use {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
@@ -152,4 +217,52 @@ return require('packer').startup(function(use)
     "mcchrish/zenbones.nvim",
     requires = "rktjmp/lush.nvim"
   }
+  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
+    end
+  }
+
+  -- Packer
+  use({
+    "folke/noice.nvim",
+    config = function()
+      require("noice").setup({
+        lsp = {
+          -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            -- ["cmp.entry.get_documentation"] = true,
+          },
+        },
+        views = {
+          hover = {
+            border = {
+              style = "none",
+              padding = { 1, 1 },
+            },
+          }
+        }
+      })
+    end,
+    requires = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      -- "rcarriga/nvim-notify",
+    }
+  })
+  use '/Users/karolbakunowski/fleetish'
+
+  use {
+    "catppuccin/nvim",
+    as = "catppuccin",
+  }
+
+  use 'atelierbram/Base2Tone-nvim'
 end)

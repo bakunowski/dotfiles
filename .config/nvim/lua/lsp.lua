@@ -54,6 +54,23 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
+
+  vim.api.nvim_create_autocmd({ "CursorHold" }, {
+    callback = function()
+      vim.lsp.buf.document_highlight()
+    end,
+  })
+  vim.api.nvim_create_autocmd({ "CursorHoldI" }, {
+    callback = function()
+      vim.lsp.buf.document_highlight()
+    end,
+  })
+  vim.api.nvim_create_autocmd({ "CursorMoved" }, {
+    callback = function()
+      vim.lsp.buf.clear_references()
+    end,
+  })
+
 end
 
 -- Setup lspconfig.
@@ -121,7 +138,6 @@ require 'lspconfig'.sumneko_lua.setup {
       telemetry = {
         enable = false,
       },
-
     },
   },
 }

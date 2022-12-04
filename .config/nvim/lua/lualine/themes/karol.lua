@@ -1,7 +1,10 @@
+local bg = vim.opt.background:get()
+local c = require('karol.palette').setup(bg)
+
 local colors = {
-  fg1 = '#281733',
-  fg2 = '#dbbfef',
-  fg3 = '#a4a0e8',
+  fg1 = c.bg_darker,
+  fg2 = c.fg,
+  fg3 = c.bg_light2,
 }
 
 return {

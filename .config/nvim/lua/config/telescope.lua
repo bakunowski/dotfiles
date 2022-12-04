@@ -1,3 +1,26 @@
-vim.api.nvim_set_keymap('n', '<c-p>', [[<cmd>Telescope find_files<cr>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>fg', [[<cmd>Telescope live_grep<cr>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>cc', [[<cmd>Telescope colorscheme<cr>]], { noremap = true })
+local find_files = function()
+  require('telescope.builtin').find_files({
+    prompt_title = false,
+    preview_title = false,
+    disable_devicons = true,
+  })
+end
+vim.keymap.set('n', '<c-p>', find_files)
+
+local live_grep = function()
+  require('telescope.builtin').live_grep({
+    prompt_title = false,
+    preview_title = false,
+    disable_devicons = true,
+  })
+end
+vim.keymap.set('n', '<leader>fg', live_grep)
+
+local colorscheme = function()
+  require('telescope.builtin').colorscheme({
+    prompt_title = false,
+    preview_title = false,
+    disable_devicons = true,
+  })
+end
+vim.keymap.set('n', '<leader>cc', colorscheme)

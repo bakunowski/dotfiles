@@ -1,0 +1,272 @@
+local M = {}
+
+function M.setup(palette)
+  -- highlights are sorted like in highlight-groups help file
+  local hlgroups = {
+    ColorColumn  = { bg = palette.bg_dark2 },
+    -- Conceal      = { fg = palette.bg_light3, bold = true },
+    -- CurSearch    = { link = "IncSearch" },
+    Cursor       = { fg = palette.bg, bg = palette.fg },
+    -- lCursor      = { link = "Cursor" },
+    -- CursorIM     = { link = "Cursor" },
+    -- CursorColumn = { link = "CursorLine" },
+    -- CursorLine   = { bg = palette.bg_light1 },
+    Directory    = { fg = palette.fg, bold = true },
+    DiffAdd      = { bg = palette.diff.add },
+    DiffChange   = { bg = palette.diff.change },
+    DiffDelete   = { fg = palette.diff.delete, bg = palette.diff.delete },
+    DiffText     = { fg = palette.fg, bg = palette.diff.text },
+    EndOfBuffer  = { fg = palette.bg },
+    -- TermCursor = {},
+    -- TermCursorNC = {},
+    -- ErrorMsg     = { fg = palette.diag.error },
+    VertSplit    = { fg = palette.bg_dark, bg = palette.bg },
+    WinSeparator = { link = "VertSplit" },
+    Folded       = { fg = palette.bg_light3, bg = palette.bg_dark },
+    FoldColumn   = { fg = palette.bg_light2 },
+    SignColumn   = { fg = palette.bg_light2 },
+    -- IncSearch    = { fg = palette.fg, bg = palette.bg_search_inc },
+    -- Substitute   = { fg = palette.fg, bg = palette.bg_search_inc },
+    LineNr       = { fg = palette.fg },
+    LineNrAbove  = { fg = palette.bg_light2 },
+    LineNrBelow  = { fg = palette.bg_light2 },
+    -- CursorLineNr = { fg = palette.diag.warning, bold = true },
+    -- MatchParen   = { fg = palette.diag.warning, bg = palette.bg_light2, bold = true },
+    -- ModeMsg      = { fg = palette.diag.warning, bold = true },
+    -- MsgArea      = { fg = palette.bg_light3 },
+    -- MsgSeparator = {},
+    -- MoreMsg      = { fg = palette.diag.info, bg = palette.bg },
+    NonText      = { fg = palette.bg_light2 },
+    Normal       = { fg = palette.fg, bg = palette.bg },
+    NormalFloat  = { fg = palette.fg, bg = palette.bg_dark },
+    -- NormalNC     = { link = "Normal" },
+    Pmenu        = { fg = palette.fg, bg = palette.bg_dark },
+    PmenuSel     = { fg = palette.fg, bg = palette.bg_light2 },
+    PmenuSbar    = { link = "Pmenu" },
+    PmenuThumb   = { bg = palette.bg_light2 },
+    -- Question     = { link = "MoreMsg" },
+    -- QuickFixLine = { link = "CursorLine" },
+    -- Search       = { fg = palette.fg, bg = palette.bg_search },
+    SpecialKey   = { link = "NonText" },
+    -- SpellBad     = { undercurl = true, sp = palette.diag.error },
+    -- SpellCap     = { undercurl = true, sp = palette.diag.warning },
+    -- SpellLocal   = { undercurl = true, sp = palette.diag.warning },
+    -- SpellRare    = { undercurl = true, sp = palette.diag.warning },
+    StatusLine   = { fg = palette.bg, bg = palette.bg, reverse = true },
+    StatusLineNC = { fg = palette.bg, bg = palette.bg },
+    TabLine      = { bg = palette.bg_dark, fg = palette.bg_light2 },
+    TabLineFill  = { bg = palette.bg },
+    TabLineSel   = { fg = palette.fg, bg = palette.bg },
+    Title        = { fg = palette.fg, bold = true },
+    Visual       = { bg = palette.bg_dark },
+    VisualNOS    = { link = "Visual" },
+    WarningMsg   = { fg = palette.diag.warning },
+    Whitespace   = { fg = palette.fg },
+    -- WildMenu     = { link = "Pmenu" },
+    -- WinBar       = {},
+    -- WinBarNC     = {},
+    FloatBorder  = { fg = palette.fg, bg = palette.bg_dark },
+
+    -- Syntax
+    Comment            = { fg = palette.bg_light2 },
+    Constant           = { fg = palette.fg },
+    String             = { fg = palette.st },
+    -- Character  = { link = "String" },
+    -- Number     = { fg = palette.nu },
+    -- Boolean    = { fg = palette.co, bold = true },
+    -- Float      = { link = "Number" },
+    Identifier         = { fg = palette.fg_dark },
+    Function           = { fg = palette.fg, bold = true },
+    Method             = { link = "Function" },
+    Statement          = { fg = palette.fg },
+    Conditional        = { fg = palette.fg },
+    -- Repeat = {},
+    -- Label      = { link = 'Statement' },
+    Operator           = { fg = palette.fg },
+    Keyword            = { fg = palette.fg },
+    -- Exception  = { fg = palette.sp2 },
+    PreProc            = { fg = palette.fg },
+    -- Include = {},
+    -- Define = {},
+    -- Macro = {},
+    -- PreCondit = {},
+    Type               = { fg = palette.fg },
+    -- Struct     = { link = "Type" },
+    -- StorageClass = {},
+    -- Structure = {},
+    -- Typedef = {},
+    Special            = { fg = palette.fg },
+    SpecialChar        = { fg = palette.op },
+    -- Tag = {},
+    Delimiter          = { fg = palette.br },
+    -- SpecialComment = {},
+    -- Debug = {},
+    --
+    Underlined         = { fg = palette.bl, underline = true },
+    -- Bold       = { bold = true },
+    -- Italic     = { italic = true },
+    -- Ignore     = { link = "NonText" },
+    -- Error      = { fg = palette.diag.error },
+    Todo               = { fg = palette.diag.info, bg = palette.bg, bold = true },
+    --
+    -- Treesitter
+    ['@function.call'] = { fg = palette.fg },
+    ['@method.call']   = { fg = palette.fg },
+    ['@property']      = { fg = palette.fg },
+    ['@text.warning']  = { link = "WarningMsg" },
+
+    -- -- syntax files
+    -- qfLineNr = { link = "lineNr" },
+    -- qfFileName = { link = "Directory" },
+    --
+    -- mkdHeading = { fg = palette.kw },
+    -- mkdLink = { fg = palette.st },
+    --
+    -- markdownHeadingDelimiter = { fg = palette.kw },
+    -- markdownCode = { fg = palette.st },
+    -- markdownCodeBlock = { fg = palette.st },
+    -- markdownEscape = { fg = "NONE" },
+    -- markdownLink = { fg = palette.st },
+    -- markdownUrl = { fg = palette.st, italic = true, underline = true },
+    --
+    -- yamlBlockMappingKey = { fg = palette.varia },
+    --
+    -- debugPC = { bg = palette.diff.delete },
+    -- debugBreakpoint = { fg = palette.sp },
+    --
+    LspReferenceText = { bg = palette.diff.text },
+    LspReferenceRead = { link = "LspReferenceText" },
+    LspReferenceWrite = { link = "LspReferenceText" },
+    --
+    DiagnosticError = { fg = palette.diag.error },
+    DiagnosticWarn = { fg = palette.diag.warning },
+    DiagnosticInfo = { fg = palette.diag.info },
+    DiagnosticHint = { fg = palette.diag.hint },
+
+    DiagnosticSignError = { link = "DiagnosticError" },
+    DiagnosticSignWarn = { link = "DiagnosticWarn" },
+    DiagnosticSignInfo = { link = "DiagnosticInfo" },
+    DiagnosticSignHint = { link = "DiagnosticHint" },
+
+    DiagnosticVirtualTextError = { link = "DiagnosticError" },
+    DiagnosticVirtualTextWarn = { link = "DiagnosticWarn" },
+    DiagnosticVirtualTextInfo = { link = "DiagnosticInfo" },
+    DiagnosticVirtualTextHint = { link = "DiagnosticHint" },
+
+    DiagnosticUnderlineError = { undercurl = true, sp = palette.diag.error },
+    DiagnosticUnderlineWarn = { undercurl = true, sp = palette.diag.warning },
+    DiagnosticUnderlineInfo = { undercurl = true, sp = palette.diag.info },
+    DiagnosticUnderlineHint = { undercurl = true, sp = palette.diag.hint },
+
+    -- LspSignatureActiveParameter = { fg = palette.diag.warning },
+    -- LspCodeLens = { fg = palette.fg_dark },
+
+    -- -- Git (piping git diff through vim)
+    diffAdded = { fg = palette.git.added },
+    diffRemoved = { fg = palette.git.removed },
+    diffDeleted = { fg = palette.git.removed },
+    diffChanged = { fg = palette.git.changed },
+    diffOldFile = { fg = palette.git.removed },
+    diffNewFile = { fg = palette.git.added },
+    -- -- diffFile = { fg = c.steelGray },
+    -- -- diffLine = { fg = c.steelGray },
+    -- -- diffIndexLine = { link = 'Identifier' },
+    --
+    -- -- GitSigns
+    GitSignsAdd = { link = "diffAdded" },
+    GitSignsChange = { link = "diffChanged" },
+    GitSignsDelete = { link = "diffDeleted" },
+    GitSignsDeleteLn = { bg = palette.diff.delete },
+
+    -- TelescopeBorder = { fg = palette.fg, bg = palette.bg },
+    -- TelescopeResultsClass = { link = "TSType" },
+    -- TelescopeResultsStruct = { link = "TSType" },
+    -- TelescopeResultsVariable = { link = "TSVariable" },
+    --
+    -- -- NvimTree                       = {},
+    -- NvimTreeNormal = { link = "Normal" },
+    -- NvimTreeNormalNC = { link = "NormalNC" },
+    -- NvimTreeRootFolder = { fg = palette.id, bold = true },
+    -- NvimTreeGitDirty = { fg = palette.git.changed },
+    -- NvimTreeGitNew = { fg = palette.git.added },
+    -- NvimTreeGitDeleted = { fg = palette.git.removed },
+    -- NvimTreeSpecialFile = { fg = palette.sp },
+    -- -- NvimTreeIndentMarker           = {},
+    -- NvimTreeImageFile = { fg = palette.sp2 },
+    -- NvimTreeSymlink = { link = "Type" },
+    -- NvimTreeFolderName = { link = "Directory" },
+    -- NvimTreeExecFile = { fg = palette.springGreen, bold = true },
+    -- NvimTreeGitStaged = { fg = palette.git.added },
+    -- NvimTreeOpenedFile = { fg = palette.sp, italic = true },
+    --
+    -- -- NeoVim                         = {},
+    -- healthError = { fg = palette.diag.error },
+    -- healthSuccess = { fg = palette.springGreen },
+    -- healthWarning = { fg = palette.diag.warning },
+    --
+    -- -- Cmp
+    -- CmpDocumentation = { link = "NormalFloat" },
+    -- CmpDocumentationBorder = { link = "FloatBorder" },
+    -- CmpCompletion = { link = "Pmenu" },
+    -- CmpCompletionSel = { link = "PmenuSel" },
+    -- CmpCompletionBorder = { fg = palette.bg_search, bg = palette.bg_dark },
+    -- CmpCompletionThumb = { link = "PmenuThumb" },
+    -- CmpCompletionSbar = { link = "PmenuSbar" },
+    --
+    -- CmpItemAbbr = { fg = palette.fg },
+    -- CmpItemAbbrDeprecated = { fg = palette.fg_dark, strikethrough = true },
+    --
+    -- CmpItemAbbrMatch = { fg = palette.fn },
+    -- CmpItemAbbrMatchFuzzy = { link = "CmpItemAbbrMatch" },
+    --
+    -- CmpItemKindDefault = { fg = palette.dep },
+    -- CmpItemMenu = { fg = palette.fg_dark },
+    --
+    -- CmpItemKindVariable = { fg = palette.bg_light3 },
+    --
+    -- CmpItemKindFunction = { link = "Function" },
+    -- CmpItemKindMethod = { link = "Function" },
+    --
+    -- CmpItemKindConstructor = { link = "TSConstructor" },
+    --
+    -- CmpItemKindClass = { link = "Type" },
+    -- CmpItemKindInterface = { link = "Type" },
+    -- CmpItemKindStruct = { link = "Type" },
+    --
+    -- CmpItemKindProperty = { link = "TSProperty" },
+    -- CmpItemKindField = { link = "TSField" },
+    -- CmpItemKindEnum = { link = "Identifier" },
+    --
+    -- CmpItemKindSnippet = { fg = palette.sp },
+    --
+    -- CmpItemKindText = { link = "TSText" },
+    --
+    -- CmpItemKindModule = { link = "TSInclude" },
+    --
+    -- CmpItemKindFile = { link = "Directory" },
+    -- CmpItemKindFolder = { link = "Directory" },
+    --
+    -- CmpItemKindKeyword = { link = "TSKeyword" },
+    -- CmpItemKindTypeParameter = { link = "Identifier" },
+    -- CmpItemKindConstant = { link = "Constant" },
+    -- CmpItemKindOperator = { link = "Operator" },
+    -- CmpItemKindReference = { link = "TSParameterReference" },
+    -- CmpItemKindEnumMember = { link = "TSField" },
+    --
+    -- CmpItemKindValue = { link = "String" },
+    -- -- CmpItemKindUnit = {},
+    -- -- CmpItemKindEvent = {},
+    -- -- CmpItemKindColor = {},
+    --
+    -- IndentBlankline
+    IndentBlanklineChar = { fg = palette.bg_dark },
+    -- IndentBlanklineSpaceChar = { fg = palette.bg_light2 },
+    -- IndentBlanklineSpaceCharBlankline = { fg = palette.bg_light2 },
+    -- IndentBlanklineContextChar = { fg = palette.bg_light3 },
+    -- IndentBlanklineContextStart = { sp = palette.bg_light3, underline = true },
+  }
+
+  return hlgroups
+end
+
+return M

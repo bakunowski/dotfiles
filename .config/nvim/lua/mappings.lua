@@ -1,7 +1,3 @@
--------------------
--- Mappings
--------------------
-
 -- Window movement
 vim.api.nvim_set_keymap('n', '<c-h>', '<c-w>h', {})
 vim.api.nvim_set_keymap('n', '<c-j>', '<c-w>j', {})
@@ -11,10 +7,14 @@ vim.api.nvim_set_keymap('n', '<c-l>', '<c-w>l', {})
 -- Close buffer
 vim.api.nvim_set_keymap('n', '<c-c>', '<c-w>c', {})
 
+-- End and beginning of line
+vim.api.nvim_set_keymap('n', 'gl', '$', {})
+vim.api.nvim_set_keymap('n', 'gh', '0', {})
+
 -- Make j/k visual down and up instead of whole lines. This makes word
 -- wrapping a lot more pleasant.
-vim.api.nvim_set_keymap('n', 'j', 'gj', {})
-vim.api.nvim_set_keymap('n', 'k', 'gk', {})
+-- vim.api.nvim_set_keymap('n', 'j', 'gj', {})
+-- vim.api.nvim_set_keymap('n', 'k', 'gk', {})
 
 -- Hit esc to clear search
 vim.api.nvim_set_keymap('n', '<esc>', ':noh<cr><esc>', { noremap = true, silent = true })

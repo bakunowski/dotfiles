@@ -178,7 +178,7 @@ return require('packer').startup(function(use)
       require('lualine').setup {
         options = {
           icons_enabled = false,
-          theme = 'colibri',
+          theme = 'auto',
           component_separators = { left = '', right = '' },
           section_separators = { left = '', right = '' },
         },
@@ -206,6 +206,7 @@ return require('packer').startup(function(use)
       }
     end
   }
+
   use {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
@@ -213,11 +214,9 @@ return require('packer').startup(function(use)
       vim.g.indent_blankline_filetype = { 'yaml' }
     end
   }
-  use {
-    "mcchrish/zenbones.nvim",
-    requires = "rktjmp/lush.nvim"
-  }
+
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+
   use {
     'lewis6991/gitsigns.nvim',
     config = function()
@@ -225,7 +224,6 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- Packer
   use({
     "folke/noice.nvim",
     config = function()
@@ -257,12 +255,10 @@ return require('packer').startup(function(use)
       -- "rcarriga/nvim-notify",
     }
   })
-  use '/Users/karolbakunowski/fleetish'
-
+  use 'rebelot/kanagawa.nvim'
   use {
-    "catppuccin/nvim",
-    as = "catppuccin",
+    "mcchrish/zenbones.nvim",
+    requires = "rktjmp/lush.nvim"
   }
-
-  use 'atelierbram/Base2Tone-nvim'
+  use 'will133/vim-dirdiff'
 end)

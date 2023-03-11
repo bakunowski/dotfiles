@@ -30,41 +30,32 @@ local on_attach = function(client, bufnr)
   end
   vim.lsp.handlers["textDocument/definition"]     = function()
     return telescope_builtin.lsp_definitions({
+      jump_type = "never",
       show_line = false,
       prompt_title = false,
       results_title = false,
       preview_title = false,
     })
   end
-  -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  -- vim.lsp.handlers["textDocument/hover"]          = vim.lsp.with(
   --   vim.lsp.handlers.hover, {
-  --     border = "solid"
-  --   }
+  --   border = "solid"
+  -- }
   -- )
 
   -- Mappings.
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', '<space>k', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  vim.keymap.set('n', '<space>h', vim.lsp.buf.document_highlight, bufopts)
+  -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
-
-  vim.api.nvim_create_autocmd({ "CursorHold" }, {
-    callback = function()
-      vim.lsp.buf.document_highlight()
-    end,
-  })
-  vim.api.nvim_create_autocmd({ "CursorHoldI" }, {
-    callback = function()
-      vim.lsp.buf.document_highlight()
-    end,
-  })
   vim.api.nvim_create_autocmd({ "CursorMoved" }, {
     callback = function()
       vim.lsp.buf.clear_references()
@@ -82,7 +73,8 @@ require 'lspconfig'.gopls.setup {
   settings = {
     gopls = {
       gofumpt = false,
-      linksInHover = true,
+      semanticTokens = true
+      -- linksInHover = false,
     },
   }
 }
@@ -138,6 +130,7 @@ require 'lspconfig'.sumneko_lua.setup {
       telemetry = {
         enable = false,
       },
+
     },
   },
 }

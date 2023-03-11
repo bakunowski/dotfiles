@@ -29,7 +29,7 @@ return require('packer').startup(function(use)
       { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
-      { 'onsails/lspkind-nvim', after = 'nvim-cmp', },
+      { 'onsails/lspkind-nvim' },
     },
     config = function()
       require('config.cmp')
@@ -54,7 +54,14 @@ return require('packer').startup(function(use)
   use {
     'numToStr/Comment.nvim',
     config = function()
-      require('Comment').setup()
+      require('Comment').setup({
+        toggler = {
+          line = '<c-c>',
+        },
+        opleader = {
+          line = '<c-c>',
+        },
+      })
     end
   }
 
@@ -65,20 +72,15 @@ return require('packer').startup(function(use)
       { 'nvim-lua/plenary.nvim' },
     },
     config = function()
-      require('config.telescope')
       require('telescope').setup({
         defaults = {
           sorting_strategy = "ascending",
           layout_config = {
             horizontal = {
-              -- width = 0.95,
-              -- height = 0.9,
-              -- preview_cutoff = 120,
               prompt_position = "top",
             },
           },
           path_display = {
-            -- tail = true
             truncate = 8
           },
         },
@@ -95,8 +97,28 @@ return require('packer').startup(function(use)
             results_title = false,
             preview_title = false,
           },
+          colorscheme = {
+            disable_devicons = true,
+            prompt_title = false,
+            results_title = false,
+            preview_title = false,
+          },
         }
       })
+      local find_files = function()
+        require('telescope.builtin').find_files()
+      end
+      vim.keymap.set('n', '<leader>f', find_files)
+
+      local live_grep = function()
+        require('telescope.builtin').live_grep()
+      end
+      vim.keymap.set('n', '<leader>g', live_grep)
+
+      local colorscheme = function()
+        require('telescope.builtin').colorscheme()
+      end
+      vim.keymap.set('n', '<leader>cc', colorscheme)
     end
   }
 
@@ -119,23 +141,6 @@ return require('packer').startup(function(use)
   -- Go tests
   -- use { 'buoto/gotests-vim', ft = 'go' }
 
-  -- Linting
-  use {
-    'mfussenegger/nvim-lint',
-    config = function()
-      require('lint').linters_by_ft = {
-        go = { 'golangcilint', },
-        -- yaml = { 'yamllint', }
-      }
-
-      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-        callback = function()
-          require("lint").try_lint()
-        end,
-      })
-    end
-  }
-
   use 'towolf/vim-helm'
 
   -- Git
@@ -144,6 +149,20 @@ return require('packer').startup(function(use)
     cmd = { 'G', 'Gstatus', 'Gblame', 'Gpush', 'Gpull', 'Gdiff' },
   }
   use 'tpope/vim-rhubarb'
+
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
+    end
+  }
+  use {
+    'sindrets/diffview.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    cmd = { 'DiffViewOpen' }
+  }
+
+  use 'will133/vim-dirdiff'
 
   -- File tree view
   use {
@@ -163,30 +182,36 @@ return require('packer').startup(function(use)
           },
         },
       })
+      vim.api.nvim_set_keymap(
+        'n', '<leader>e', [[:NvimTreeToggle<cr>]], { noremap = true }
+      )
     end,
-    cmd = 'NvimTreeToggle'
   }
 
-  -- Pretty
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function()
-
-      local fugitiveblame = { sections = { lualine_a = { 'mode' } }, filetypes = { 'fugitiveblame' } }
-
+      local fugitiveblame = {
+        sections = {
+          lualine_a = { 'mode' }
+        },
+        filetypes = { 'fugitiveblame' }
+      }
       require('lualine').setup {
         options = {
           icons_enabled = false,
-          theme = 'auto',
+          theme = 'acme',
           component_separators = { left = '', right = '' },
           section_separators = { left = '', right = '' },
         },
         sections = {
-          lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 3) end } },
-          -- lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_a = {
+            { 'mode', fmt = function(str) return str:sub(1, 3) end }
+          },
           lualine_b = {},
-          lualine_c = { { 'filename', path = 1 } },
+          lualine_c = {
+            { 'filename', path = 1 }
+          },
           lualine_x = {},
           lualine_y = { 'progress' },
           lualine_z = { 'location' }
@@ -207,58 +232,79 @@ return require('packer').startup(function(use)
     end
   }
 
-  use {
-    'lukas-reineke/indent-blankline.nvim',
-    config = function()
-      -- Show indent lines only in these files
-      vim.g.indent_blankline_filetype = { 'yaml' }
-    end
-  }
-
-  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-
-  use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup()
-    end
-  }
-
   use({
     "folke/noice.nvim",
     config = function()
       require("noice").setup({
-        lsp = {
-          -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-          override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"] = true,
-            -- ["cmp.entry.get_documentation"] = true,
-          },
-        },
         views = {
+          cmdline_popup = {
+            border = {
+              style = "none",
+              padding = { 1, 1 },
+            },
+            filter_options = {},
+            win_options = {
+              winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+            },
+          },
           hover = {
             border = {
               style = "none",
               padding = { 1, 1 },
             },
-          }
-        }
+            position = {
+              row = 2
+            }
+            -- filter_options = {},
+            -- win_options = {
+            --   winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+            -- },
+          },
+        },
+        routes = {
+          {
+            filter = {
+              event = "msg_show",
+              kind = "search_count",
+            },
+            opts = { skip = true },
+          },
+        },
+        lsp = {
+          -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true,
+          },
+        },
+        -- you can enable a preset for easier configuration
+        presets = {
+          bottom_search = true, -- use a classic bottom cmdline for search
+          command_palette = true, -- position the cmdline and popupmenu together
+          long_message_to_split = true, -- long messages will be sent to a split
+          inc_rename = false, -- enables an input dialog for inc-rename.nvim
+          lsp_doc_border = false, -- add a border to hover docs and signature help
+        },
       })
     end,
     requires = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      -- "rcarriga/nvim-notify",
     }
   })
-  use 'rebelot/kanagawa.nvim'
-  use {
-    "mcchrish/zenbones.nvim",
-    requires = "rktjmp/lush.nvim"
-  }
-  use 'will133/vim-dirdiff'
+  -- use {
+  -- 'lukas-reineke/indent-blankline.nvim',
+  --   ft = { 'yaml' },
+  --   config = function()
+  --     -- Show indent lines only in these files
+  --     vim.g.indent_blankline_filetype = { 'yaml' }
+  --   end
+  -- }
+
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
+  use 'NvChad/nvim-colorizer.lua'
 end)

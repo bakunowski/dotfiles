@@ -1,4 +1,4 @@
-vim.o.clipboard = 'unnamedplus' -- Yank to system cliboard
+-- vim.o.clipboard = 'unnamedplus' -- Yank to system cliboard
 vim.o.number = true -- Show current line number
 vim.o.relativenumber = true -- Show relative line numbers
 vim.g.mapleader = [[ ]] -- Set leader to space
@@ -19,11 +19,20 @@ vim.o.listchars = 'nbsp:¬,tab:  ,trail:·,extends:>' -- Set the characters for 
 vim.o.signcolumn = 'yes' -- How to display gitgutter signs next to numbers column
 vim.o.splitright = true
 vim.o.splitbelow = true
--- vim.o.cmdheight = 0 -- Don't show empty command line if not in use
--- vim.o.winbar = '%=%f%m%='
--- vim.o.laststatus = 3 -- Global status line
 vim.opt.diffopt = vim.opt.diffopt + { linematch = 50 }
 vim.o.updatetime = 1000
+vim.o.swapfile = 0
+vim.o.pumheight = 100
+-- vim.o.conceallevel = 2
+-- vim.o.stc = '%=%{v:relnum?v:relnum:v:lnum}  '
+vim.o.splitkeep = 'topline'
+
+-- Override diagnostics symbols
+local signs = { Error = "⏺", Warn = "⏺", Hint = "⏺", Info = "⏺" }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
 -- Tab is 2 spaces in these files:
 vim.cmd [[ autocmd FileType yaml setlocal ts=2 sw=2 ]]
@@ -37,4 +46,5 @@ require('mappings')
 require('plugins')
 require('lsp')
 
-vim.cmd [[ colorscheme karol ]]
+-- vim.cmd [[ set bg=light ]]
+vim.cmd.colorscheme 'acme'

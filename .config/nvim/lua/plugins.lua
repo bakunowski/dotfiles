@@ -1,110 +1,207 @@
--- Bootstrap installing packer on a new machine
-local fn = vim.fn
-local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  Packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
-    install_path })
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
--- Compile whenever changes are made to this file
-vim.cmd([[
-	augroup packer_user_config
-		autocmd!
-		autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-	augroup end
-]])
+require("lazy").setup({
+  -- kill me
+  'martinda/Jenkinsfile-vim-syntax',
 
-return require('packer').startup(function(use)
-  -- Manage yourself pls :)
-  use 'wbthomason/packer.nvim'
+  -- Colorscheme
+  {
+    'lourenci/github-colors',
+    lazy = false,
+    priority = 1000,
+    -- config = function()
+    --   vim.cmd [[
+    --   colorscheme github-colors
+    --   ]]
+    -- end
+  },
 
-  -- Completion
-  use {
-    'hrsh7th/nvim-cmp',
-    requires = {
-      { 'hrsh7th/vim-vsnip', after = 'nvim-cmp' },
-      { 'hrsh7th/cmp-vsnip', after = 'nvim-cmp' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp' },
-      { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-      { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
-      { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
-      { 'onsails/lspkind-nvim' },
-    },
-    config = function()
-      require('config.cmp')
-    end,
-    event = 'InsertEnter *'
-  }
+  -- Git
+  'tpope/vim-fugitive',
+  'tpope/vim-rhubarb',
 
-  -- Brackets
-  use {
+  -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-sleuth',
+
+  -- Brackets operations
+  'tpope/vim-surround',
+
+  -- Easy native LSP setup
+  'neovim/nvim-lspconfig',
+
+  -- Replaced by helm-treesitter
+  -- 'towolf/vim-helm',
+
+  { -- Brackets
     'windwp/nvim-autopairs',
-    config = function()
-      require('nvim-autopairs').setup({
-        fast_wrap = {
-          map = '<C-e>',
+    opts = {
+      fast_wrap = {
+        map = '<C-e>',
+      },
+    },
+  },
+
+  { -- Autocompletion
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/vim-vsnip',
+      'hrsh7th/cmp-vsnip',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-nvim-lua',
+      'onsails/lspkind-nvim'
+    },
+    init = function()
+      local cmp = require('cmp')
+      local lspkind = require('lspkind')
+
+      cmp.setup({
+        preselect = cmp.PreselectMode.None,
+        snippet = {
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        }),
+        completion = {
+          completeopt = 'menu,menuone,noinsert',
+        },
+        sources = {
+          { name = 'nvim_lsp' },
+          -- { name = "nvim_lsp_signature_help" },
+          { name = 'buffer' },
+          { name = 'path' },
+          { name = 'vsnip' },
+        },
+        formatting = {
+          format = lspkind.cmp_format(),
         },
       })
     end
-  }
-  use 'tpope/vim-surround'
+  },
 
-  -- Comments
-  use {
+  { -- Adds git releated signs to the gutter, as well as utilities for managing changes
+    'lewis6991/gitsigns.nvim',
+    config = true
+  },
+
+  {
+    'nvim-lualine/lualine.nvim',
+    opts = {
+      options = {
+        icons_enabled = false,
+        theme = 'default',
+        -- theme = 'auto',
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+      },
+      sections = {
+        lualine_a = {
+          { 'mode', fmt = function(str) return str:sub(1, 3) end }
+        },
+        lualine_b = {},
+        lualine_c = {
+          { 'filename', path = 1 }
+        },
+        lualine_x = {},
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
+      },
+      inactive_sections = {
+        lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 3) end } },
+        lualine_b = {},
+        lualine_c = { 'filename' },
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {}
+      },
+      tabline = {},
+      winbar = {},
+      inactive_winbar = {},
+      extensions = { 'nvim-tree', 'fugitive' }
+    },
+  },
+
+  { -- Add indentation guides even on blank lines
+    'lukas-reineke/indent-blankline.nvim',
+    opts = {
+      filetype = { 'yaml' }
+    },
+  },
+
+  { -- Comments
     'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup({
-        toggler = {
-          line = '<c-c>',
-        },
-        opleader = {
-          line = '<c-c>',
-        },
-      })
-    end
-  }
+    opts = {
+      toggler = { line = '<c-c>', },
+      opleader = { line = '<c-c>', },
+    },
+  },
 
-  -- Classic TJ
-  use {
+  { -- Classic TJ
     'nvim-telescope/telescope.nvim',
-    requires = {
+    dependencies = {
       { 'nvim-lua/plenary.nvim' },
     },
-    config = function()
-      require('telescope').setup({
-        defaults = {
-          sorting_strategy = "ascending",
-          layout_config = {
-            horizontal = {
-              prompt_position = "top",
-            },
-          },
-          path_display = {
-            truncate = 8
+    opts = {
+      defaults = {
+        sorting_strategy = "ascending",
+        layout_config = {
+          horizontal = {
+            prompt_position = "top",
           },
         },
-        pickers = {
-          find_files = {
-            disable_devicons = true,
-            prompt_title = false,
-            results_title = false,
-            preview_title = false,
-          },
-          live_grep = {
-            disable_devicons = true,
-            prompt_title = false,
-            results_title = false,
-            preview_title = false,
-          },
-          colorscheme = {
-            disable_devicons = true,
-            prompt_title = false,
-            results_title = false,
-            preview_title = false,
-          },
-        }
-      })
+        path_display = {
+          truncate = 8
+        },
+        borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+      },
+      pickers = {
+        find_files = {
+          disable_devicons = true,
+          prompt_title = false,
+          results_title = false,
+          preview_title = false,
+        },
+        live_grep = {
+          disable_devicons = true,
+          prompt_title = false,
+          results_title = false,
+          preview_title = false,
+        },
+        colorscheme = {
+          disable_devicons = true,
+          prompt_title = false,
+          results_title = false,
+          preview_title = false,
+        },
+        file_browser = {
+          disable_devicons = true,
+          prompt_title = false,
+          results_title = false,
+          preview_title = false,
+        },
+      },
+    },
+    init = function()
       local find_files = function()
         require('telescope.builtin').find_files()
       end
@@ -120,191 +217,110 @@ return require('packer').startup(function(use)
       end
       vim.keymap.set('n', '<leader>cc', colorscheme)
     end
-  }
+  },
 
-  -- Easy native LSP setup
-  use 'neovim/nvim-lspconfig'
-
-  -- Better syntax highlighting
-  use {
+  { -- Better syntax highlighting
     'nvim-treesitter/nvim-treesitter',
-    requires = {
-      'nvim-treesitter/playground',
-      cmd = 'TSHighlightCapturesUnderCursor'
-    },
-    run = ':TSUpdate',
+    build = ':TSUpdate',
     config = function()
-      require('config.treesitter')
-    end
-  }
-
-  -- Go tests
-  -- use { 'buoto/gotests-vim', ft = 'go' }
-
-  use 'towolf/vim-helm'
-
-  -- Git
-  use {
-    'tpope/vim-fugitive',
-    cmd = { 'G', 'Gstatus', 'Gblame', 'Gpush', 'Gpull', 'Gdiff' },
-  }
-  use 'tpope/vim-rhubarb'
-
-  use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup()
-    end
-  }
-  use {
-    'sindrets/diffview.nvim',
-    requires = 'nvim-lua/plenary.nvim',
-    cmd = { 'DiffViewOpen' }
-  }
-
-  use 'will133/vim-dirdiff'
-
-  -- File tree view
-  use {
-    'kyazdani42/nvim-tree.lua',
-    requires = {
-      'kyazdani42/nvim-web-devicons',
-    },
-    config = function()
-      require 'nvim-tree'.setup({
-        view = {
-          adaptive_size = true,
-          signcolumn = "no",
+      require 'nvim-treesitter.configs'.setup {
+        ensure_installed = {
+          "bash",
+          "comment",
+          "dockerfile",
+          "go",
+          "hcl",
+          "java",
+          "json",
+          "lua",
+          "python",
+          "rust",
+          "vim",
+          "yaml",
+          "markdown",
+          "markdown_inline",
         },
-        actions = {
-          open_file = {
-            quit_on_open = true,
-          },
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false,
         },
-      })
-      vim.api.nvim_set_keymap(
-        'n', '<leader>e', [[:NvimTreeToggle<cr>]], { noremap = true }
-      )
-    end,
-  }
-
-  use {
-    'nvim-lualine/lualine.nvim',
-    config = function()
-      local fugitiveblame = {
-        sections = {
-          lualine_a = { 'mode' }
+        indent = {
+          enable = true,
         },
-        filetypes = { 'fugitiveblame' }
-      }
-      require('lualine').setup {
-        options = {
-          icons_enabled = false,
-          theme = 'acme',
-          component_separators = { left = '', right = '' },
-          section_separators = { left = '', right = '' },
-        },
-        sections = {
-          lualine_a = {
-            { 'mode', fmt = function(str) return str:sub(1, 3) end }
-          },
-          lualine_b = {},
-          lualine_c = {
-            { 'filename', path = 1 }
-          },
-          lualine_x = {},
-          lualine_y = { 'progress' },
-          lualine_z = { 'location' }
-        },
-        inactive_sections = {
-          lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 3) end } },
-          lualine_b = {},
-          lualine_c = { 'filename' },
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = {}
-        },
-        tabline = {},
-        winbar = {},
-        inactive_winbar = {},
-        extensions = { 'nvim-tree', 'fugitive', fugitiveblame }
       }
     end
-  }
+  },
 
-  use({
-    "folke/noice.nvim",
-    config = function()
-      require("noice").setup({
-        views = {
-          cmdline_popup = {
-            border = {
-              style = "none",
-              padding = { 1, 1 },
-            },
-            filter_options = {},
-            win_options = {
-              winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-            },
-          },
-          hover = {
-            border = {
-              style = "none",
-              padding = { 1, 1 },
-            },
-            position = {
-              row = 2
-            }
-            -- filter_options = {},
-            -- win_options = {
-            --   winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-            -- },
-          },
-        },
-        routes = {
-          {
-            filter = {
-              event = "msg_show",
-              kind = "search_count",
-            },
-            opts = { skip = true },
-          },
-        },
-        lsp = {
-          -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-          override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"] = true,
-            ["cmp.entry.get_documentation"] = true,
-          },
-        },
-        -- you can enable a preset for easier configuration
-        presets = {
-          bottom_search = true, -- use a classic bottom cmdline for search
-          command_palette = true, -- position the cmdline and popupmenu together
-          long_message_to_split = true, -- long messages will be sent to a split
-          inc_rename = false, -- enables an input dialog for inc-rename.nvim
-          lsp_doc_border = false, -- add a border to hover docs and signature help
-        },
-      })
-    end,
-    requires = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-    }
-  })
-  -- use {
-  -- 'lukas-reineke/indent-blankline.nvim',
-  --   ft = { 'yaml' },
+  -- {
+  --   'norcalli/nvim-colorizer.lua',
   --   config = function()
-  --     -- Show indent lines only in these files
-  --     vim.g.indent_blankline_filetype = { 'yaml' }
-  --   end
-  -- }
+  --     require 'colorizer'.setup()
+  --   end,
+  -- },
 
-  use({
-    "iamcco/markdown-preview.nvim",
-    run = function() vim.fn["mkdp#util#install"]() end,
-  })
-  use 'NvChad/nvim-colorizer.lua'
-end)
+  {
+    "folke/noice.nvim",
+    opts = {
+      cmdline = {
+        -- use regular cmdline
+        view = "cmdline",
+      },
+      views = {
+        hover = {
+          border = { style = "none", padding = { 1, 1 }, },
+          position = { row = 2 }
+        },
+      },
+      lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
+        },
+      },
+      presets = {
+        bottom_search = true, -- use a classic bottom cmdline for search
+        long_message_to_split = true, -- long messages will be sent to a split
+      },
+      messages = {
+        view_search = false
+      }
+    },
+    dependencies = { "MunifTanjim/nui.nvim" }
+  },
+
+  {
+    'nvim-tree/nvim-tree.lua',
+    config = function()
+      require("nvim-tree").setup()
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>e",
+        ':NvimTreeToggle<cr>',
+        { noremap = true, silent = true }
+      )
+    end
+  },
+
+  {
+    'f-person/auto-dark-mode.nvim',
+    config = function()
+
+      local auto_dark_mode = require('auto-dark-mode')
+      auto_dark_mode.setup({
+        -- update_interval = 1000,
+        set_dark_mode = function()
+          vim.api.nvim_set_option('background', 'dark')
+          vim.cmd('colorscheme habamax')
+        end,
+        set_light_mode = function()
+          vim.api.nvim_set_option('background', 'light')
+          vim.cmd('colorscheme github-colors')
+        end,
+      })
+      auto_dark_mode.init()
+    end,
+  },
+
+}, {})

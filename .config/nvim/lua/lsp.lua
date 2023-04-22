@@ -1,3 +1,10 @@
+-- Override diagnostics symbols
+local signs = { Error = "⏺", Warn = "⏺", Hint = "⏺", Info = "⏺" }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<space>D', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
@@ -37,11 +44,6 @@ local on_attach = function(client, bufnr)
       preview_title = false,
     })
   end
-  -- vim.lsp.handlers["textDocument/hover"]          = vim.lsp.with(
-  --   vim.lsp.handlers.hover, {
-  --   border = "solid"
-  -- }
-  -- )
 
   -- Mappings.
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -104,16 +106,9 @@ require 'lspconfig'.bashls.setup {
   capabilities = capabilities,
 }
 
-require 'lspconfig'.sumneko_lua.setup {
+require 'lspconfig'.lua_ls.setup {
   settings = {
     Lua = {
-      format = {
-        enable = true,
-        defaultConfig = {
-          indent_style = "tabs",
-          indent_size = "2",
-        }
-      },
       runtime = {
         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
         version = 'LuaJIT',
@@ -130,7 +125,6 @@ require 'lspconfig'.sumneko_lua.setup {
       telemetry = {
         enable = false,
       },
-
     },
   },
 }
@@ -162,10 +156,36 @@ require 'lspconfig'.pyright.setup {
   capabilities = capabilities,
 }
 
+require 'lspconfig'.tsserver.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+local configs = require('lspconfig.configs')
+local lspconfig = require('lspconfig')
+local util = require('lspconfig.util')
+
+if not configs.helm_ls then
+  configs.helm_ls = {
+    default_config = {
+      cmd = { "helm_ls", "serve" },
+      filetypes = { 'helm' },
+      root_dir = function(fname)
+        return util.root_pattern('Chart.yaml')(fname)
+      end,
+    },
+  }
+end
+
+lspconfig.helm_ls.setup {
+  filetypes = { "helm" },
+  cmd = { "helm-ls", "serve" },
+}
+
 -- Format these files on save
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*.lua", "*.rs", "*.go", "*.tf", "*.tfvars" },
+  pattern = { "*.lua", "*.rs", "*.go", "*.tf", "*.tfvars", "*.html" },
   callback = function()
-    vim.lsp.buf.format({ async = false })
+    vim.lsp.buf.format({ async = true })
   end,
 })

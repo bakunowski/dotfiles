@@ -30,13 +30,6 @@ vim.opt.diffopt = vim.opt.diffopt + { linematch = 50 }
 -- vim.o.conceallevel = 2
 -- vim.o.stc = '%=%{v:relnum?v:relnum:v:lnum}  '
 
--- Override diagnostics symbols
-local signs = { Error = "⏺", Warn = "⏺", Hint = "⏺", Info = "⏺" }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
 -- Tab is 2 spaces in these files:
 vim.cmd [[ autocmd FileType yaml setlocal ts=2 sw=2 ]]
 vim.cmd [[ autocmd FileType helm setlocal ts=2 sw=2 ]]
@@ -51,3 +44,13 @@ require('lsp')
 
 -- vim.cmd [[ set bg=light ]]
 vim.cmd.colorscheme 'acme'
+
+local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
+parser_config.gotmpl = {
+  install_info = {
+    url = "https://github.com/ngalaiko/tree-sitter-go-template",
+    files = { "src/parser.c" }
+  },
+  filetype = "helm",
+  used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl", "helm" }
+}

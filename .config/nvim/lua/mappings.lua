@@ -22,10 +22,13 @@ vim.api.nvim_set_keymap('v', 'gh', '0', {})
 vim.api.nvim_set_keymap('n', 'gs', '^', {})
 vim.api.nvim_set_keymap('v', 'gs', '^', {})
 
+vim.api.nvim_set_keymap('n', 'mm', '%', {})
+vim.api.nvim_set_keymap('v', 'mm', '%', {})
+
 -- Make j/k visual down and up instead of whole lines. This makes word
 -- wrapping a lot more pleasant.
--- vim.api.nvim_set_keymap('n', 'j', 'gj', {})
--- vim.api.nvim_set_keymap('n', 'k', 'gk', {})
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Hit esc to clear search
 vim.api.nvim_set_keymap('n', '<esc>', ':noh<cr><esc>', { noremap = true, silent = true })

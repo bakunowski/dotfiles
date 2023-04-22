@@ -30,6 +30,30 @@ vim.opt.diffopt = vim.opt.diffopt + { linematch = 50 }
 -- vim.o.conceallevel = 2
 -- vim.o.stc = '%=%{v:relnum?v:relnum:v:lnum}  '
 
+vim.cmd [[
+augroup desert_override
+  autocmd!
+  autocmd ColorScheme habamax hi! link @variable Normal
+  autocmd ColorScheme habamax hi! link @punctuation Normal
+  autocmd ColorScheme habamax hi! link @field Normal
+  autocmd ColorScheme habamax hi IndentBlanklineChar guifg=#303030
+  autocmd ColorScheme habamax hi! link GitSignsChange Type
+  autocmd ColorScheme habamax hi GitSignsAdd guifg=#87af87
+  autocmd ColorScheme habamax hi WinSeparator guibg=none guifg=#303030
+  autocmd ColorScheme habamax hi LspReferenceText guibg=#303030
+  autocmd ColorScheme habamax hi LspReferenceRead guibg=#303030
+  autocmd ColorScheme habamax hi LspReferenceWrite guibg=#303030
+  autocmd ColorScheme habamax hi! link Todo Number
+  autocmd ColorScheme habamax hi MatchParen gui=none
+  autocmd ColorScheme habamax hi TabLine guibg=#303030 guifg=#bcbcbc
+  autocmd ColorScheme habamax hi TabLineFill guibg=#303030 guifg=#bcbcbc
+  autocmd ColorScheme habamax hi StatusLine guifg=#1c1c1c guibg=#1c1c1c
+  autocmd ColorScheme habamax hi StatusLineNC guifg=#1c1c1c guibg=#1c1c1c
+  autocmd ColorScheme habamax hi MsgArena guibg=#1c1c1c
+augroup END
+colorscheme habamax
+]]
+
 -- Tab is 2 spaces in these files:
 vim.cmd [[ autocmd FileType yaml setlocal ts=2 sw=2 ]]
 vim.cmd [[ autocmd FileType helm setlocal ts=2 sw=2 ]]

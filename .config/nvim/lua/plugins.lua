@@ -78,7 +78,38 @@ require("lazy").setup({
           { name = 'vsnip' },
         },
         formatting = {
-          format = lspkind.cmp_format(),
+          fields = { "abbr", "kind" },
+          format = function(_, vim_item)
+            local cmp_kinds = {
+              Text = '  ',
+              Method = '  ',
+              Function = '  ',
+              Constructor = '  ',
+              Field = '  ',
+              Variable = '  ',
+              Class = '  ',
+              Interface = '  ',
+              Module = '  ',
+              Property = '  ',
+              Unit = '  ',
+              Value = '  ',
+              Enum = '  ',
+              Keyword = '  ',
+              Snippet = '  ',
+              Color = '  ',
+              File = '  ',
+              Reference = '  ',
+              Folder = '  ',
+              EnumMember = '  ',
+              Constant = '  ',
+              Struct = '  ',
+              Event = '  ',
+              Operator = '  ',
+              TypeParameter = '  ',
+            }
+            vim_item.kind = cmp_kinds[vim_item.kind] or ""
+            return vim_item
+          end,
         },
       })
     end
@@ -150,6 +181,10 @@ require("lazy").setup({
       },
     },
     init = function()
+      -- To get fzf loaded and working with telescope, you need to call
+      -- load_extension, somewhere after setup function:
+      require('telescope').load_extension('fzf')
+
       local find_files = function()
         require('telescope.builtin').find_files()
       end
@@ -166,17 +201,25 @@ require("lazy").setup({
       vim.keymap.set('n', '<leader>cc', colorscheme)
     end
   },
+  -- fzf extension for telescope with better speed
+  {
+    "nvim-telescope/telescope-fzf-native.nvim", run = 'make'
+  },
 
   { -- Better syntax highlighting
     'nvim-treesitter/nvim-treesitter',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
     build = ':TSUpdate',
     config = function()
       require 'nvim-treesitter.configs'.setup {
         ensure_installed = {
+          "go",
+          "gomod",
           "bash",
           "comment",
           "dockerfile",
-          "go",
           "hcl",
           "java",
           "json",
@@ -192,8 +235,26 @@ require("lazy").setup({
           enable = true,
           additional_vim_regex_highlighting = false,
         },
-        indent = {
-          enable = true,
+        indent = { enable = true },
+        textobjects = {
+          move = {
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
+            goto_next_start = {
+              [']f'] = '@function.outer',
+              [']b'] = '@block.outer',
+            },
+            goto_next_end = {
+              [']F'] = '@function.outer',
+            },
+            goto_previous_start = {
+              ['[f'] = '@function.outer',
+              ['[b'] = '@block.outer',
+            },
+            goto_previous_end = {
+              ['[F'] = '@function.outer',
+            },
+          },
         },
       }
     end
@@ -201,8 +262,17 @@ require("lazy").setup({
 
   {
     'nvim-tree/nvim-tree.lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      require("nvim-tree").setup()
+      require("nvim-tree").setup({
+        actions = {
+          open_file = { quit_on_open = true },
+        },
+        view = {
+          width = {},
+
+        }
+      })
       vim.api.nvim_set_keymap(
         "n",
         "<leader>e",

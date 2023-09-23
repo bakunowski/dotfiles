@@ -3,10 +3,10 @@ vim.o.relativenumber = true -- Show relative line numbers
 vim.g.mapleader = [[ ]] -- Set leader to space
 vim.o.ignorecase = true -- Case insensitive search
 vim.o.smartcase = true -- If uppercase char specified in search, it becomes case sensitive
--- vim.o.expandtab = true -- Use spaces instead of <Tab>
--- vim.o.softtabstop = 4 -- Soft tab width in spaces
 vim.o.tabstop = 4 -- Tab width in spaces
 -- vim.o.shiftwidth = 4 -- Amount of spaces when shifting
+-- vim.o.expandtab = true -- Use spaces instead of <Tab>
+-- vim.o.softtabstop = 4 -- Soft tab width in spaces
 vim.o.linebreak = true -- Break at word, not last character
 vim.o.fixendofline = false -- If there isn't an empty line at EOF don't insert it
 vim.o.hidden = true -- Allow buffers to be backgrounded without being saved
@@ -54,9 +54,7 @@ augroup habamax_override
   autocmd ColorScheme habamax hi! link Todo Number
 
   " plugins
-  autocmd ColorScheme habamax hi IndentBlanklineChar guifg=#303030
   autocmd ColorScheme habamax hi! link GitSignsChange Type
-  autocmd ColorScheme habamax hi GitSignsAdd guifg=#87af87
 augroup END
 ]]
 

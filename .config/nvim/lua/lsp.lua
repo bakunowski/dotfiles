@@ -57,7 +57,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>h', vim.lsp.buf.document_highlight, bufopts)
-  -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  vim.keymap.set('n', 'gf', function() vim.lsp.buf.format { async = false } end, bufopts)
 
   vim.api.nvim_create_autocmd({ "CursorMoved" }, {
     callback = function()
@@ -179,6 +179,7 @@ if not configs.helm_ls then
 end
 
 lspconfig.helm_ls.setup {
+  on_attach = on_attach,
   filetypes = { "helm" },
   cmd = { "helm-ls", "serve" },
 }

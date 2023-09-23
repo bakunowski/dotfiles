@@ -14,6 +14,7 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
+  client.server_capabilities.semanticTokensProvider = nil
   -- Override handlers
   local telescope_builtin = require 'telescope.builtin'
 
@@ -75,8 +76,7 @@ require 'lspconfig'.gopls.setup {
   settings = {
     gopls = {
       gofumpt = false,
-      semanticTokens = true
-      -- linksInHover = false,
+      semanticTokens = false,
     },
   }
 }
@@ -107,6 +107,7 @@ require 'lspconfig'.bashls.setup {
 }
 
 require 'lspconfig'.lua_ls.setup {
+  on_attach = on_attach,
   settings = {
     Lua = {
       runtime = {

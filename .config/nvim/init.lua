@@ -14,45 +14,53 @@ vim.o.termguicolors = true -- Use 24-bit RGB color in terminal
 vim.o.mouse = 'a' -- Enable mouse support
 vim.o.list = true -- Always show invisible characters
 vim.o.listchars = 'nbsp:¬,tab:  ,trail:·,extends:>' -- Set the characters for the invisibles
--- vim.o.colorcolumn = '80' -- Highlight 80 character limit
+vim.o.colorcolumn = '80' -- Highlight 80 character limit
 vim.o.signcolumn = 'auto' -- How to display gitgutter signs next to numbers column
 vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.updatetime = 250
 vim.o.timeout = true
 vim.o.timeoutlen = 300
-vim.o.swapfile = 0
+vim.o.swapfile = false
 vim.o.pumheight = 100
--- vim.o.splitkeep = 'screen'
 vim.o.breakindent = true
 vim.o.completeopt = 'menuone,noselect'
 vim.opt.diffopt = vim.opt.diffopt + { linematch = 50 }
--- vim.o.conceallevel = 2
--- vim.o.stc = '%=%{v:relnum?v:relnum:v:lnum}  '
 
 vim.cmd [[
-augroup desert_override
+augroup habamax_override
   autocmd!
-  autocmd ColorScheme habamax hi! link @variable Normal
-  autocmd ColorScheme habamax hi! link @punctuation Normal
-  autocmd ColorScheme habamax hi! link @field Normal
-  autocmd ColorScheme habamax hi IndentBlanklineChar guifg=#303030
-  autocmd ColorScheme habamax hi! link GitSignsChange Type
-  autocmd ColorScheme habamax hi GitSignsAdd guifg=#87af87
-  autocmd ColorScheme habamax hi WinSeparator guibg=none guifg=#303030
+  " treesitter - don't want christmas tree
+  autocmd ColorScheme habamax hi @variable        guifg=#bcbcbc guibg=none
+  autocmd ColorScheme habamax hi @function        guifg=#bcbcbc guibg=none
+  autocmd ColorScheme habamax hi @parameter       guifg=#bcbcbc guibg=none
+  autocmd ColorScheme habamax hi @namespace       guifg=#bcbcbc guibg=none
+  autocmd ColorScheme habamax hi @operator        guifg=#bcbcbc guibg=none
+  autocmd ColorScheme habamax hi @property        guifg=#bcbcbc guibg=none
+  autocmd ColorScheme habamax hi @field           guifg=#bcbcbc guibg=none
+  autocmd ColorScheme habamax hi @punctuation     guifg=#bcbcbc guibg=none
+  autocmd ColorScheme habamax hi @type.definition guifg=#bcbcbc guibg=none
+  autocmd ColorScheme habamax hi! link @function.call @method
+  autocmd ColorScheme habamax hi! link @constructor @method
+  autocmd ColorScheme habamax hi! link @constant.builtin Number
+
+  " lsp
   autocmd ColorScheme habamax hi LspReferenceText guibg=#303030
   autocmd ColorScheme habamax hi LspReferenceRead guibg=#303030
   autocmd ColorScheme habamax hi LspReferenceWrite guibg=#303030
+
+  " builtin
+  autocmd ColorScheme habamax hi! link WinSeparator Comment
   autocmd ColorScheme habamax hi! link Todo Number
-  autocmd ColorScheme habamax hi MatchParen gui=none
-  autocmd ColorScheme habamax hi TabLine guibg=#303030 guifg=#bcbcbc
-  autocmd ColorScheme habamax hi TabLineFill guibg=#303030 guifg=#bcbcbc
-  autocmd ColorScheme habamax hi StatusLine guifg=#1c1c1c guibg=#1c1c1c
-  autocmd ColorScheme habamax hi StatusLineNC guifg=#1c1c1c guibg=#1c1c1c
-  autocmd ColorScheme habamax hi MsgArena guibg=#1c1c1c
+
+  " plugins
+  autocmd ColorScheme habamax hi IndentBlanklineChar guifg=#303030
+  autocmd ColorScheme habamax hi! link GitSignsChange Type
+  autocmd ColorScheme habamax hi GitSignsAdd guifg=#87af87
 augroup END
-colorscheme habamax
 ]]
+
+vim.cmd [[ colorscheme habamax ]]
 
 -- Tab is 2 spaces in these files:
 vim.cmd [[ autocmd FileType yaml setlocal ts=2 sw=2 ]]
@@ -65,9 +73,6 @@ vim.cmd [[ autocmd FileType groovy setlocal ts=2 sw=2 ]]
 require('mappings')
 require('plugins')
 require('lsp')
-
--- vim.cmd [[ set bg=light ]]
-vim.cmd.colorscheme 'acme'
 
 local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
 parser_config.gotmpl = {

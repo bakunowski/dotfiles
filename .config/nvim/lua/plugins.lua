@@ -12,20 +12,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  -- kill me
+  -- i don't want this, but i need this
   'martinda/Jenkinsfile-vim-syntax',
-
-  -- Colorscheme
-  {
-    'lourenci/github-colors',
-    lazy = false,
-    priority = 1000,
-    -- config = function()
-    --   vim.cmd [[
-    --   colorscheme github-colors
-    --   ]]
-    -- end
-  },
 
   -- Git
   'tpope/vim-fugitive',
@@ -39,9 +27,6 @@ require("lazy").setup({
 
   -- Easy native LSP setup
   'neovim/nvim-lspconfig',
-
-  -- Replaced by helm-treesitter
-  -- 'towolf/vim-helm',
 
   { -- Brackets
     'windwp/nvim-autopairs',
@@ -102,43 +87,6 @@ require("lazy").setup({
   { -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     config = true
-  },
-
-  {
-    'nvim-lualine/lualine.nvim',
-    opts = {
-      options = {
-        icons_enabled = false,
-        theme = 'default',
-        -- theme = 'auto',
-        component_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
-      },
-      sections = {
-        lualine_a = {
-          { 'mode', fmt = function(str) return str:sub(1, 3) end }
-        },
-        lualine_b = {},
-        lualine_c = {
-          { 'filename', path = 1 }
-        },
-        lualine_x = {},
-        lualine_y = { 'progress' },
-        lualine_z = { 'location' }
-      },
-      inactive_sections = {
-        lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 3) end } },
-        lualine_b = {},
-        lualine_c = { 'filename' },
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {}
-      },
-      tabline = {},
-      winbar = {},
-      inactive_winbar = {},
-      extensions = { 'nvim-tree', 'fugitive' }
-    },
   },
 
   { -- Add indentation guides even on blank lines
@@ -251,45 +199,6 @@ require("lazy").setup({
     end
   },
 
-  -- {
-  --   'norcalli/nvim-colorizer.lua',
-  --   config = function()
-  --     require 'colorizer'.setup()
-  --   end,
-  -- },
-
-  {
-    "folke/noice.nvim",
-    opts = {
-      cmdline = {
-        -- use regular cmdline
-        view = "cmdline",
-      },
-      views = {
-        hover = {
-          border = { style = "none", padding = { 1, 1 }, },
-          position = { row = 2 }
-        },
-      },
-      lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
-        },
-      },
-      presets = {
-        bottom_search = true, -- use a classic bottom cmdline for search
-        long_message_to_split = true, -- long messages will be sent to a split
-      },
-      messages = {
-        view_search = false
-      }
-    },
-    dependencies = { "MunifTanjim/nui.nvim" }
-  },
-
   {
     'nvim-tree/nvim-tree.lua',
     config = function()
@@ -302,25 +211,4 @@ require("lazy").setup({
       )
     end
   },
-
-  {
-    'f-person/auto-dark-mode.nvim',
-    config = function()
-
-      local auto_dark_mode = require('auto-dark-mode')
-      auto_dark_mode.setup({
-        -- update_interval = 1000,
-        set_dark_mode = function()
-          vim.api.nvim_set_option('background', 'dark')
-          vim.cmd('colorscheme habamax')
-        end,
-        set_light_mode = function()
-          vim.api.nvim_set_option('background', 'light')
-          vim.cmd('colorscheme github-colors')
-        end,
-      })
-      auto_dark_mode.init()
-    end,
-  },
-
 }, {})

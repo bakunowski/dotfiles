@@ -7,8 +7,8 @@ vim.api.nvim_set_keymap('n', '<c-j>', '<c-w>j', {})
 vim.api.nvim_set_keymap('n', '<c-k>', '<c-w>k', {})
 vim.api.nvim_set_keymap('n', '<c-l>', '<c-w>l', {})
 
--- vim.api.nvim_set_keymap('n', '<c-d>', '<c-d>zz', {})
--- vim.api.nvim_set_keymap('n', '<c-u>', '<c-u>zz', {})
+vim.api.nvim_set_keymap('n', '<c-d>', '<c-d>zz', {})
+vim.api.nvim_set_keymap('n', '<c-u>', '<c-u>zz', {})
 
 -- Close buffer
 -- vim.api.nvim_set_keymap('n', '<c-c>', '<c-w>c', {})

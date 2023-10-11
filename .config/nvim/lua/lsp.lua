@@ -64,7 +64,25 @@ local on_attach = function(client, bufnr)
       vim.lsp.buf.clear_references()
     end,
   })
+end
 
+local border = {
+  { " ", "FloatBorder" },
+  { "", "FloatBorder" },
+  { " ", "FloatBorder" },
+  { " ", "FloatBorder" },
+  { " ", "FloatBorder" },
+  { " ", "FloatBorder" },
+  { " ", "FloatBorder" },
+  { " ", "FloatBorder" },
+}
+
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  opts.border = opts.border or border
+  opts.max_width = opts.max_width or 80
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
 -- Setup lspconfig.
@@ -188,6 +206,6 @@ lspconfig.helm_ls.setup {
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   pattern = { "*.lua", "*.rs", "*.go", "*.tf", "*.tfvars", "*.html" },
   callback = function()
-    vim.lsp.buf.format({ async = true })
+    vim.lsp.buf.format()
   end,
 })

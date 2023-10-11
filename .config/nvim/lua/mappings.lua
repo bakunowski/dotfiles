@@ -1,5 +1,6 @@
 -- nnoremap <leader>rw :%s/\s\+$//e<CR> -- remove whitespace
 -- nnoremap <leader>jq :%!jq '.'<CR> -- format json
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Window movement
 vim.api.nvim_set_keymap('n', '<c-h>', '<c-w>h', {})

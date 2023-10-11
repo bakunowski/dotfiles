@@ -26,39 +26,7 @@ vim.o.pumheight = 100
 vim.o.breakindent = true
 vim.o.completeopt = 'menuone,noselect'
 vim.opt.diffopt = vim.opt.diffopt + { linematch = 50 }
-
-vim.cmd [[
-augroup habamax_override
-  autocmd!
-  " treesitter - don't want christmas tree
-  autocmd ColorScheme habamax hi @variable        guifg=#bcbcbc guibg=none
-  autocmd ColorScheme habamax hi @function        guifg=#bcbcbc guibg=none
-  autocmd ColorScheme habamax hi @parameter       guifg=#bcbcbc guibg=none
-  autocmd ColorScheme habamax hi @namespace       guifg=#bcbcbc guibg=none
-  autocmd ColorScheme habamax hi @operator        guifg=#bcbcbc guibg=none
-  autocmd ColorScheme habamax hi @property        guifg=#bcbcbc guibg=none
-  autocmd ColorScheme habamax hi @field           guifg=#bcbcbc guibg=none
-  autocmd ColorScheme habamax hi @punctuation     guifg=#bcbcbc guibg=none
-  autocmd ColorScheme habamax hi @type.definition guifg=#bcbcbc guibg=none
-  autocmd ColorScheme habamax hi! link @function.call @method
-  autocmd ColorScheme habamax hi! link @constructor @method
-  autocmd ColorScheme habamax hi! link @constant.builtin Number
-
-  " lsp
-  autocmd ColorScheme habamax hi LspReferenceText guibg=#303030
-  autocmd ColorScheme habamax hi LspReferenceRead guibg=#303030
-  autocmd ColorScheme habamax hi LspReferenceWrite guibg=#303030
-
-  " builtin
-  autocmd ColorScheme habamax hi! link WinSeparator Comment
-  autocmd ColorScheme habamax hi! link Todo Number
-
-  " plugins
-  autocmd ColorScheme habamax hi! link GitSignsChange Type
-augroup END
-]]
-
-vim.cmd [[ colorscheme habamax ]]
+vim.o.smoothscroll = true
 
 -- Tab is 2 spaces in these files:
 vim.cmd [[ autocmd FileType yaml setlocal ts=2 sw=2 ]]
@@ -81,3 +49,61 @@ parser_config.gotmpl = {
   filetype = "helm",
   used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl", "helm" }
 }
+
+vim.cmd [[
+augroup CustomHighlight
+    autocmd!
+    autocmd ColorScheme moonfly highlight Comment gui=none
+    autocmd ColorScheme moonfly hi! link WinSeparator LineNr
+augroup END
+]]
+
+vim.cmd [[
+augroup habamax_override
+  autocmd!
+  " builtin
+  " autocmd ColorScheme habamax hi Normal guifg=#d0d0d0
+  autocmd ColorScheme habamax hi! link WinSeparator Comment
+  autocmd ColorScheme habamax hi! link Todo Number
+  " autocmd ColorScheme habamax hi NormalFloat guibg=#303030
+  autocmd ColorScheme habamax hi! link NormalFloat Normal
+  autocmd ColorScheme habamax hi! link FloatBorder NormalFloat
+
+
+  " treesitter - don't want christmas tree
+  autocmd ColorScheme habamax hi! link @variable        Normal
+  autocmd ColorScheme habamax hi! link @function        Normal
+  autocmd ColorScheme habamax hi! link @parameter       Normal
+  autocmd ColorScheme habamax hi! link @namespace       Normal
+  autocmd ColorScheme habamax hi! link @operator        Normal
+  autocmd ColorScheme habamax hi! link @property        Normal
+  autocmd ColorScheme habamax hi! link @field           Normal
+  autocmd ColorScheme habamax hi! link @punctuation     Normal
+  autocmd ColorScheme habamax hi! link @type.definition Normal
+  autocmd ColorScheme habamax hi! link @method Normal
+  autocmd ColorScheme habamax hi! link @function.call @method
+  autocmd ColorScheme habamax hi! link @constructor @method
+  autocmd ColorScheme habamax hi! link @constant.builtin Number
+
+  autocmd ColorScheme habamax hi! link @field.yaml Statement
+  autocmd ColorScheme habamax hi! link @string.yaml Normal
+  autocmd ColorScheme habamax hi! link @punctuation.bracket.gotmpl Statement
+  autocmd ColorScheme habamax hi! link @variable.gotmpl Statement
+  autocmd ColorScheme habamax hi! link @property.gotmpl Statement
+  autocmd ColorScheme habamax hi! link @function.gotmpl Identifier
+
+  " lsp
+  autocmd ColorScheme habamax hi LspReferenceText guibg=#303030
+  autocmd ColorScheme habamax hi LspReferenceRead guibg=#303030
+  autocmd ColorScheme habamax hi LspReferenceWrite guibg=#303030
+
+  " builtin
+  autocmd ColorScheme habamax hi! link WinSeparator Comment
+  autocmd ColorScheme habamax hi! link Todo Number
+
+  " plugins
+  autocmd ColorScheme habamax hi! link GitSignsChange Type
+augroup END
+]]
+
+-- vim.cmd [[ colorscheme habamax ]]

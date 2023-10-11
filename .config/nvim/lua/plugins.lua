@@ -12,9 +12,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  -- i don't want this, but i need this
-  'martinda/Jenkinsfile-vim-syntax',
-
   -- Git
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
@@ -118,13 +115,6 @@ require("lazy").setup({
   { -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     config = true
-  },
-
-  { -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    opts = {
-      filetype = { 'yaml' }
-    },
   },
 
   { -- Comments
@@ -271,7 +261,11 @@ require("lazy").setup({
         view = {
           width = {},
 
-        }
+        },
+        filters = {
+          dotfiles = false,
+          git_ignored = false,
+        },
       })
       vim.api.nvim_set_keymap(
         "n",
@@ -280,5 +274,66 @@ require("lazy").setup({
         { noremap = true, silent = true }
       )
     end
+  },
+
+  {
+    "ray-x/go.nvim",
+    dependencies = { -- optional packages
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("go").setup()
+    end,
+    event = { "CmdlineEnter" },
+    ft = { "go", 'gomod' },
+    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+  },
+
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = {
+      'arkav/lualine-lsp-progress',
+    },
+    opts = {
+      options = {
+        icons_enabled = false,
+        -- theme = 'default',
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+      },
+      sections = {
+        lualine_a = {
+          { 'mode', fmt = function(str) return str:sub(1, 3) end }
+        },
+        lualine_b = { 'branch' },
+        lualine_c = {
+          { 'filename', path = 1 },
+          'lsp_progress'
+        },
+        lualine_x = { 'diagnostics' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
+      },
+      inactive_sections = {
+        lualine_a = { { 'mode', fmt = function(str) return str:sub(1, 3) end } },
+        lualine_b = {},
+        lualine_c = { 'filename' },
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {}
+      },
+      extensions = { 'nvim-tree', 'fugitive' }
+    },
+  },
+
+  {
+    "bluz71/vim-moonfly-colors",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd [[ colorscheme moonfly ]]
+    end,
   },
 }, {})

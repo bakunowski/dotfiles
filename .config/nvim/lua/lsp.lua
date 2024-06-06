@@ -6,17 +6,29 @@ for type, icon in pairs(signs) do
 end
 
 local opts = { noremap = true, silent = true }
-vim.keymap.set('n', '<space>D', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+-- vim.keymap.set('n', '<space>D', vim.diagnostic.open_float, opts)
+-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+-- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  client.server_capabilities.semanticTokensProvider = nil
+  -- client.server_capabilities.semanticTokensProvider = nil
   -- Override handlers
   local telescope_builtin = require 'telescope.builtin'
+
+  local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+  if client.supports_method("textDocument/formatting") then
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = augroup,
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.format()
+      end,
+    })
+  end
 
   vim.lsp.handlers["textDocument/references"]     = function()
     return telescope_builtin.lsp_references({
@@ -86,42 +98,45 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 end
 
 -- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lspconfig = require('lspconfig')
 
 require 'lspconfig'.gopls.setup {
   on_attach = on_attach,
-  capabilities = capabilities,
   settings = {
     gopls = {
-      gofumpt = false,
+      gofumpt = true,
       semanticTokens = false,
+      -- hints = {
+      --   assignVariableTypes = true,
+      --   compositeLiteralFields = true,
+      --   compositeLiteralTypes = true,
+      --   constantValues = true,
+      -- functionTypeParameters = true,
+      -- parameterNames = true,
+      --   rangeVariableTypes = true,
+      -- },
     },
   }
 }
 
 require 'lspconfig'.terraformls.setup {
   on_attach = on_attach,
-  capabilities = capabilities,
 }
 
 require 'lspconfig'.rust_analyzer.setup {
   on_attach = on_attach,
-  capabilities = capabilities,
 }
 
 require 'lspconfig'.html.setup {
   on_attach = on_attach,
-  capabilities = capabilities,
 }
 
 require 'lspconfig'.cssls.setup {
   on_attach = on_attach,
-  capabilities = capabilities,
 }
 
 require 'lspconfig'.bashls.setup {
   on_attach = on_attach,
-  capabilities = capabilities,
 }
 
 require 'lspconfig'.lua_ls.setup {
@@ -150,12 +165,10 @@ require 'lspconfig'.lua_ls.setup {
 
 require 'lspconfig'.jsonnet_ls.setup {
   on_attach = on_attach,
-  capabilities = capabilities,
 }
 
 -- require('lspconfig').yamlls.setup {
 --   on_attach = on_attach,
---   capabilities = capabilities,
 --   settings = {
 --     yaml = {
 --       trace = {
@@ -172,12 +185,10 @@ require 'lspconfig'.jsonnet_ls.setup {
 
 require 'lspconfig'.pyright.setup {
   on_attach = on_attach,
-  capabilities = capabilities,
 }
 
 require 'lspconfig'.tsserver.setup {
   on_attach = on_attach,
-  capabilities = capabilities,
 }
 
 local configs = require('lspconfig.configs')
@@ -201,11 +212,3 @@ lspconfig.helm_ls.setup {
   filetypes = { "helm" },
   cmd = { "helm-ls", "serve" },
 }
-
--- Format these files on save
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*.lua", "*.rs", "*.go", "*.tf", "*.tfvars", "*.html" },
-  callback = function()
-    vim.lsp.buf.format()
-  end,
-})

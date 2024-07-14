@@ -9,22 +9,21 @@ keybind="super+shift+k=goto_split:top"
 keybind="super+shift+h=goto_split:left"
 keybind="super+shift+l=goto_split:right"
 
-# kanagawa
-background = #1F1F28
-foreground = #dcd7d7
-palette = 0=#16161D
-palette = 1=#C34043
-palette = 2=#76946A
-palette = 3=#C0A36E
-palette = 4=#7E9CD8
-palette = 5=#957FB8
-palette = 6=#6A9589
-palette = 7=#C8C0c8
-palette = 8=#727169
-palette = 9=#E82424
-palette = 10=#98BB6C
-palette = 11=#E6C384
-palette = 12=#7FB4CA
-palette = 13=#938AA9
-palette = 14=#7AA89F
-palette = 15=#DCD7d7
+background = #1d1f21
+foreground = #c5c8c6
+palette = 0=#1d1f21
+palette = 1=#cc6666
+palette = 2=#b5bd68
+palette = 3=#f0c674
+palette = 4=#81a2be
+palette = 5=#b294bb
+palette = 6=#8abeb7
+palette = 7=#c5c8c6
+palette = 8=#1d1f21
+palette = 9=#cc6666
+palette = 10=#b5bd68
+palette = 11=#f0c674
+palette = 12=#81a2be
+palette = 13=#b294bb
+palette = 14=#8abeb7
+palette = 15=#c5c8c6

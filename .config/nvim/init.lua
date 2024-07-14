@@ -24,28 +24,15 @@ vim.opt.diffopt = vim.opt.diffopt + { linematch = 50 }
 vim.o.smoothscroll = true
 vim.o.cmdheight = 0
 
--- vim.cmd [[
--- augroup default
---   autocmd!
---   autocmd ColorScheme default hi clear Function
---   autocmd ColorScheme default hi clear Special
---   autocmd ColorScheme default hi clear Identifier
---   autocmd ColorScheme default hi! link Comment DiagnosticHint
---   autocmd ColorScheme default hi! link WinSeparator LineNr
---
---   "autocmd ColorScheme default hi! link LspReferenceText ColorColumn
---   "autocmd ColorScheme default hi clear MiniFilesNormal
---   "autocmd ColorScheme default hi clear MiniFilesBorder
---   "autocmd ColorScheme default hi GitSignsAdd guifg=NvimDarkGreen
---   "autocmd ColorScheme default hi GitSignsChange guifg=NvimDarkGrey4
---   "autocmd ColorScheme default hi GitSignsDelete guifg=NvimLightRed
--- augroup END
--- ]]
--- vim.cmd[[colorscheme default]]
+-- Tab is 2 spaces in these files:
+vim.cmd [[ autocmd FileType yaml setlocal ts=2 sw=2 ]]
+vim.cmd [[ autocmd FileType helm setlocal ts=2 sw=2 ]]
+vim.cmd [[ autocmd FileType terraform setlocal ts=2 sw=2 ]]
+vim.cmd [[ autocmd FileType groovy setlocal ts=2 sw=2 ]]
+
+vim.cmd [[ colorscheme tomorrownight ]]
 
 -- Lua library
 require('mappings')
 require('plugins')
 require('lsp')
-
-vim.cmd [[ colorscheme kanagawa ]]
